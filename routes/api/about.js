@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const About = require('../../models/about');
+const About = require('../../models/About');
 
 
 router.get('/about-data', (req, res) => {
