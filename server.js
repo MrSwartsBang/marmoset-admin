@@ -37,14 +37,15 @@ app.use('/api', carousel);
 app.use('/api', about);
 app.use('/api', staff);
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('/admin/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-// app.use(express.static(path.join(__dirname, 'build')));
-// app.get('/*', function (req, res) {
-//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// app.use('/admin/*', express.static(path.join(__dirname, '/client/build')));
+app.use('/', express.static(path.join(__dirname, 'user_build')));
+// app.get('/admin/*', function (req, res) {
+//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 // });
+// app.use(express.static(path.join(__dirname, 'build')));
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const port = process.env.PORT || 5000;
 
