@@ -22,8 +22,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(bodyParser.json());
 
-app.listen(9000);
-
 const db = require('./config/keys').mongoURI;
 
 mongoose.connect(db, { useNewUrlParser: true })
@@ -33,16 +31,20 @@ mongoose.connect(db, { useNewUrlParser: true })
 
 app.use(passport.initialize());
 
+
 app.use('/api', users);
 app.use('/api', carousel);
 app.use('/api', about);
 app.use('/api', staff);
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.get('*', function (req, res) {
+app.get('/admin/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
+// app.use(express.static(path.join(__dirname, 'build')));
+// app.get('/*', function (req, res) {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 const port = process.env.PORT || 5000;
 
