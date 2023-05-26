@@ -38,7 +38,7 @@ app.use('/api', about);
 app.use('/api', staff);
 
 // app.use('/admin/*', express.static(path.join(__dirname, '/client/build')));
-app.use('/', express.static(path.join(__dirname, 'user_build')));
+app.use(express.static(path.join(__dirname, 'user_build')));
 // app.get('/admin/*', function (req, res) {
 //     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 // });
