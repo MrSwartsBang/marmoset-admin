@@ -41,14 +41,11 @@ app.use('/api', carousel);
 app.use('/api', about);
 app.use('/api', staff);
 
-// app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'user_build')));
 
-app.get('/admin', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'user_build', 'index.html'));
 });
-app.get('/', (req, res) => {
-    proxy.web(req, res, { target: 'http://localhost:3000/' });
-  });
 
 const port = process.env.PORT || 5000;
 
