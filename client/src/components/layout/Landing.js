@@ -23,7 +23,7 @@ class Landing extends Component {
                             </Link>
                         </div>
                         <div className="col s6">
-                            <Link to="/login"
+                            <Link to="/admin/login"
                                 style={{
                                     width: "140px",
                                     borderRadius: "3px",

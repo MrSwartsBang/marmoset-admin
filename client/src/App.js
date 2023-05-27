@@ -31,7 +31,7 @@ if (localStorage.jwtToken) {
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
         store.dispatch(logoutUser());
-        window.location.href = "./login";
+        window.location.href = "./admin/login";
     }
 }
 
@@ -42,15 +42,15 @@ class App extends Component {
                 <Router>
                     <div className="App">
                         <Switch>
-                            <Route exact path="/" component={Login} />
-                            <Route exact path="/register" component={Register} />
-                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/admin" component={Login} />
+                            <Route exact path="/admin/register" component={Register} />
+                            <Route exact path="/admin/login" component={Login} />
                             <Switch>
-                                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                                <PrivateRoute exact path="/users" component={User} />
-                                <PrivateRoute exact path="/carousel" component={Carousel} />
-                                <PrivateRoute exact path="/staff" component={Staff} />
-                                <PrivateRoute exact path="/about" component={About} />
+                                <PrivateRoute exact path="/admin/dashboard" component={Dashboard} />
+                                <PrivateRoute exact path="/admin/users" component={User} />
+                                <PrivateRoute exact path="/admin/carousel" component={Carousel} />
+                                <PrivateRoute exact path="/admin/staff" component={Staff} />
+                                <PrivateRoute exact path="/admin/about" component={About} />
                             </Switch>
                             <Route exact path="*" component={NotFound} />
                         </Switch>
