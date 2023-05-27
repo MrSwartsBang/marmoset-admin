@@ -8,9 +8,6 @@ const carousel = require('./routes/api/carousel');
 const about = require('./routes/api/about');
 const staff = require('./routes/api/staff');
 
-const httpProxy = require('http-proxy');
-const proxy = httpProxy.createServer({});
-
 require('./config/passport')(passport);
 
 const app = express();
@@ -41,9 +38,15 @@ app.use('/api', carousel);
 app.use('/api', about);
 app.use('/api', staff);
 
+app.use('/admin', express.static(path.join(__dirname, 'client/build')));
+
+app.get('/admin/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'user_build', 'index.html'));
+});
+
 app.use(express.static(path.join(__dirname, 'user_build')));
 
-app.get('/', function (req, res) {
+app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'user_build', 'index.html'));
 });
 
