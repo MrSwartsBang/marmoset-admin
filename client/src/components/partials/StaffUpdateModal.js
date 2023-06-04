@@ -69,7 +69,8 @@ class StaffUpdateModal extends React.Component {
               var imageDataUrl = e.target.result;
               this.setState(prevState => ({
                 ...prevState,
-                img: imageDataUrl
+                img: imageDataUrl,
+                file:file
               }));
           
               // Perform further actions with the image data URL
@@ -84,14 +85,6 @@ class StaffUpdateModal extends React.Component {
     }
     onStaffUpdate = e => {
         e.preventDefault();
-        const newStaff = {
-            _id: this.state.id,
-            username: this.state.username,
-            telegram: this.state.telegram,
-            discord: this.state.discord,
-            role: this.state.role,
-            img: this.state.img
-        };
         const options = {
             onClose: props => { 
                 var modal = document.getElementById('update-staff-modal');
@@ -105,6 +98,27 @@ class StaffUpdateModal extends React.Component {
                 });
             }
         };
+
+
+        var newStaff;
+        if(this.state.file === ""){
+            newStaff = {
+                username: this.state.username,
+                discord: this.state.discord,
+                telegram: this.state.telegram,
+                role: this.state.role,
+                img:this.state.img
+            }
+        }
+        else
+        {
+            newStaff = new FormData();
+            newStaff.append('file', this.state.file);
+            newStaff.append('username', this.state.username);
+            newStaff.append('discord', this.state.discord);
+            newStaff.append('telegram', this.state.telegram);
+            newStaff.append('role', this.state.role);
+        }
         axios
         .post("/api/staff-update", newStaff)
         .then(res =>{

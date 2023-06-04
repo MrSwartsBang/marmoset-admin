@@ -52,7 +52,8 @@ class CarouselAdd extends React.Component {
               var imageDataUrl = e.target.result;
               this.setState(prevState => ({
                 ...prevState,
-                img: imageDataUrl
+                img: imageDataUrl,
+                file:file
               }));
           
               // Perform further actions with the image data URL
@@ -68,15 +69,7 @@ class CarouselAdd extends React.Component {
 
     onUserCarousel = e => {
         e.preventDefault();
-        const newCarousel = {
-            heroTitle: this.state.heroTitle,
-            heroText: this.state.heroText,
-            img: this.state.img,
-            devices: this.state.devices,
-            freetoplay: this.state.freetoplay,
-            playtoearn: this.state.playtoearn,
-            Status: this.state.Status
-        };
+    
         const options = {
             onClose: props => { 
                 var modal = document.getElementById('add-carousel-modal');
@@ -92,6 +85,29 @@ class CarouselAdd extends React.Component {
                 });
             }
         };
+        var newCarousel;
+        if(this.state.file === ""){
+            newCarousel = {
+                heroTitle: this.state.heroTitle,
+                heroText: this.state.heroText,
+                img: this.state.img,
+                devices: this.state.devices,
+                freetoplay: this.state.freetoplay,
+                playtoearn: this.state.playtoearn,
+                Status: this.state.Status
+            }
+        }
+        else
+        {
+            const newCarousel = new FormData();
+                newCarousel.append('heroTitle', this.state.heroTitle);
+                newCarousel.append('heroText', this.state.heroText);
+                newCarousel.append('img', this.state.img);
+                newCarousel.append('devices', this.state.devices);
+                newCarousel.append('freetoplay', this.state.freetoplay);
+                newCarousel.append('playtoearn', this.state.playtoearn);
+                newCarousel.append('Status', this.state.Status);
+        }
 
         axios
         .post("/api/carousel-add", newCarousel)

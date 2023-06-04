@@ -44,11 +44,19 @@ app.get('/admin/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get('/uploads/*', function (req, res) {
+    console.log("sdd");
+    res.sendFile(path.join(__dirname, 'uploads'));
+});
+
 app.use(express.static(path.join(__dirname, 'user_build')));
 
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'user_build', 'index.html'));
 });
+
 
 const port = process.env.PORT || 5000;
 

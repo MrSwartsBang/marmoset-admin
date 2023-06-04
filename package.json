@@ -27,7 +27,7 @@
     "client-install": "npm install --prefix client",
     "start": "set PORT=5000 && node server.js",
     "server": "nodemon server.js",
-    "client": "set PORT=5000 && npm start --prefix client",
+    "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   }
 }

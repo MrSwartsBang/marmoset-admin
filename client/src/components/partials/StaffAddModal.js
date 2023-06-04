@@ -59,15 +59,32 @@ class StaffAdd extends React.Component {
                 });
             }
         };
-        const newStaff = {
-            username: this.state.username,
-            discord: this.state.discord,
-            telegram: this.state.telegram,
-            role: this.state.role,
-            img:this.state.img
-        };
+        var newStaff;
+        if(this.state.file === ""){
+            newStaff = {
+                username: this.state.username,
+                discord: this.state.discord,
+                telegram: this.state.telegram,
+                role: this.state.role,
+                img:this.state.img
+            }
+        }
+        else
+        {
+            newStaff = new FormData();
+            newStaff.append('file', this.state.file);
+            newStaff.append('username', this.state.username);
+            newStaff.append('discord', this.state.discord);
+            newStaff.append('telegram', this.state.telegram);
+            newStaff.append('role', this.state.role);
+        }
+
         axios
-        .post("/api/staff-add", newStaff)
+        .post("/api/staff-add", newStaff,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
         .then(res =>{
             toast(res.data.message,options);
             this.props.getdata();
