@@ -7,7 +7,8 @@ const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 const validateUpdateUserInput = require('../../validation/updateUser');
 const User = require('../../models/User');
-
+const Verified = require('../../models/Verified');
+const isEmpty = require("is-empty");
 router.post(['/user-add','/register'], (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
     if (!isValid) {
@@ -125,5 +126,19 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.post('/user-verify', (req, res) => {
+  
+    const {discord,telegram,wallet} = req.body;
+    if(!isEmpty(discord) && !isEmpty(telegram) && !isEmpty(wallet))
+    Verified.findOne({ wallet }).then((result)=>{
+        if(!result)
+        Verified.create(req.body).then(()=>{
+            res.status(200).json({message:"You are successfully verified.",flg:"success"});
+        });
+        else
+        res.status(200).json({message:"The wallet is already verified.",flg:"error"});
+
+    });
+});
 
 module.exports = router;
