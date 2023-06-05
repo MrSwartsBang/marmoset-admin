@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint @typescript-eslint/no-var-requires: "off" */
 const axios = require("axios");
 const process = require("process");
 const { Buffer } = require("buffer");

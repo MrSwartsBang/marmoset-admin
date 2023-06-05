@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.683eb368.css",
-    "main.js": "./static/js/main.1d977ba7.js",
+    "main.css": "./static/css/main.c5cb00b3.css",
+    "main.js": "./static/js/main.79ed178c.js",
     "static/js/995.2acdd092.chunk.js": "./static/js/995.2acdd092.chunk.js",
     "static/js/950.4dd9bcb9.chunk.js": "./static/js/950.4dd9bcb9.chunk.js",
     "static/js/268.bd50e2c8.chunk.js": "./static/js/268.bd50e2c8.chunk.js",
@@ -64,13 +64,7 @@
     "static/media/desk-nft-game.gif": "./static/media/desk-nft-game.5ad060c7b41188cb7c4e.gif",
     "static/media/bg_box_kingland.png": "./static/media/bg_box_kingland.00eed3ed3efb8f8f1069.png",
     "static/media/bg_box_kingpad.png": "./static/media/bg_box_kingpad.91eb385772aa673aa310.png",
-    "static/media/6.png": "./static/media/6.4f5a08ebbc35df5192c4.png",
-    "static/media/5.png": "./static/media/5.7f7cce0ea1931ef2436b.png",
-    "static/media/3.png": "./static/media/3.0a24e3fa194e2d295d6b.png",
-    "static/media/2.png": "./static/media/2.620e2953ff8616742bbc.png",
-    "static/media/4.png": "./static/media/4.e273cce4f1da649f85dc.png",
     "static/media/logokingfloki.png": "./static/media/logokingfloki.4b9c2eb520c7820e16c1.png",
-    "static/media/1.png": "./static/media/1.c6bd4706cc1b4362e304.png",
     "static/media/kingpass_mobile.png": "./static/media/kingpass_mobile.2bd62b01b79c405569ae.png",
     "static/media/mobile-nft-game.gif": "./static/media/mobile-nft-game.04540ad18dbc50370185.gif",
     "static/media/tablet-nft-game.gif": "./static/media/tablet-nft-game.7360b11862123e22819b.gif",
@@ -106,8 +100,8 @@
     "static/media/iconboxtwitter.svg": "./static/media/iconboxtwitter.a5f929bb7739baaed4e8c24229fe8503.svg",
     "static/media/iconboxmedium.svg": "./static/media/iconboxmedium.e2f304adcc6ec40e57883c0b7259ba39.svg",
     "static/media/iconboxtg.svg": "./static/media/iconboxtg.a80e2d946f80808193220e0f30ab135c.svg",
-    "main.683eb368.css.map": "./static/css/main.683eb368.css.map",
-    "main.1d977ba7.js.map": "./static/js/main.1d977ba7.js.map",
+    "main.c5cb00b3.css.map": "./static/css/main.c5cb00b3.css.map",
+    "main.79ed178c.js.map": "./static/js/main.79ed178c.js.map",
     "995.2acdd092.chunk.js.map": "./static/js/995.2acdd092.chunk.js.map",
     "950.4dd9bcb9.chunk.js.map": "./static/js/950.4dd9bcb9.chunk.js.map",
     "268.bd50e2c8.chunk.js.map": "./static/js/268.bd50e2c8.chunk.js.map",
@@ -151,7 +145,7 @@
     "222.569f8633.chunk.js.map": "./static/js/222.569f8633.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.683eb368.css",
-    "static/js/main.1d977ba7.js"
+    "static/css/main.c5cb00b3.css",
+    "static/js/main.79ed178c.js"
   ]
 }

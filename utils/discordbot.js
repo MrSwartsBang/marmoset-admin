@@ -2,7 +2,7 @@
   const { clientAPI, APICall } = require("./getNFT");
   const Discord = require('discord.js')
   const client = new Discord.Client();
-
+  const Verified = require("../models/Verified");
   // Register an event so that when the bot is ready, it will log a messsage to the terminal
   client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -18,8 +18,9 @@
     const roles = msg.member.roles.cache.map(role => role.name);
     // Log the roles
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
-    const isNFTOWNER = await checkNFTowner(msg.content);
-    console.log(isNFTOWNER);
+
+    const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
+    const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
     // if(!roles.includes("AAA")){
     //   let roleName = "AAA"; // replace this with the name of your role
     //   let role = msg.guild.roles.cache.find(r => r.name === roleName);
@@ -32,7 +33,7 @@
     // }
     // Check if the message starts with '!hello' and respond with 'world!' if it does.
     if(msg.content.startsWith("!hello")) {
-      msg.reply("world!")
+      msg.reply("You own "+NFTcount)
     }
   })
 
@@ -73,5 +74,5 @@ async function checkNFTowner(ownerAddress) {
       })
   );
   data = data.filter((item) => item.listNFT?.length > 0);
-  return data[0].listNFT.length>0;
+  return data[0].listNFT.length;
 }
