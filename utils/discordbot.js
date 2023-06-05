@@ -20,8 +20,30 @@
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
 
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
-    const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
-    // if(!roles.includes("AAA")){
+    if(isVerifiedUser)
+    {const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
+        let msgss = "";
+        if(NFTcount===0)
+        {msgss = "You no own NFT.";
+             if(!roles.includes("NoNFT")){
+                 
+                 msg.member.roles.add("NoNFT").catch(console.error);
+                 msg.reply("You get the NoNFT role.");
+             }
+        }
+        else if(NFTcount>0&&NFTcount<100)
+        {
+             if(!roles.includes("NFTowner")){
+              msg.member.roles.add("NFTowner").catch(console.error);
+              msg.reply("You get the role of NFTowner");
+             }
+        }
+        else if(NFTcount>=100)
+        msgss = "YOu own much NFTs";
+    }
+    else
+    msg.reply("You have to verify yourself.http://localhost:3001/verify");    
+// if(!roles.includes("AAA")){
     //   let roleName = "AAA"; // replace this with the name of your role
     //   let role = msg.guild.roles.cache.find(r => r.name === roleName);
     //   if (!role) {
@@ -33,13 +55,13 @@
     // }
     // Check if the message starts with '!hello' and respond with 'world!' if it does.
     if(msg.content.startsWith("!hello")) {
-      msg.reply("You own "+NFTcount)
+     
     }
   })
 
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
-client.login('MTExNDE2NDAzNzYxMDExMTA3OQ.G11x_W.zS0G7HQpdfLlUfKq0sQFuuRpaCqLCkHyKKaKQM');
+client.login('MTExNTMyMzQyOTQ3MDYwOTUwOA.GsIJox.JzeD9bgk0wJLlsdy2Elp-KehqnktnII9qy4kuE');
 
 
 async function checkNFTowner(ownerAddress) {
