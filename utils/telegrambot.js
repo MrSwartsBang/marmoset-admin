@@ -35,38 +35,57 @@ const channelName = 'CHANNEL_NAME_HERE';
 
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
+  const userId = msg.from.id;
   console.log(msg.from.username);
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
   console.log(isVerifiedUser);
-  const userId = msg.from.id;
   if(isVerifiedUser){
+    // get the member object for the user in the chat
     const chatMember = await bot.getChatMember(chatId, userId);
-    console.log(chatMember);
-    // Set the user as an administrator in the chat
-    const canPostMessages = chatMember.can_post_messages;
+    // check if the member has the required permissions
+    const permissions = chatMember.permissions;
+    console.log(permissions);
 
     // const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
     // Check if user has at least one NFT
     if (NFTcount > 0) {
       // Get the user ID for the current message sender
-      // if (canPostMessages){
+      if (canPostMessages){
 
-      // }
-      // else{
-      //   bot.promoteChatMember(chatId, userId, {
-      //     can_change_info: false,
-      //     can_post_messages: true,
-      //     can_edit_messages: true,
-      //     can_delete_messages: true,
-      //     can_invite_users: false,
-      //     can_restrict_members: false,
-      //     can_pin_messages: true,
-      //     can_promote_members: false
-      //   });
-      //   bot.sendMessage(userId,"Congratulations! You have been promoted to an administrator because you own "+NFTcount+" NFTs.");
-      // }
+      }
+      else{
+        const permissions = {
+          can_send_messages: true,
+          can_send_media_messages: true,
+          can_send_polls: true,
+          can_send_other_messages: true,
+          can_add_web_page_previews: true,
+          can_change_info: true,
+          can_invite_users: true,
+          can_pin_messages: true,
+          can_view_messages: true,
+        };
+        // allow the user with the new permissions
+        await bot.restrictChatMember(chatId, userId, { permissions });
+      }
     } else {
-      bot.sendMessage(userId,"You own "+NFTcount+" NFTs.");
+       // define the new chat permissions for the user
+      const permissions = {
+        can_send_messages: false,
+        can_send_media_messages: false,
+        can_send_polls: false,
+        can_send_other_messages: false,
+        can_add_web_page_previews: false,
+        can_change_info: false,
+        can_invite_users: false,
+        can_pin_messages: false,
+        can_view_messages: false,
+      };
+
+      // restrict the user with the new permissions
+      await bot.restrictChatMember(chatId, userId, { permissions });
+
+      bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
     }
 
   }else{
