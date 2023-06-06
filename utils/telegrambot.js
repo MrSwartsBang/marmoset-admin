@@ -46,6 +46,7 @@ bot.on('message',async (msg) => {
     if (NFTcount > 0) {
       // Get the user ID for the current message sender
       const chatMember = await bot.getChatMember(chatId, userId);
+      console.log(chatMember);
       // Set the user as an administrator in the chat
       const canPostMessages = chatMember.can_post_messages;
       if (canPostMessages){
@@ -62,7 +63,6 @@ bot.on('message',async (msg) => {
           can_pin_messages: true,
           can_promote_members: false
         });
-
         bot.sendMessage(userId,"Congratulations! You have been promoted to an administrator because you own "+NFTcount+" NFTs.");
       }
     } else {
