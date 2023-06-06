@@ -33,7 +33,7 @@ const channelName = 'CHANNEL_NAME_HERE';
 
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
-  console.log(msg.chat);
+  console.log(msg);
   // Check if message was sent in the channel
   if (msg.chat.username === channelName.substr(1)) {
     bot.sendMessage(chatId, 'Hello');
