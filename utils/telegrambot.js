@@ -49,11 +49,7 @@ bot.on('message',async (msg) => {
     // const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
     // Check if user has at least one NFT
     if (NFTcount > 0) {
-      // Get the user ID for the current message sender
-      if (canPostMessages){
-
-      }
-      else{
+      
         const permissions = {
           can_send_messages: true,
           can_send_media_messages: true,
@@ -67,7 +63,6 @@ bot.on('message',async (msg) => {
         };
         // allow the user with the new permissions
         await bot.restrictChatMember(chatId, userId, { permissions });
-      }
     } else {
        // define the new chat permissions for the user
       const permissions = {
