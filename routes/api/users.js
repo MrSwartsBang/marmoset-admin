@@ -136,7 +136,16 @@ router.post('/user-verify', (req, res) => {
             res.status(200).json({message:"You are successfully verified.",flg:"success"});
         });
         else
-        res.status(200).json({message:"The wallet is already verified.",flg:"error"});
+        {
+            Verified.findOneAndUpdate({wallet: wallet}, {discord, telegram, wallet})
+            .then(() => {
+              res.status(200).json({message: "The wallet is already verified. Your info has been updated.", flg: "error"});
+            })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).json({message: "An error occurred while updating your information. Please try again later.", flg: "error"});
+            });
+        }
 
     });
 });
