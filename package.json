@@ -21,6 +21,8 @@
     "multer-gridfs-storage": "^5.0.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "telebot": "^1.4.1",
+    "telegraf": "^4.12.2",
     "validator": "^11.0.0"
   },
   "devDependencies": {
