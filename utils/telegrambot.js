@@ -37,6 +37,7 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   console.log(msg.from.username);
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
+  console.log(isVerifiedUser);
   const userId = msg.from.id;
   if(isVerifiedUser){
     const NFTcount = await checkNFTowner(isVerifiedUser.wallet);

@@ -137,12 +137,12 @@ router.post('/user-verify', (req, res) => {
         });
         else
         {
-            Verified.findOneAndUpdate({wallet: wallet}, {discord, telegram, wallet})
-            .then(() => {
+            Verified.findOneAndUpdate({wallet: wallet}, {discord, telegram})
+            .then((ttt) => {
+                console.log(ttt);
               res.status(200).json({message: "The wallet is already verified. Your info has been updated.", flg: "error"});
             })
             .catch((error) => {
-              console.error(error);
               res.status(500).json({message: "An error occurred while updating your information. Please try again later.", flg: "error"});
             });
         }
