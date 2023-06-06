@@ -37,13 +37,13 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   console.log(msg.from.username);
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
+  const userId = msg.from.id;
   if(isVerifiedUser){
     const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
 
     // Check if user has at least one NFT
     if (NFTcount > 0) {
       // Get the user ID for the current message sender
-      const userId = msg.from.id;
 
       // Set the user as an administrator in the chat
       bot.promoteChatMember(chatId, userId, {
