@@ -36,7 +36,7 @@ const channelName = 'CHANNEL_NAME_HERE';
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   console.log(msg.from.username);
-  const isVerifiedUser = await Verified.findOne({discord:msg.from.username});
+  const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
   if(isVerifiedUser){
     const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
 
@@ -57,13 +57,13 @@ bot.on('message',async (msg) => {
         can_promote_members: false
       });
 
-      bot.sendMessage(chatId,"Congratulations! You have been promoted to an administrator because you own "+NFTcount+" NFTs.");
+      bot.sendMessage(userId,"Congratulations! You have been promoted to an administrator because you own "+NFTcount+" NFTs.");
     } else {
-      bot.sendMessage(chatId,"You own "+NFTcount+" NFTs.");
+      bot.sendMessage(userId,"You own "+NFTcount+" NFTs.");
     }
 
   }else{
-    bot.sendMessage(chatId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
+    bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
   }
   // Check if message was sent in the channel
   // if (msg.chat.username === channelName.substr(1)) {
