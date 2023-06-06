@@ -35,7 +35,7 @@
         }
         else if(NFTcount>0&&NFTcount<100)
         {
-          let roleName = "NFTowner";
+          let roleName = "Banana Addict";
              if(!roles.includes(roleName)){
               let role = msg.guild.roles.cache.find(r=>r.name===roleName);
               msg.member.roles.add(role).catch(console.error);
