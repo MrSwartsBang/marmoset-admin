@@ -52,13 +52,9 @@ bot.on('message',async (msg) => {
       can_pin_messages: true,
       can_view_messages: true,
     };
+    
     // allow the user with the new permissions
-    // await bot.setChatPermissions(chatId, userId, { permissionsaaa });
-
-    // // get the member object for the user in the chat
-    // const chatMember = await bot.getChatMember(chatId, userId);
-    // // check if the member has the required permissions
-    // const permissions = chatMember.permissions;
+    await bot.restrictChatMember(chatId, userId, { permissions: permissionsaaa });
     console.log("==============setChatPermissions==================");
 
     // const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
