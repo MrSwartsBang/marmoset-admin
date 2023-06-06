@@ -41,30 +41,26 @@ bot.on('message',async (msg) => {
   console.log(isVerifiedUser);
   if(isVerifiedUser){
     const chatMember = await bot.getChatMember(chatId, userId);
-    console.log(chatMember);
+    console.log(chatMember.status);
     console.log("==============setChatPermissions==================");
 
-    // const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
-    // Check if user has at least one NFT
+    const restrictedPermissions = {
+      // can_send_messages: false,
+      // can_send_media_messages: false,
+      // can_send_polls: false,
+      // can_send_other_messages: false,
+      // can_add_web_page_previews: false,
+      // can_change_info: false,
+      can_invite_users: false,
+      // can_pin_messages: false,
+    };
+    await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
+
     if (NFTcount > 0) {
       
         
     } else {
-       // define the new chat permissions for the user
-      const permissions = {
-        can_send_messages: false,
-        can_send_media_messages: false,
-        can_send_polls: false,
-        can_send_other_messages: false,
-        can_add_web_page_previews: false,
-        can_change_info: false,
-        can_invite_users: false,
-        can_pin_messages: false,
-        can_view_messages: false,
-      };
-
-      // restrict the user with the new permissions
-      await bot.restrictChatMember(chatId, userId, { permissions });
+     
 
       bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
     }
