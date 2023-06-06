@@ -1,16 +1,21 @@
 const TeleBot = require("telebot");
 const config = require("../config/keys");
-//instantiate Telebot with our token got in the BtFather
-const bot = new TeleBot({
-  token: config.telegram,
-});
+const { Telegraf } = require('telegraf');
 
-//our command
-bot.on(["/start", "/hello"], (msg) => {
-  //all the information about user will come with the msg
-  console.log(msg);
-  bot.sendMessage(msg.from.id, `Hello ${msg.chat.username}`);
-});
+const bot = new Telegraf(config.telegram);
 
-//start polling
-bot.start();
+bot.launch();
+
+bot.command('start', ctx => {
+  console.log(ctx.from)
+  bot.telegram.sendMessage(ctx.chat.id, 'Hello there! Welcome to the Code Capsules telegram bot.\nI respond to /ethereum. Please try it', {
+  })
+})
+
+bot.command('ethereum', ctx => {
+  var rate;
+  console.log(ctx.from)
+  const message = `Hello, today the ethereum price is USD`
+  bot.telegram.sendMessage(ctx.chat.id, message, {})
+
+})
