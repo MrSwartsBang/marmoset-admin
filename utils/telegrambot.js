@@ -40,21 +40,8 @@ bot.on('message',async (msg) => {
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
   console.log(isVerifiedUser);
   if(isVerifiedUser){
-
-    const permissionsaaa = {
-      can_send_messages: true,
-      can_send_media_messages: true,
-      can_send_polls: true,
-      can_send_other_messages: true,
-      can_add_web_page_previews: true,
-      can_change_info: true,
-      can_invite_users: true,
-      can_pin_messages: true,
-      can_view_messages: true,
-    };
-    
-    // allow the user with the new permissions
-    await bot.restrictChatMember(chatId, userId, { permissions: permissionsaaa });
+    const chatMember = await bot.getChatMember(chatId, userId);
+    console.log(chatMember);
     console.log("==============setChatPermissions==================");
 
     // const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
