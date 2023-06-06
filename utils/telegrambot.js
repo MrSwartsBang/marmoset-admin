@@ -53,7 +53,7 @@ bot.on('message',async (msg) => {
       can_view_messages: true,
     };
     // allow the user with the new permissions
-    await bot.restrictChatMember(chatId, userId, { permissionsaaa });
+    await bot.setChatPermissions(chatId, userId, { permissionsaaa });
 
     // get the member object for the user in the chat
     const chatMember = await bot.getChatMember(chatId, userId);
