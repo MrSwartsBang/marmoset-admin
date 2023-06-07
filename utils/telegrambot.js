@@ -42,20 +42,24 @@ bot.on('message',async (msg) => {
   if(isVerifiedUser){
     const chatMember = await bot.getChatMember(chatId, userId);
     console.log(chatMember.status);
-    console.log("==============setChatPermissions==================");
+    if(chatMember.status === "administrator"){
 
-    const restrictedPermissions = {
-      // can_send_messages: false,
-      // can_send_media_messages: false,
-      // can_send_polls: false,
-      // can_send_other_messages: false,
-      // can_add_web_page_previews: false,
-      // can_change_info: false,
-      can_invite_users: false,
-      // can_pin_messages: false,
-    };
-    await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
+    }
+    else
+    {console.log("==============setChatPermissions==================");
 
+      const restrictedPermissions = {
+        // can_send_messages: false,
+        // can_send_media_messages: false,
+        // can_send_polls: false,
+        // can_send_other_messages: false,
+        // can_add_web_page_previews: false,
+        // can_change_info: false,
+        can_invite_users: false,
+        // can_pin_messages: false,
+      };
+      await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
+    }
     if (NFTcount > 0) {
       
         
