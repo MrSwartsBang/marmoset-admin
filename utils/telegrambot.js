@@ -69,7 +69,7 @@ bot.on('message',async (msg) => {
             
         } else {
           if(membershipStatus){
-              bot.kickChatMember(chatId, userId)
+              bot.deleteChatMember(chatId, userId)
                 .then(() => {
                   bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT. And then join again.");
                 })
