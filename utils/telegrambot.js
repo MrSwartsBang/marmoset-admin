@@ -101,7 +101,8 @@ async function getUserGroupId() {
     const admins = await bot.getChatAdministrators(channelId);
     
     // Find the entry in the list that corresponds to your bot and get its chat ID
-    const botAdmin = admins.find((admin) => admin.user.username === 'YOUR_BOT_USERNAME_HERE');
+    console.log(admins);
+    const botAdmin = admins.find((admin) => admin.user.username === '@marmoset_club_bot');
     const permissionGroupId = botAdmin.chat.id;
 
     // Print the user group ID
