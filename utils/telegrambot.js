@@ -30,8 +30,14 @@ const TelegramBot = require('node-telegram-bot-api');
 // Replace YOUR_TOKEN_HERE with your actual bot token obtained from BotFather
 const bot = new TelegramBot(config.telegram, { polling: true });
 
-// Replace CHANNEL_NAME_HERE with the name of your channel (including @ symbol)
-const channelName = 'CHANNEL_NAME_HERE';
+// Listen for new chat members
+bot.on('new_chat_members', (msg) => {
+  const newMembers = msg.new_chat_members;
+  // Loop through the new members and greet them
+  newMembers.forEach(member => {
+    bot.sendMessage(msg.chat.id, `Welcome to the group, ${member.first_name}!`);
+  });
+});
 
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
@@ -79,7 +85,6 @@ bot.on('message',async (msg) => {
     const contact = {
       phone_number: '+1234567890',
       first_name: 'John',
-      last_name: 'Doe'
     };
     
     // Send the contact to the chat
