@@ -42,7 +42,7 @@ bot.on('message',async (msg) => {
   if(isVerifiedUser){
     const chatMember = await bot.getChatMember(chatId, userId);
     console.log(chatMember.status);
-    if(chatMember.status === "administrator"){
+    if(chatMember.status.includes("administrator")){
 
     }
     else
