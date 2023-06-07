@@ -61,13 +61,13 @@ bot.on('message',async (msg) => {
       console.log(isVerifiedUser);
       const chatMember = await bot.getChatMember(chatId, userId);
       if(chatMember.status.includes("administrator")){
-        console.log("==============True==================");
+       
       }
       else
       {
         const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
         if (NFTcount > 0) {
-          
+          console.log("==============True==================");
             
         } else {
         
@@ -82,7 +82,7 @@ bot.on('message',async (msg) => {
             can_invite_users: false,
             // can_pin_messages: false,
           };
-          await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
+          await bot.restrictChatMember(chatId, userId, restrictedPermissions);
           
           bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
         }
@@ -130,7 +130,6 @@ async function checkNFTowner(ownerAddress) {
       })
   );
   data = data.filter((item) => item.listNFT?.length > 0);
-  console.log(data);
   if(data.length)
   return data[0].listNFT.length;
   else return 0;
