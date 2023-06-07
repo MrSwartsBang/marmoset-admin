@@ -70,22 +70,10 @@ bot.on('message',async (msg) => {
           console.log("==============True==================");
             
         } else {
-        
-          console.log("==============false==================");
-          const chatMember = await bot.getChatMember(chatId, userId);
-          console.log(chatMember);
-          // const restrictedPermissions = {
-          //   // can_send_messages: false,
-          //   // can_send_media_messages: false,
-          //   // can_send_polls: false,
-          //   // can_send_other_messages: false,
-          //   // can_add_web_page_previews: false,
-          //   // can_change_info: false,
-          //   can_invite_users: false,
-          //   // can_pin_messages: false,
-          // };
-          // await bot.restrictChatMember(chatId, userId, restrictedPermissions);
           
+        
+          console.log(await getUserGroupId());
+         
           bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
         }
       }
@@ -99,6 +87,32 @@ bot.getMe().then((botInfo) => {
   bot.options.username = botInfo.username;
   console.log(`Bot started as ${botInfo.username}`);
 });
+
+
+// Define an async function to get the user group ID of your bot in the channel
+async function getUserGroupId() {
+  try {
+    // Call the getUpdates method to get the chat ID of your channel
+    const updates = await bot.getUpdates();
+    const latestUpdate = updates[updates.length - 1];
+    const channelId = latestUpdate.message.chat.id;
+
+    // Call the getChatAdministrators method to get a list of chat administrators, including your bot
+    const admins = await bot.getChatAdministrators(channelId);
+    
+    // Find the entry in the list that corresponds to your bot and get its chat ID
+    const botAdmin = admins.find((admin) => admin.user.username === 'YOUR_BOT_USERNAME_HERE');
+    const permissionGroupId = botAdmin.chat.id;
+
+    // Print the user group ID
+    console.log(`User group ID of your bot in the channel: ${permissionGroupId}`);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+
 
 async function checkNFTowner(ownerAddress) {
 
