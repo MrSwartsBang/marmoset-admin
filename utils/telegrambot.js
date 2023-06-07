@@ -63,7 +63,7 @@ bot.on('message',async (msg) => {
       // await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
       if (msg.new_chat_members) {
         const newUsers = msg.new_chat_members.map((user) => user.username).join(', ');
-        bot.sendMessage(userId, `Welcome ${newUsers}!`);
+        bot.sendMessage(chatId, `Welcome ${newUsers}!`);
       }
     }
     if (NFTcount > 0) {
@@ -72,11 +72,11 @@ bot.on('message',async (msg) => {
     } else {
      
 
-      bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
+      bot.sendMessage(chatId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
     }
 
   }else{
-    bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
+    bot.sendMessage(chatId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
   }
   // Check if message was sent in the channel
   // if (msg.chat.username === channelName.substr(1)) {
