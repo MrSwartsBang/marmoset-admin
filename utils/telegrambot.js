@@ -56,50 +56,40 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
   if (msg.from.is_bot) return;
-  
+
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
   if(isVerifiedUser){
     
     const chatMember = await bot.getChatMember(chatId, userId);
-    console.log(chatMember.status);
     if(chatMember.status.includes("administrator")){
       console.log("==============True==================");
     }
     else
     {
-      console.log("==============false==================");
-      const restrictedPermissions = {
-        // can_send_messages: false,
-        // can_send_media_messages: false,
-        // can_send_polls: false,
-        // can_send_other_messages: false,
-        // can_add_web_page_previews: false,
-        // can_change_info: false,
-        can_invite_users: false,
-        // can_pin_messages: false,
-      };
-      // await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
-      if (msg.new_chat_members) {
-        const newUsers = msg.new_chat_members.map((user) => user.username).join(', ');
-        bot.sendMessage(userId, `Welcome ${newUsers}!`);
+      if (NFTcount > 0) {
+        
+          
+      } else {
+      
+        console.log("==============false==================");
+        const restrictedPermissions = {
+          // can_send_messages: false,
+          // can_send_media_messages: false,
+          // can_send_polls: false,
+          // can_send_other_messages: false,
+          // can_add_web_page_previews: false,
+          // can_change_info: false,
+          can_invite_users: false,
+          // can_pin_messages: false,
+        };
+        await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
+        
+        bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
       }
     }
-    if (NFTcount > 0) {
-      
-        
-    } else {
-     
-
-      bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
-    }
-
   }else{
     bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
   }
-  // Check if message was sent in the channel
-  // if (msg.chat.username === channelName.substr(1)) {
-  //   bot.sendMessage(chatId, 'Hello');
-  // }
 });
 
 
