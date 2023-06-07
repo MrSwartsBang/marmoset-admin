@@ -99,7 +99,7 @@ bot.getMe().then((botInfo) => {
 });
 
 async function checkNFTowner(ownerAddress) {
-  console.log(clientAPI);
+
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
@@ -130,5 +130,6 @@ async function checkNFTowner(ownerAddress) {
       })
   );
   data = data.filter((item) => item.listNFT?.length > 0);
+  console.log(data);
   return data[0].listNFT.length;
 }
