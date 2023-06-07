@@ -34,12 +34,12 @@ const bot = new TelegramBot(config.telegram, { polling: true });
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
-  console.log(msg);
+  console.log(bot);
   if (msg.from.is_bot) return;
 
   
   if (msg.new_chat_members !== undefined) {
-    console.log(msg.new_chat_members);
+    // console.log(msg.new_chat_members);
     for (let i = 0; i < msg.new_chat_members.length; i++) {
       const newMember = msg.new_chat_members[i];
       const dmLink = `https://t.me/${bot.options.username}?start=dm_${newMember.id}`;
