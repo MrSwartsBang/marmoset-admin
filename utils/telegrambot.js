@@ -38,9 +38,11 @@ bot.on('message',async (msg) => {
 
   
   if (msg.new_chat_members !== undefined) {
+    console.log(msg.new_chat_members);
     for (let i = 0; i < msg.new_chat_members.length; i++) {
       const newMember = msg.new_chat_members[i];
-      bot.sendMessage(newMember.id, 'Welcome to the group! Please DM me to continue participating.');
+      const dmLink = `https://t.me/${bot.options.username}?start=dm_${newMember.id}`;
+      bot.sendMessage(chatId, `Welcome to the group! Please click this [link](${dmLink}) to start a DM with me.`);
     }
   }
   else {
