@@ -69,10 +69,15 @@ bot.on('message',async (msg) => {
             
         } else {
           if(membershipStatus){
-            console.log("============================"+membershipStatus);
-            await bot.restrictChatMember(chatId, userId, { can_send_messages: false });
+              bot.kickChatMember(chatId, userId)
+                .then(() => {
+                  bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT. And then join again.");
+                })
+                .catch((error) => {
+                  console.error('Error occurred while kicking member:', error);
+                });
           }
-          bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
+          
         }
       }
     }else{
