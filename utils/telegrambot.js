@@ -34,7 +34,10 @@ const bot = new TelegramBot(config.telegram, { polling: true });
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
+
   console.log(bot.username);
+
+
   if (msg.from.is_bot) return;
 
   
@@ -84,7 +87,23 @@ bot.on('message',async (msg) => {
   }
 });
 
-
+// Set the bot's commands
+const commands = [
+  {
+    command: '/start',
+    description: 'Welcome message'
+  },
+  {
+    command: '/help',
+    description: 'Help message'
+  }
+];
+bot.telegram.setMyCommands(commands);
+// Get the bot's username
+bot.getMe().then((botInfo) => {
+  bot.options.username = botInfo.username;
+  console.log(`Bot started as ${botInfo.username}`);
+});
 async function checkNFTowner(ownerAddress) {
   console.log(clientAPI);
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
