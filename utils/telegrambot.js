@@ -45,9 +45,13 @@ bot.on('message',async (msg) => {
     for (let i = 0; i < msg.new_chat_members.length; i++) {
       const newMember = msg.new_chat_members[i];
       const dmLink = `https://t.me/${bot.options.username}?start=dm_${newMember.id}`;
-      
-  console.log(dmLink);
-      bot.sendMessage(chatId, `Welcome to the group! Please click this [link](${dmLink}) to start a DM with me.`);
+      const replyMarkup = {
+        inline_keyboard: [
+          [{ text: 'Start DM with me', url: dmLink }]
+        ]
+      };
+      bot.sendMessage(chatId, `Welcome to the group! Please click this [link](${dmLink}) to start a DM with me.`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
+    
     }
   }
   else {
