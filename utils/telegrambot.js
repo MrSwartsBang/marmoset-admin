@@ -34,12 +34,12 @@ const bot = new TelegramBot(config.telegram, { polling: true });
 bot.on("new_chat_members", (msg) => {
   // Get the ID of the new member and create a new chat with them
   const chatId = msg.new_chat_members[0].id;
-  
   // Send a welcome message to the new member
   const message = `Welcome to our channel! If you would like to start a private conversation with me, please click the "Start" button below:
-
-/start`;
   
+  /start`;
+  
+  console.log("Welcome to our channel");
   bot.sendMessage(chatId, message, {
       reply_markup: {
           keyboard: [
