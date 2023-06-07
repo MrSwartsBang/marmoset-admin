@@ -37,7 +37,7 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
   console.log(msg);
-  return;
+  // return;
   
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
   if(isVerifiedUser){
@@ -76,8 +76,7 @@ bot.on('message',async (msg) => {
     }
 
   }else{
-    bot.sendContact(chat_id=CHAT_ID, phone_number='123456789', first_name='John',
-                last_name='Doe', request_contact=True);
+    bot.sendContact(chatId,true);
     bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
   }
   // Check if message was sent in the channel
