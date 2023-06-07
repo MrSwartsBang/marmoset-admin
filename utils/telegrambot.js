@@ -37,10 +37,11 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
 
-  console.log(msg);
-  return;
+  
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
   if(isVerifiedUser){
+    console.log(isVerifiedUser);
+  return;
     const chatMember = await bot.getChatMember(chatId, userId);
     console.log(chatMember.status);
     if(chatMember.status.includes("administrator")){
