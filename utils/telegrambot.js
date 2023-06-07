@@ -36,9 +36,10 @@ const channelName = 'CHANNEL_NAME_HERE';
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
-  console.log(msg.from.username);
+
+  console.log(msg);
+  return;
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
-  console.log(isVerifiedUser);
   if(isVerifiedUser){
     const chatMember = await bot.getChatMember(chatId, userId);
     console.log(chatMember.status);
