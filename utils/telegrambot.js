@@ -34,6 +34,7 @@ const bot = new TelegramBot(config.telegram, { polling: true });
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
+  console.log(msg);
   if (msg.from.is_bot) return;
 
   
