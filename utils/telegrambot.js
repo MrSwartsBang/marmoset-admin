@@ -30,14 +30,27 @@ const TelegramBot = require('node-telegram-bot-api');
 // Replace YOUR_TOKEN_HERE with your actual bot token obtained from BotFather
 const bot = new TelegramBot(config.telegram, { polling: true });
 
-// Listen for new chat members
-bot.on('new_chat_members', (msg) => {
-  const newMembers = msg.new_chat_members;
-  // Loop through the new members and greet them
-  newMembers.forEach(member => {
-    bot.sendMessage(msg.chat.id, `Welcome to the group, ${member.first_name}!`);
+// Listen for new members joining the channel/group
+bot.on("new_chat_members", (msg) => {
+  // Get the ID of the new member and create a new chat with them
+  const chatId = msg.new_chat_members[0].id;
+  
+  // Send a welcome message to the new member
+  const message = `Welcome to our channel! If you would like to start a private conversation with me, please click the "Start" button below:
+
+/start`;
+  
+  bot.sendMessage(chatId, message, {
+      reply_markup: {
+          keyboard: [
+              [{ text: "Start" }]
+          ],
+          resize_keyboard: true,
+          one_time_keyboard: true
+      }
   });
 });
+
 
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
