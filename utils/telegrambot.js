@@ -35,8 +35,8 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
 
-
-
+  console.log(chatId,userId);
+  if (chatId !== userId) return;
   if (msg.from.is_bot) return;
 
   
@@ -70,10 +70,8 @@ bot.on('message',async (msg) => {
           console.log("==============True==================");
             
         } else {
-          
-         var ttt =await getUserGroupId();
-          console.log(ttt);
-         
+          const membershipStatus = await checkMembership(userId, chatId);
+          console.log(membershipStatus);
           bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
         }
       }
@@ -88,31 +86,40 @@ bot.getMe().then((botInfo) => {
   console.log(`Bot started as ${botInfo.username}`);
 });
 
+// Call the getUpdates method to retrieve information about recent updates
+bot.getUpdates().then((updates) => {
+  // Extract the chat IDs of all channels that the bot is a member of
+  const channelIds = updates
+    .map((update) => update.channel_post || update.message)
+    .filter((msg) => msg != null && msg.chat.type === 'channel' && msg.chat.username !== undefined)
+    .map((msg) => ({
+      id: msg.chat.id,
+      username: msg.chat.username
+    }));
 
-// Define an async function to get the user group ID of your bot in the channel
-async function getUserGroupId() {
+  console.log(channelIds);
+});
+
+// Define a function to check if the user is a member of the specified channel
+async function checkMembership(userId, channelId) {
   try {
-    // Call the getUpdates method to get the chat ID of your channel
-    const updates = await bot.getUpdates();
-    const latestUpdate = updates[updates.length - 1];
-    const channelId = latestUpdate.message.chat.id;
+    // Call the getChatMember method to get the user object for the specified user ID in the specified channel
+    const response = await bot.getChatMember(channelId, userId);
+    const userObject = response.user;
 
-    // Call the getChatAdministrators method to get a list of chat administrators, including your bot
-    const admins = await bot.getChatAdministrators(channelId);
-    
-    // Find the entry in the list that corresponds to your bot and get its chat ID
-    console.log(admins);
-    const botAdmin = admins.find((admin) => admin.user.username === '@marmoset_club_bot');
-    const permissionGroupId = botAdmin.chat.id;
-    // Print the user group ID
-    console.log(`User group ID of your bot in the channel: ${permissionGroupId}`);
-    return permissionGroupId; 
+    // Check if the user is a member of the channel or not
+    if (response.status === 'member' || response.status === 'creator' || response.status === 'administrator') {
+      console.log(`User ${userObject.username} is a member of the channel.`);
+      return true;
+    } else {
+      console.log(`User ${userObject.username} is NOT a member of the channel.`);
+      return false;
+    }
   } catch (error) {
     console.error(error);
+    return false;
   }
 }
-
-
 
 
 async function checkNFTowner(ownerAddress) {
