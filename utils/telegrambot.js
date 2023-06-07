@@ -58,8 +58,8 @@ bot.on('message',async (msg) => {
 
     const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
     if(isVerifiedUser){
-      console.log(isVerifiedUser);
       const chatMember = await bot.getChatMember(chatId, userId);
+      const membershipStatus = await checkMembership(userId, chatId);
       if(chatMember.status.includes("administrator")){
        
       }
@@ -70,8 +70,10 @@ bot.on('message',async (msg) => {
           console.log("==============True==================");
             
         } else {
-          const membershipStatus = await checkMembership(userId, chatId);
-          console.log(membershipStatus);
+          if(membershipStatus){
+            console.log("============================"+membershipStatus);
+            await bot.restrictChatMember(chatId, userId, { can_send_messages: false });
+          }
           bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
         }
       }
