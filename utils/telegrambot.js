@@ -43,11 +43,11 @@ bot.on('message',async (msg) => {
     const chatMember = await bot.getChatMember(chatId, userId);
     console.log(chatMember.status);
     if(chatMember.status.includes("administrator")){
-
+      console.log("==============True==================");
     }
     else
-    {console.log("==============setChatPermissions==================");
-
+    {
+      console.log("==============false==================");
       const restrictedPermissions = {
         // can_send_messages: false,
         // can_send_media_messages: false,
