@@ -30,69 +30,56 @@ const TelegramBot = require('node-telegram-bot-api');
 // Replace YOUR_TOKEN_HERE with your actual bot token obtained from BotFather
 const bot = new TelegramBot(config.telegram, { polling: true });
 
-// Listen for new members joining the channel/group
-bot.on("new_chat_members", (msg) => {
-  // Get the ID of the new member and create a new chat with them
-  const chatId = msg.new_chat_members[0].id;
-  // Send a welcome message to the new member
-  const message = `Welcome to our channel! If you would like to start a private conversation with me, please click the "Start" button below:
-  
-  /start`;
-  
-  console.log("Welcome to our channel");
-  bot.sendMessage(chatId, message, {
-      reply_markup: {
-          keyboard: [
-              [{ text: "Start" }]
-          ],
-          resize_keyboard: true,
-          one_time_keyboard: true
-      }
-  });
-});
-
 
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
   if (msg.from.is_bot) return;
 
-  const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
-  if(isVerifiedUser){
-    
-    const chatMember = await bot.getChatMember(chatId, userId);
-    if(chatMember.status.includes("administrator")){
-      console.log("==============True==================");
+  
+  if (msg.new_chat_members !== undefined) {
+    for (let i = 0; i < msg.new_chat_members.length; i++) {
+      const newMember = msg.new_chat_members[i];
+      bot.sendMessage(newMember.id, 'Welcome to the group! Please DM me to continue participating.');
     }
-    else
-    {
-      if (NFTcount > 0) {
-        
-          
-      } else {
+  }
+  else {
+
+    const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
+    if(isVerifiedUser){
       
-        console.log("==============false==================");
-        const restrictedPermissions = {
-          // can_send_messages: false,
-          // can_send_media_messages: false,
-          // can_send_polls: false,
-          // can_send_other_messages: false,
-          // can_add_web_page_previews: false,
-          // can_change_info: false,
-          can_invite_users: false,
-          // can_pin_messages: false,
-        };
-        await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
-        
-        bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
+      const chatMember = await bot.getChatMember(chatId, userId);
+      if(chatMember.status.includes("administrator")){
+        console.log("==============True==================");
       }
+      else
+      {
+        if (NFTcount > 0) {
+          
+            
+        } else {
+        
+          console.log("==============false==================");
+          const restrictedPermissions = {
+            // can_send_messages: false,
+            // can_send_media_messages: false,
+            // can_send_polls: false,
+            // can_send_other_messages: false,
+            // can_add_web_page_previews: false,
+            // can_change_info: false,
+            can_invite_users: false,
+            // can_pin_messages: false,
+          };
+          await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
+          
+          bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
+        }
+      }
+    }else{
+      bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
     }
-  }else{
-    bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
   }
 });
-
-
 
 
 async function checkNFTowner(ownerAddress) {
