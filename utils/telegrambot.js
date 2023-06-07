@@ -71,8 +71,8 @@ bot.on('message',async (msg) => {
             
         } else {
           
-        
-          console.log(await getUserGroupId());
+         var ttt =await getUserGroupId();
+          console.log(ttt);
          
           bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
         }
@@ -104,9 +104,9 @@ async function getUserGroupId() {
     console.log(admins);
     const botAdmin = admins.find((admin) => admin.user.username === '@marmoset_club_bot');
     const permissionGroupId = botAdmin.chat.id;
-
     // Print the user group ID
     console.log(`User group ID of your bot in the channel: ${permissionGroupId}`);
+    return permissionGroupId; 
   } catch (error) {
     console.error(error);
   }
