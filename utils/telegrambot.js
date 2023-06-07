@@ -55,6 +55,7 @@ bot.on("new_chat_members", (msg) => {
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
+  if (msg.from.is_bot) return;
   
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
   if(isVerifiedUser){
