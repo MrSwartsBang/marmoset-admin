@@ -36,12 +36,12 @@ const channelName = 'CHANNEL_NAME_HERE';
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
-
+  console.log(msg);
+  return;
   
   const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
   if(isVerifiedUser){
-    console.log(isVerifiedUser);
-  return;
+    
     const chatMember = await bot.getChatMember(chatId, userId);
     console.log(chatMember.status);
     if(chatMember.status.includes("administrator")){
@@ -63,7 +63,7 @@ bot.on('message',async (msg) => {
       // await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
       if (msg.new_chat_members) {
         const newUsers = msg.new_chat_members.map((user) => user.username).join(', ');
-        bot.sendMessage(chatId, `Welcome ${newUsers}!`);
+        bot.sendMessage(userId, `Welcome ${newUsers}!`);
       }
     }
     if (NFTcount > 0) {
@@ -72,11 +72,13 @@ bot.on('message',async (msg) => {
     } else {
      
 
-      bot.sendMessage(chatId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
+      bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
     }
 
   }else{
-    bot.sendMessage(chatId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
+    bot.sendContact(chat_id=CHAT_ID, phone_number='123456789', first_name='John',
+                last_name='Doe', request_contact=True);
+    bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
   }
   // Check if message was sent in the channel
   // if (msg.chat.username === channelName.substr(1)) {
