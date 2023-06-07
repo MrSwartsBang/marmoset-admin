@@ -72,17 +72,19 @@ bot.on('message',async (msg) => {
         } else {
         
           console.log("==============false==================");
-          const restrictedPermissions = {
-            // can_send_messages: false,
-            // can_send_media_messages: false,
-            // can_send_polls: false,
-            // can_send_other_messages: false,
-            // can_add_web_page_previews: false,
-            // can_change_info: false,
-            can_invite_users: false,
-            // can_pin_messages: false,
-          };
-          await bot.restrictChatMember(chatId, userId, restrictedPermissions);
+          const chatMember = await bot.getChatMember(chatId, userId);
+          console.log(chatMember);
+          // const restrictedPermissions = {
+          //   // can_send_messages: false,
+          //   // can_send_media_messages: false,
+          //   // can_send_polls: false,
+          //   // can_send_other_messages: false,
+          //   // can_add_web_page_previews: false,
+          //   // can_change_info: false,
+          //   can_invite_users: false,
+          //   // can_pin_messages: false,
+          // };
+          // await bot.restrictChatMember(chatId, userId, restrictedPermissions);
           
           bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT.");
         }
