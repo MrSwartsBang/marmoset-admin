@@ -58,7 +58,11 @@ bot.on('message',async (msg) => {
         can_invite_users: false,
         // can_pin_messages: false,
       };
-      await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
+      // await bot.restrictChatMember(chatId, userId, { restrictedPermissions });
+      if (msg.new_chat_members) {
+        const newUsers = msg.new_chat_members.map((user) => user.username).join(', ');
+        bot.sendMessage(userId, `Welcome ${newUsers}!`);
+      }
     }
     if (NFTcount > 0) {
       
