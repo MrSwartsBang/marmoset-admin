@@ -35,7 +35,7 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
 
-  console.log(bot.username);
+  console.log(bot.options.username);
 
 
   if (msg.from.is_bot) return;
