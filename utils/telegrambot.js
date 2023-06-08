@@ -69,13 +69,24 @@ bot.on('message',async (msg) => {
             
         } else {
           if(membershipStatus){
-              bot.deleteChatMember(chatId, userId)
-                .then(() => {
-                  bot.sendMessage(userId,"You own "+NFTcount+" NFTs. Please buy an NFT. And then join again.");
-                })
-                .catch((error) => {
-                  console.error('Error occurred while kicking member:', error);
-                });
+            const permissions = {
+              can_send_messages: true,
+              can_send_media_messages: false,
+              can_send_polls: false,
+              can_send_other_messages: false,
+              can_add_web_page_previews: false,
+              can_change_info: false,
+              can_invite_users: false,
+              can_pin_messages: false,
+            };
+        
+            bot.restrictChatMember(chatId, senderId, permissions)
+              .then(() => {
+                bot.sendMessage(userId,"You are restricted all permissions. Because you don't have any NFT. Buy an NFT and send message 'I am a NFT owner.'")
+              })
+              .catch((error) => {
+                console.error('Error occurred while revoking permissions:', error);
+              });
           }
           
         }
