@@ -125,6 +125,7 @@ async function checkMembership(userId, channelId) {
     const userObject = response.user;
 
     // Check if the user is a member of the channel or not
+    console.log(response.status);
     if (response.status === 'member' || response.status === 'creator' || response.status === 'administrator') {
       console.log(`User ${userObject.username} is a member of the channel.`);
       return true;
