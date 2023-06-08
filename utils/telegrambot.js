@@ -44,11 +44,12 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
   const text = msg.text;
-  if (msg.from.is_bot) return;
-
+  
+  const chatMember = await bot.getChatMember(chatId, userId);
   if(chatMember.status.includes("administrator"))return;
   else if(chatMember.status.includes("owner"))return;
-  
+
+  if (msg.from.is_bot) return;
   if (msg.new_chat_members !== undefined) {
     // console.log(msg.new_chat_members);
     for (let i = 0; i < msg.new_chat_members.length; i++) {
@@ -66,8 +67,7 @@ bot.on('message',async (msg) => {
   else {
 
     const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
-    if(isVerifiedUser){
-      const chatMember = await bot.getChatMember(chatId, userId);
+    if(isVerifiedUser){      
       const membershipStatus = await checkMembership(userId, chatId);
       const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
       if (NFTcount > 0) {
