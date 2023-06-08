@@ -80,7 +80,7 @@ bot.on('message',async (msg) => {
               can_pin_messages: false,
             };
         
-            bot.restrictChatMember(chatId, senderId, permissions)
+            bot.restrictChatMember(chatId, userId, permissions)
               .then(() => {
                 bot.sendMessage(userId,"You are restricted all permissions. Because you don't have any NFT. Buy an NFT and send message 'I am a NFT owner.'")
               })
