@@ -101,8 +101,8 @@ bot.on('message',async (msg) => {
       
     }else{
       bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify");
-      // await bot.restrictChatMember(chatId, userId, permissions);
-      // await bot.deleteMessage(chatId, msg.message_id);
+      await bot.restrictChatMember(chatId, userId, permissions);
+      await bot.deleteMessage(chatId, msg.message_id);
     }
   }
 });
