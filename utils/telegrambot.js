@@ -29,12 +29,21 @@ const TelegramBot = require('node-telegram-bot-api');
 
 // Replace YOUR_TOKEN_HERE with your actual bot token obtained from BotFather
 const bot = new TelegramBot(config.telegram, { polling: true });
-
+const permissions = {
+  can_send_messages: true,
+  can_send_media_messages: false,
+  can_send_polls: false,
+  can_send_other_messages: false,
+  can_add_web_page_previews: false,
+  can_change_info: false,
+  can_invite_users: false,
+  can_pin_messages: false,
+};
 
 bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
-
+  const text = msg.text;
   if (msg.from.is_bot) return;
 
   
@@ -69,30 +78,22 @@ bot.on('message',async (msg) => {
             
         } else {
           if(membershipStatus){
-            const permissions = {
-              can_send_messages: true,
-              can_send_media_messages: false,
-              can_send_polls: false,
-              can_send_other_messages: false,
-              can_add_web_page_previews: false,
-              can_change_info: false,
-              can_invite_users: false,
-              can_pin_messages: false,
-            };
-        
-            bot.restrictChatMember(chatId, userId, permissions)
-              .then(() => {
-                bot.sendMessage(userId,"You are restricted all permissions. Because you don't have any NFT. Buy an NFT and send message 'I am a NFT owner.'")
-              })
-              .catch((error) => {
-                console.error('Error occurred while revoking permissions:', error);
-              });
+            await bot.restrictChatMember(chatId, userId, permissions);
+            bot.sendMessage(userId,"You are restricted all permissions. Because you don't have any NFT. Buy an NFT and send message 'I am a NFT owner.'");
+
+            if (text !== 'ttt') {
+                await bot.deleteMessage(chatId, msg.message_id);
+            }else{
+              
+            }
           }
           
         }
       }
     }else{
-      bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify")
+      bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify");
+      await bot.restrictChatMember(chatId, userId, permissions);
+      await bot.deleteMessage(chatId, msg.message_id);
     }
   }
 });
