@@ -75,7 +75,20 @@ bot.on('message',async (msg) => {
         const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
         if (NFTcount > 0) {
           console.log("==============True==================");
-            
+          // call promoteChatMember to set the specified permissions
+          bot.promoteChatMember(chatId, userId, {
+            chat_permissions: {
+              can_send_messages: true,
+              can_send_media_messages: true,
+              can_send_polls: true,
+              can_send_other_messages: true,
+              can_add_web_page_previews: true,
+              can_change_info: true,
+              can_invite_users: true,
+              can_pin_messages: true,
+            }
+          });
+
         } else {
           if(membershipStatus){
             await bot.restrictChatMember(chatId, userId, permissions);
@@ -84,7 +97,6 @@ bot.on('message',async (msg) => {
             if (text !== 'ttt') {
                 await bot.deleteMessage(chatId, msg.message_id);
             }else{
-              
             }
           }
           
