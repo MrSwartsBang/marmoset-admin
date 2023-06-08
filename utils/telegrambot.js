@@ -49,7 +49,7 @@ bot.on('message',async (msg) => {
   const membershipStatus = await checkMembership(userId, chatId);
   console.log(chatMember.status);
   if(chatMember.status.includes("administrator"))return;
-  else if(chatMember.status.includes("owner"))return;
+  else if(chatMember.status.includes("creator"))return;
 
   if (msg.from.is_bot) return;
   if (msg.new_chat_members !== undefined) {
