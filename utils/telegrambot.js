@@ -45,7 +45,7 @@ bot.on('message',async (msg) => {
   const userId = msg.from.id;
   const text = msg.text;
 
-  const chatMember = await bot.getChatMember(channelId, userId);
+  const chatMember = await bot.getChatMember(chatId, userId);
   const membershipStatus = await checkMembership(userId, chatId);
   console.log(chatMember.status);
   if(chatMember.status.includes("administrator"))return;
