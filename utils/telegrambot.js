@@ -46,6 +46,8 @@ bot.on('message',async (msg) => {
   const text = msg.text;
   if (msg.from.is_bot) return;
 
+  if(chatMember.status.includes("administrator"))return;
+  else if(chatMember.status.includes("owner"))return;
   
   if (msg.new_chat_members !== undefined) {
     // console.log(msg.new_chat_members);
@@ -67,40 +69,35 @@ bot.on('message',async (msg) => {
     if(isVerifiedUser){
       const chatMember = await bot.getChatMember(chatId, userId);
       const membershipStatus = await checkMembership(userId, chatId);
-      if(chatMember.status.includes("administrator")){}
-      else if(chatMember.status.includes("owner")){}
-      else
-      {
-        const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
-        if (NFTcount > 0) {
-          console.log("==============True==================");
-          // call promoteChatMember to set the specified permissions
-          bot.promoteChatMember(chatId, userId, {
-            chat_permissions: {
-              can_send_messages: true,
-              can_send_media_messages: true,
-              can_send_polls: true,
-              can_send_other_messages: true,
-              can_add_web_page_previews: true,
-              can_change_info: true,
-              can_invite_users: true,
-              can_pin_messages: true,
-            }
-          });
-
-        } else {
-          if(membershipStatus){
-            await bot.restrictChatMember(chatId, userId, permissions);
-            bot.sendMessage(userId,"You are restricted all permissions. Because you don't have any NFT. Buy an NFT and send message 'I am a NFT owner.'");
-
-            if (text !== 'ttt') {
-                await bot.deleteMessage(chatId, msg.message_id);
-            }else{
-            }
+      const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
+      if (NFTcount > 0) {
+        console.log("==============True==================");
+        // call promoteChatMember to set the specified permissions
+        bot.promoteChatMember(chatId, userId, {
+          chat_permissions: {
+            can_send_messages: true,
+            can_send_media_messages: true,
+            can_send_polls: true,
+            can_send_other_messages: true,
+            can_add_web_page_previews: true,
+            can_change_info: true,
+            can_invite_users: true,
+            can_pin_messages: true,
           }
-          
+        });
+
+      } else {
+        if(membershipStatus){
+          await bot.restrictChatMember(chatId, userId, permissions);
+          bot.sendMessage(userId,"You are restricted all permissions. Because you don't have any NFT. Buy an NFT and send message 'I am a NFT owner.'");
+
+          if (text !== 'ttt') {
+              await bot.deleteMessage(chatId, msg.message_id);
+          }else{
+          }
         }
       }
+      
     }else{
       bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify");
       await bot.restrictChatMember(chatId, userId, permissions);
