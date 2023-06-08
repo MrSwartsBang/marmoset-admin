@@ -67,9 +67,8 @@ bot.on('message',async (msg) => {
     if(isVerifiedUser){
       const chatMember = await bot.getChatMember(chatId, userId);
       const membershipStatus = await checkMembership(userId, chatId);
-      if(chatMember.status.includes("administrator")){
-       
-      }
+      if(chatMember.status.includes("administrator")){}
+      else if(chatMember.status.includes("owner")){}
       else
       {
         const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
