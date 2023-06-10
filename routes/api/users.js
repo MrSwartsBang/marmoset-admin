@@ -129,7 +129,12 @@ router.post('/login', (req, res) => {
 router.post('/user-verify', (req, res) => {
   
     const {discord,telegram,wallet} = req.body;
-    if(!isEmpty(discord) && !isEmpty(telegram) && !isEmpty(wallet))
+
+    for(each in req.body){
+        if(isEmpty(req.body[each])) req.body[each] = undefined;
+    }
+
+    if(!isEmpty(wallet))
     Verified.findOne({ wallet }).then((result)=>{
         if(!result)
         Verified.create(req.body).then(()=>{
@@ -137,7 +142,7 @@ router.post('/user-verify', (req, res) => {
         });
         else
         {
-            Verified.findOneAndUpdate({wallet: wallet}, {discord, telegram})
+            Verified.findOneAndUpdate({wallet: wallet}, req.body)
             .then((ttt) => {
                 console.log(ttt);
               res.status(200).json({message: "The wallet is already verified. Your info has been updated.", flg: "error"});

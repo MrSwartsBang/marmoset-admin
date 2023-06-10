@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const VerifiedSchema = new Schema({
     discord: {
-        type: String,
-        required: true
+        type: String
+       
     },
     telegram: {
-        type: String,
-        required: true
+        type: String
+ 
     },
     wallet: {
         type: String,
