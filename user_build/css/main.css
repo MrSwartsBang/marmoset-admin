@@ -346,7 +346,8 @@ ul {
   display: none;
 }
 
-.header__nav {
+.header__nav,
+.header__nav_wallet {
   position: fixed;
   width: 280px;
   top: 80px;
@@ -363,16 +364,19 @@ ul {
   transform: translate3d(0, 0, 0);
 }
 
-.header__nav li {
+.header__nav,
+.header__nav_wallet li {
   display: block;
   margin-bottom: 25px;
 }
 
-.header__nav li:last-child {
+.header__nav,
+.header__nav_wallet li:last-child {
   margin-bottom: 0;
 }
 
-.header__nav a {
+.header__nav,
+.header__nav_wallet a {
   display: inline-block;
   font-size: 14px;
   line-height: 24px;
@@ -381,7 +385,8 @@ ul {
   text-transform: uppercase;
 }
 
-.header__nav a svg {
+.header__nav,
+.header__nav_wallet a svg {
   fill: #fff;
   width: 14px;
   height: auto;
@@ -390,13 +395,17 @@ ul {
   margin-top: 2px;
 }
 
-.header__nav a:hover,
-.header__nav a[aria-expanded="true"] {
+.header__nav,
+.header__nav_wallet a:hover,
+.header__nav,
+.header__nav_wallet a[aria-expanded="true"] {
   color: #aa72ce;
 }
 
-.header__nav a:hover svg,
-.header__nav a[aria-expanded="true"] svg {
+.header__nav,
+.header__nav_wallet a:hover svg,
+.header__nav,
+.header__nav_wallet a[aria-expanded="true"] svg {
   fill: #aa72ce;
 }
 
