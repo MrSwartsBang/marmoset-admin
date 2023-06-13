@@ -56,13 +56,13 @@ bot.on('message',async (msg) => {
     // console.log(msg.new_chat_members);
     for (let i = 0; i < msg.new_chat_members.length; i++) {
       const newMember = msg.new_chat_members[i];
-      const dmLink = `https://t.me/${bot.options.username}?start=dm_${newMember.id}`;
+      const dmLink = `https://http://marmosetclub.io/verify`;
       const replyMarkup = {
         inline_keyboard: [
-          [{ text: 'Start DM with me', url: dmLink }]
+          [{ text: 'Become a member', url: dmLink }]
         ]
       };
-      bot.sendMessage(chatId, `Welcome to the group! Please click this [link](${dmLink}) to start a DM with me.`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
+      bot.sendMessage(chatId, `Welcome to the group! Please click this [link](${dmLink}) to verify.`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
     
     }
   }
@@ -100,7 +100,7 @@ bot.on('message',async (msg) => {
       }
       
     }else{
-      bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify");
+      bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://marmosetclub.io/verify");
       await bot.restrictChatMember(chatId, userId, permissions);
       await bot.deleteMessage(chatId, msg.message_id);
     }

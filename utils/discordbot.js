@@ -54,7 +54,7 @@
         msgss = "YOu own much NFTs";
     }
     else
-    msg.reply("You have to verify yourself. http://ec2-44-201-124-72.compute-1.amazonaws.com/verify");    
+    msg.reply("You have to verify yourself. http://marmosetclub.io/verify");    
 // if(!roles.includes("AAA")){
     //   let roleName = "AAA"; // replace this with the name of your role
     //   let role = msg.guild.roles.cache.find(r => r.name === roleName);
