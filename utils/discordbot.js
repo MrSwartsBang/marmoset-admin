@@ -21,6 +21,7 @@
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
 
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
+    console.log(isVerifiedUser);
     if(isVerifiedUser)
     {const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
         let msgss = "";
@@ -54,7 +55,9 @@
         msgss = "YOu own much NFTs";
     }
     else
-    msg.reply("You have to verify yourself. http://marmosetclub.io/verify");    
+    { 
+      msg.reply("You have to verify yourself. http://marmosetclub.io/verify");   
+    } 
 // if(!roles.includes("AAA")){
     //   let roleName = "AAA"; // replace this with the name of your role
     //   let role = msg.guild.roles.cache.find(r => r.name === roleName);
