@@ -129,11 +129,11 @@ router.post('/login', (req, res) => {
 router.post('/user-verify', (req, res) => {
   
     const {discord,telegram,wallet} = req.body;
-
+    console.log(req.body);
     for(each in req.body){
         if(isEmpty(req.body[each])) req.body[each] = undefined;
     }
-    console.log(req.body);
+ 
     if(!isEmpty(wallet))
     Verified.findOne({ wallet }).then((result)=>{
         if(!result)
