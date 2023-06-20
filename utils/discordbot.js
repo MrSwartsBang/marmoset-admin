@@ -52,11 +52,11 @@
                                         .catch(console.error);
             }
         }
-        msgss = "YOu own much NFTs";
+        msgss = "You own much NFTs";
     }
     else
     { 
-      msg.reply("You have to verify yourself. http://marmosetclub.io/verify");   
+      msg.reply("You have to verify yourself. https://marmosetclub.io/verify");   
     } 
 // if(!roles.includes("AAA")){
     //   let roleName = "AAA"; // replace this with the name of your role
