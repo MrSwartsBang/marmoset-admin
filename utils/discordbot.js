@@ -29,18 +29,18 @@
         {msgss = "You no own NFT.";
           let roleName = "NoNFT";
              if(!roles.includes(roleName)){
-		let role = msg.guild.roles.cache.find(r=>r.name===roleName);
+		            let role = msg.guild.roles.cache.find(r=>r.name===roleName);
                  msg.member.roles.add(role).catch(console.error);
                  msg.reply("You get the NoNFT role.");
              }
         }
         else if(NFTcount>0&&NFTcount<100)
         {
-          let roleName = "Banana Addict";
+          let roleName = "Azero Addict";
              if(!roles.includes(roleName)){
               let role = msg.guild.roles.cache.find(r=>r.name===roleName);
-              msg.member.roles.add(role).catch(console.error);
-              msg.reply("You get the role of "+roleName);
+              msg.member.roles.add(role).then(()=>msg.reply("You get the role of "+roleName))
+                                        .catch(console.error);
              }
         }
         else if(NFTcount>=100)
@@ -48,8 +48,8 @@
           let roleName = "manyNFTowner";
             if(!roles.includes(roleName)){
                let role = msg.guild.roles.cache.find(r=>r.name===roleName);
-               msg.member.roles.add(role).catch(console.error);
-              msg.reply("You get the role of "+roleName);
+               msg.member.roles.add(role).then(()=>msg.reply("You get the role of "+roleName))
+                                        .catch(console.error);
             }
         }
         msgss = "YOu own much NFTs";
