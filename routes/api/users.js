@@ -142,7 +142,7 @@ router.post('/user-verify', (req, res) => {
         });
         else
         {
-            Verified.findOneAndUpdate({wallet}, req.body)
+            Verified.findByIdAndUpdate(result._id, req.body,{ new: true })
             .then((ttt) => {
                 console.log(ttt);
               res.status(200).json({message: "The wallet is already verified. Your info has been updated.", flg: "error"});
