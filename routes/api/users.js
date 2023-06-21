@@ -137,15 +137,16 @@ router.post('/user-verify', (req, res) => {
     if(!isEmpty(wallet))
     Verified.findOne({ wallet }).then((result)=>{
         if(!result)
-        Verified.create(req.body).then(()=>{
-            res.status(200).json({message:"You are successfully verified.",flg:"success"});
+        Verified.create(req.body).then((createResult)=>{
+            const {discord,telegram} = createResult;
+            res.status(200).json({message:"You are successfully verified.",flg:"success",discord,telegram});
         });
         else
         {
             Verified.findByIdAndUpdate(result._id, req.body,{ new: true })
             .then((ttt) => {
-                console.log(ttt);
-              res.status(200).json({message: "The wallet is already verified. Your info has been updated.", flg: "error"});
+                const {discord,telegram} = ttt;
+              res.status(200).json({message: "The wallet is already verified. Your info has been updated.", flg: "error",discord,telegram});
             })
             .catch((error) => {
               res.status(500).json({message: "An error occurred while updating your information. Please try again later.", flg: "error"});
@@ -154,5 +155,12 @@ router.post('/user-verify', (req, res) => {
 
     });
 });
-
+router.post('/getUserByWallet', (req, res) => {
+    const {wallet} = req.body;
+    if(!isEmpty(wallet))
+    Verified.findOne({ wallet }).then((result)=>{
+        const {discord,telegram} = result;
+        res.status(200).json({message:"You are successfully verified.",flg:"success",discord,telegram});
+    });
+});
 module.exports = router;
