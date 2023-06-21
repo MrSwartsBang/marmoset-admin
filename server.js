@@ -3,10 +3,12 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const users = require('./routes/api/users');
+
 const carousel = require('./routes/api/carousel');
+const admin = require('./routes/api/admin');
 const about = require('./routes/api/about');
 const staff = require('./routes/api/staff');
+const users = require('./routes/api/users');
 const morgan = require('morgan');
 require('./config/passport')(passport);
 
@@ -35,6 +37,7 @@ mongoose.connect(db, { useNewUrlParser: true,
 
 app.use(passport.initialize());
 
+app.use('/api', admin);
 app.use('/api', users);
 app.use('/api', carousel);
 app.use('/api', about);

@@ -14,9 +14,10 @@ class UserAddModal extends React.Component {
     constructor() {
         super();
         this.state = {
-            discord: "",
-            telegram: "",
-            wallet: "",
+            name: "",
+            email: "",
+            password: "",
+            password2: "",
             errors: {},
         };
     }
@@ -45,9 +46,10 @@ class UserAddModal extends React.Component {
     onUserAdd = e => {
         e.preventDefault();
         const newUser = {
-            discord: this.state.discord,
-            telegram: this.state.telegram,
-            wallet: this.state.wallet
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            password2: this.state.password2
         };
         this.props.addUser(newUser, this.props.history);
     };
@@ -60,63 +62,81 @@ class UserAddModal extends React.Component {
                     <div className="modal-dialog modal-lg">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h4 className="modal-title">Add User</h4>
+                                <h4 className="modal-title">Add Admin</h4>
                                 <button type="button" className="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div className="modal-body">
                                 <form noValidate onSubmit={this.onUserAdd} id="add-user">
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="name">Discord</label>
+                                            <label htmlFor="name">Name</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
                                                 onChange={this.onChange}
-                                                value={this.state.discord}
-                                                id="discord"
+                                                value={this.state.name}
+                                                id="name"
                                                 type="text"
-                                                error={errors.discord}
+                                                error={errors.name}
                                                 className={classnames("form-control", {
-                                                    invalid: errors.discord
+                                                    invalid: errors.name
                                                 })}/>
-                                            <span className="text-danger">{errors.discord}</span>
+                                            <span className="text-danger">{errors.name}</span>
                                         </div>
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="email">Telegram</label>
+                                            <label htmlFor="email">Email</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
                                                 onChange={this.onChange}
-                                                value={this.state.telegram}
-                                                error={errors.telegram}
-                                                id="telegram"
+                                                value={this.state.email}
+                                                error={errors.email}
+                                                id="email"
                                                 type="email"
                                                 className={classnames("form-control", {
                                                     invalid: errors.email
                                                 })}
                                             />
-                                            <span className="text-danger">{errors.telegram}</span>
+                                            <span className="text-danger">{errors.email}</span>
                                         </div>
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="password">Wallet</label>
+                                            <label htmlFor="password">Password</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
                                                 autoComplete={''}
                                                 onChange={this.onChange}
-                                                value={this.state.wallet}
-                                                error={errors.wallet}
-                                                id="wallet"
+                                                value={this.state.password}
+                                                error={errors.password}
+                                                id="password"
                                                 type="password"
                                                 className={classnames("form-control", {
-                                                    invalid: errors.wallet
+                                                    invalid: errors.password
                                                 })}
                                             />
-                                            <span className="text-danger">{errors.wallet}</span>
+                                            <span className="text-danger">{errors.password}</span>
+                                        </div>
+                                    </div>
+                                    <div className="row mt-2">
+                                        <div className="col-md-3">
+                                            <label htmlFor="password2">Confirm Password</label>
+                                        </div>
+                                        <div className="col-md-9">
+                                            <input
+                                                autoComplete={''}
+                                                onChange={this.onChange}
+                                                value={this.state.password2}
+                                                id="password2"
+                                                type="password"
+                                                className={classnames("form-control", {
+                                                    invalid: errors.password2
+                                                })}
+                                            />
+                                            <span className="text-danger">{errors.password2}</span>
                                         </div>
                                     </div>
                                 </form>

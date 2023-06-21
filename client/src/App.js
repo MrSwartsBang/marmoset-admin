@@ -18,7 +18,8 @@ import '../node_modules/font-awesome/css/font-awesome.css';
 import '../node_modules/jquery/dist/jquery.min';
 import '../node_modules/popper.js/dist/popper';
 
-import User from "./components/pages/Users";
+import Admin from "./components/pages/Admin";
+import Users from "./components/pages/Users";
 import Carousel from "./components/pages/Carousel";
 import Staff from "./components/pages/Staff";
 import About from "./components/pages/About";
@@ -47,7 +48,8 @@ class App extends Component {
                             <Route exact path="/admin/login" component={Login} />
                             <Switch>
                                 <PrivateRoute exact path="/admin/dashboard" component={Dashboard} />
-                                <PrivateRoute exact path="/admin/users" component={User} />
+                                <PrivateRoute exact path="/admin/admin" component={Admin} />
+                                <PrivateRoute exact path="/admin/users" component={Users} />
                                 <PrivateRoute exact path="/admin/carousel" component={Carousel} />
                                 <PrivateRoute exact path="/admin/staff" component={Staff} />
                                 <PrivateRoute exact path="/admin/about" component={About} />

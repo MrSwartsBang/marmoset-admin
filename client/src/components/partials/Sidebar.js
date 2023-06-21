@@ -19,7 +19,8 @@ class Sidebar extends Component {
             <div className="border-right h-100" id="sidebar-wrapper">
                 <div className="list-group list-group-flush">
                     <Link to="/admin/dashboard" className="list-group-item list-group-item-action">Dashboard</Link>
-                    <Link to="/admin/users" className="list-group-item list-group-item-action">Users</Link>
+                    <Link to="/admin/admin" className="list-group-item list-group-item-action">Admin</Link>
+                    <Link to="/admin/Users" className="list-group-item list-group-item-action">Users</Link>
                     <Link to="/admin/carousel" className="list-group-item list-group-item-action">Carousel</Link>
                     <Link to="/admin/staff" className="list-group-item list-group-item-action">Staff</Link>
                     <Link to="/admin/about" className="list-group-item list-group-item-action">About</Link>

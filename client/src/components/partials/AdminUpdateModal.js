@@ -2,26 +2,34 @@ import React from 'react'
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addUser } from "../../actions/userActions";
+import { updateUser } from "../../actions/userActions";
 import { withRouter } from "react-router-dom";
 import { toast } from 'react-toastify';
 import $ from 'jquery';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-class UserAddModal extends React.Component {
+class UserUpdateModal extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            discord: "",
-            telegram: "",
-            wallet: "",
+            id: this.props.record.id,
+            name: this.props.record.name,
+            email: this.props.record.email,
+            password: '',
             errors: {},
         };
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.record) {
+            this.setState({
+                id: nextProps.record.id,
+                name: nextProps.record.name,
+                email: nextProps.record.email,
+            })
+        }
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
@@ -30,8 +38,9 @@ class UserAddModal extends React.Component {
         if (nextProps.auth !== undefined
             && nextProps.auth.user !== undefined
             && nextProps.auth.user.data !== undefined
-            && nextProps.auth.user.data.message !== undefined) {
-            $('#add-user-modal').modal('hide');
+            && nextProps.auth.user.data.message !== undefined
+            && nextProps.auth.user.data.success) {
+            $('#update-user-modal').modal('hide');
             toast(nextProps.auth.user.data.message, {
                 position: toast.POSITION.TOP_CENTER
             });
@@ -39,84 +48,99 @@ class UserAddModal extends React.Component {
     }
 
     onChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
+        if (e.target.id === 'user-update-name') {
+            this.setState({ name: e.target.value });
+        }
+        if (e.target.id === 'user-update-email') {
+            this.setState({ email: e.target.value });
+        }
+        if (e.target.id === 'user-update-password') {
+            this.setState({ password: e.target.value });
+        }
     };
 
-    onUserAdd = e => {
+    onUserUpdate = e => {
         e.preventDefault();
         const newUser = {
-            discord: this.state.discord,
-            telegram: this.state.telegram,
-            wallet: this.state.wallet
+            _id: this.state.id,
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password
         };
-        this.props.addUser(newUser, this.props.history);
+        this.props.updateUser(newUser);
     };
 
     render() {
         const { errors } = this.state;
         return (
             <div>
-                <div className="modal fade" id="add-user-modal" data-reset="true">
+                <div className="modal fade" id="update-user-modal">
                     <div className="modal-dialog modal-lg">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h4 className="modal-title">Add User</h4>
+                                <h4 className="modal-title">Update Admin</h4>
                                 <button type="button" className="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div className="modal-body">
-                                <form noValidate onSubmit={this.onUserAdd} id="add-user">
+                                <form noValidate onSubmit={this.onUserUpdate} id="update-user">
+                                    <input
+                                        onChange={this.onChange}
+                                        value={this.state.id}
+                                        id="user-update-id"
+                                        type="text"
+                                        className="d-none"/>
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="name">Discord</label>
+                                            <label htmlFor="name">Name</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
                                                 onChange={this.onChange}
-                                                value={this.state.discord}
-                                                id="discord"
+                                                value={this.state.name}
+                                                id="user-update-name"
                                                 type="text"
-                                                error={errors.discord}
+                                                error={errors.name}
                                                 className={classnames("form-control", {
-                                                    invalid: errors.discord
+                                                    invalid: errors.name
                                                 })}/>
-                                            <span className="text-danger">{errors.discord}</span>
+                                            <span className="text-danger">{errors.name}</span>
                                         </div>
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="email">Telegram</label>
+                                            <label htmlFor="email">Email</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
                                                 onChange={this.onChange}
-                                                value={this.state.telegram}
-                                                error={errors.telegram}
-                                                id="telegram"
+                                                value={this.state.email}
+                                                error={errors.email}
+                                                id="user-update-email"
                                                 type="email"
                                                 className={classnames("form-control", {
                                                     invalid: errors.email
                                                 })}
                                             />
-                                            <span className="text-danger">{errors.telegram}</span>
+                                            <span className="text-danger">{errors.email}</span>
                                         </div>
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="password">Wallet</label>
+                                            <label htmlFor="password">Password</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
+                                                data-reset-input={true}
                                                 autoComplete={''}
                                                 onChange={this.onChange}
-                                                value={this.state.wallet}
-                                                error={errors.wallet}
-                                                id="wallet"
+                                                error={errors.password}
+                                                id="user-update-password"
                                                 type="password"
                                                 className={classnames("form-control", {
-                                                    invalid: errors.wallet
+                                                    invalid: errors.password
                                                 })}
                                             />
-                                            <span className="text-danger">{errors.wallet}</span>
+                                            <span className="text-danger">{errors.password}</span>
                                         </div>
                                     </div>
                                 </form>
@@ -124,10 +148,10 @@ class UserAddModal extends React.Component {
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button
-                                    form="add-user"
+                                    form="update-user"
                                     type="submit"
                                     className="btn btn-primary">
-                                    Add User
+                                    Update User
                                 </button>
                             </div>
                         </div>
@@ -138,8 +162,8 @@ class UserAddModal extends React.Component {
     }
 }
 
-UserAddModal.propTypes = {
-    addUser: PropTypes.func.isRequired,
+UserUpdateModal.propTypes = {
+    updateUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -151,5 +175,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { addUser }
-)(withRouter(UserAddModal));
+    { updateUser }
+)(withRouter(UserUpdateModal));

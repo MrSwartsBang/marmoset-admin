@@ -15,20 +15,23 @@ class UserUpdateModal extends React.Component {
         super(props);
         this.state = {
             id: this.props.record.id,
-            name: this.props.record.name,
-            email: this.props.record.email,
-            password: '',
+            discord: this.props.record.discord,
+            telegram: this.props.record.telegram,
+            wallet:this.props.record.wallet,
             errors: {},
         };
     }
 
     componentWillReceiveProps(nextProps) {
+        
         if (nextProps.record) {
             this.setState({
                 id: nextProps.record.id,
-                name: nextProps.record.name,
-                email: nextProps.record.email,
+                discord: nextProps.record.discord,
+                telegram: nextProps.record.telegram,
+                wallet:nextProps.record.wallet
             })
+         
         }
         if (nextProps.errors) {
             this.setState({
@@ -48,14 +51,11 @@ class UserUpdateModal extends React.Component {
     }
 
     onChange = e => {
-        if (e.target.id === 'user-update-name') {
-            this.setState({ name: e.target.value });
+        if (e.target.id === 'user-update-telegram') {
+            this.setState({ telegram: e.target.value });
         }
-        if (e.target.id === 'user-update-email') {
-            this.setState({ email: e.target.value });
-        }
-        if (e.target.id === 'user-update-password') {
-            this.setState({ password: e.target.value });
+        if (e.target.id === 'user-update-discord') {
+            this.setState({ discord: e.target.value });
         }
     };
 
@@ -63,15 +63,17 @@ class UserUpdateModal extends React.Component {
         e.preventDefault();
         const newUser = {
             _id: this.state.id,
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password
+            discord: this.state.discord,
+            telegram: this.state.telegram,
+            wallet: this.state.wallet
+            
         };
         this.props.updateUser(newUser);
     };
 
     render() {
         const { errors } = this.state;
+        console.log(this.state);
         return (
             <div>
                 <div className="modal fade" id="update-user-modal">
@@ -91,13 +93,13 @@ class UserUpdateModal extends React.Component {
                                         className="d-none"/>
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="name">Name</label>
+                                            <label htmlFor="name">Discord</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
                                                 onChange={this.onChange}
-                                                value={this.state.name}
-                                                id="user-update-name"
+                                                value={this.state.discord}
+                                                id="user-update-discord"
                                                 type="text"
                                                 error={errors.name}
                                                 className={classnames("form-control", {
@@ -108,39 +110,38 @@ class UserUpdateModal extends React.Component {
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="email">Email</label>
+                                            <label htmlFor="email">Telegram</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
                                                 onChange={this.onChange}
-                                                value={this.state.email}
-                                                error={errors.email}
-                                                id="user-update-email"
+                                                value={this.state.telegram}
+                                                error={errors.telegram}
+                                                id="user-update-telegram"
                                                 type="email"
                                                 className={classnames("form-control", {
-                                                    invalid: errors.email
+                                                    invalid: errors.telegram
                                                 })}
                                             />
-                                            <span className="text-danger">{errors.email}</span>
+                                            <span className="text-danger">{errors.telegram}</span>
                                         </div>
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="password">Password</label>
+                                            <label htmlFor="password">Wallet</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
-                                                data-reset-input={true}
-                                                autoComplete={''}
                                                 onChange={this.onChange}
-                                                error={errors.password}
-                                                id="user-update-password"
-                                                type="password"
+                                                error={errors.wallet}
+                                                id="user-update-wallet"
+                                                type="text"
+                                                value={this.state.wallet}
                                                 className={classnames("form-control", {
-                                                    invalid: errors.password
+                                                    invalid: errors.wallet
                                                 })}
                                             />
-                                            <span className="text-danger">{errors.password}</span>
+                                            <span className="text-danger">{errors.wallet}</span>
                                         </div>
                                     </div>
                                 </form>

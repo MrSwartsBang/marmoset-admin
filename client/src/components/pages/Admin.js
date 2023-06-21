@@ -8,11 +8,11 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import axios from "axios";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import UserAddModal from "../partials/UserAddModal";
-import UserUpdateModal from "../partials/UserUpdateModal";
+import AdminAddModal from "../partials/AdminAddModal";
+import AdminUpdateModal from "../partials/AdminUpdateModal";
 import { toast, ToastContainer} from "react-toastify";
 
-class Users extends Component {
+class Admin extends Component {
 
     constructor(props) {
         super(props);
@@ -26,22 +26,22 @@ class Users extends Component {
                 sortable: true,
             },
             {
-                key: "discord",
-                text: "Discord",
+                key: "name",
+                text: "Name",
                 className: "name",
                 align: "left",
                 sortable: true,
             },
             {
-                key: "telegram",
-                text: "Telegram",
+                key: "email",
+                text: "Email",
                 className: "email",
                 align: "left",
                 sortable: true
             },
             {
-                key: "wallet",
-                text: "Wallet",
+                key: "date",
+                text: "Date",
                 className: "date",
                 align: "left",
                 sortable: true
@@ -129,9 +129,8 @@ class Users extends Component {
 
     getData() {
         axios
-            .post("/api/user-data")
+            .post("/api/admin-data")
             .then(res => {
-                console.log(res.data);
                 this.setState({ records: res.data})
             })
             .catch()
@@ -143,7 +142,7 @@ class Users extends Component {
 
     deleteRecord(record) {
         axios
-            .post("/api/user-delete", {_id: record._id})
+            .post("/api/admin-delete", {_id: record._id})
             .then(res => {
                 if (res.status === 200) {
                    toast(res.data.message, {
@@ -165,13 +164,13 @@ class Users extends Component {
                 <Navbar/>
                 <div className="d-flex" id="wrapper">
                     <Sidebar/>
-                    <UserAddModal/>
-                    <UserUpdateModal record={this.state.currentRecord}/>
+                    <AdminAddModal/>
+                    <AdminUpdateModal record={this.state.currentRecord}/>
                     <div id="page-content-wrapper">
                         <div className="container-fluid">
                             <button className="btn btn-link mt-3" id="menu-toggle"><FontAwesomeIcon icon={faList}/></button>
                             <button className="btn btn-outline-primary float-right mt-3 mr-2" data-toggle="modal" data-target="#add-user-modal"><FontAwesomeIcon icon={faPlus}/> Add User</button>
-                            <h1 className="mt-2 text-primary">Users List</h1>
+                            <h1 className="mt-2 text-primary">Admin List</h1>
                             <ReactDatatable
                                 config={this.config}
                                 records={this.state.records}
@@ -188,7 +187,7 @@ class Users extends Component {
 
 }
 
-Users.propTypes = {
+Admin.propTypes = {
     auth: PropTypes.object.isRequired,
 };
 
@@ -199,4 +198,4 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps
-)(Users);
+)(Admin);
