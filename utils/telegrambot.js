@@ -1,5 +1,3 @@
-const TeleBot = require("telebot");
-const config = require("../config/keys");
 const { clientAPI, APICall } = require("./getNFT");
 const Verified = require("../models/Verified");
 // const { Telegraf } = require('telegraf');
@@ -28,7 +26,7 @@ const Verified = require("../models/Verified");
 const TelegramBot = require('node-telegram-bot-api');
 
 // Replace YOUR_TOKEN_HERE with your actual bot token obtained from BotFather
-const bot = new TelegramBot(config.telegram, { polling: true });
+const bot = new TelegramBot(process.env.telegram, { polling: true });
 const permissions = {
   can_send_messages: true,
   can_send_media_messages: false,

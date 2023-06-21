@@ -76,7 +76,7 @@
 
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
-client.login(config.discordbot);
+client.login(process.env.discordbot);
 
 
 async function checkNFTowner(ownerAddress) {
