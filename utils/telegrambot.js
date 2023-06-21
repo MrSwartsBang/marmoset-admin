@@ -54,7 +54,7 @@ bot.on('message',async (msg) => {
     // console.log(msg.new_chat_members);
     for (let i = 0; i < msg.new_chat_members.length; i++) {
       const newMember = msg.new_chat_members[i];
-      const dmLink = `https://http://marmosetclub.io/verify`;
+      const dmLink = `https://marmosetclub.io/verify`;
       const replyMarkup = {
         inline_keyboard: [
           [{ text: 'Become a member', url: dmLink }]
