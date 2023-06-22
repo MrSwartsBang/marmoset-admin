@@ -420,6 +420,7 @@ ul {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  color: white;
 }
 
 .header__dropdown .dropdown-link svg {
@@ -550,6 +551,19 @@ ul {
   box-shadow: 0 0 22px rgba(170, 114, 206, 0.12);
 }
 
+@media screen and (max-width: 576px) {
+  .header__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 150px;
+  }
+
+  .header__nav--active {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @media (min-width: 576px) {
   .header__logo {
     margin-left: 45px;
@@ -567,9 +581,10 @@ ul {
   }
 
   .header__nav {
-    padding-left: calc((100vw - 516px) / 2);
-    width: 320px;
-    transform: translate3d(-320px, 0, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 150px;
   }
 
   .header__nav--active {
@@ -602,13 +617,19 @@ ul {
   }
 
   .header__nav {
-    padding-left: calc((100vw - 696px) / 2);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 150px;
   }
 }
 
 @media (min-width: 992px) {
   .header__nav {
-    padding-left: calc((100vw - 936px) / 2);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 150px;
   }
 }
 
@@ -689,6 +710,12 @@ ul {
     height: auto;
     color: #fff;
     justify-content: flex-start;
+
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
   }
 
   .header__dropdown-menu a:hover {
@@ -1547,6 +1574,12 @@ ul {
   .section--article {
     padding-top: 0;
   }
+}
+
+.section__title--grid-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 @media (min-width: 992px) {
