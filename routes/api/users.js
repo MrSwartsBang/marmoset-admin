@@ -8,7 +8,7 @@ const validateLoginInput = require('../../validation/login');
 const validateUpdateUserInput = require('../../validation/updateUser');
 const Verified = require('../../models/Verified');
 const isEmpty = require("is-empty");
-
+const {VerifiCode} = require("../../utils/marmosetUtils");
 router.post('/user-data', (req, res) => {
     Verified.find({}).then(user => {
         if (user) {
@@ -92,4 +92,10 @@ router.post('/getUserByWallet', (req, res) => {
         res.status(200).json({message:"You are successfully verified.",flg:"success",discord,telegram});
     });
 });
+
+router.post('/get-verifiCode', (req, res) => {
+    var code = VerifiCode.create(req.body);
+    res.json(code);
+});
 module.exports = router;
+

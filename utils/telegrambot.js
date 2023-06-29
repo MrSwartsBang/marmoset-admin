@@ -1,27 +1,6 @@
 const { clientAPI, APICall } = require("./getNFT");
 const Verified = require("../models/Verified");
-// const { Telegraf } = require('telegraf');
-
-// const bot = new Telegraf(config.telegram);
-
-// bot.launch();
-
-// bot.command('start', ctx => {
-//   console.log(ctx.from)
-//   bot.telegram.sendMessage(ctx.chat.id, 'Hello there! Welcome to the Code Capsules telegram bot.\nI respond to /ethereum. Please try it', {
-//   })
-// })
-// bot.on('message', (ctx) => {
-//   console.log(ctx.message.text)
-// })
-// bot.command('ethereum', ctx => {
-//   var rate;
-//   console.log(ctx.from)
-//   const message = `Hello, today the ethereum price is USD`
-//   bot.telegram.sendMessage(ctx.chat.id, message, {})
-
-// })
-
+const {VerifiCode} = require("./marmosetUtils");
 //-----------------------------------------//
 const TelegramBot = require('node-telegram-bot-api');
 

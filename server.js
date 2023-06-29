@@ -13,7 +13,7 @@ const morgan = require('morgan');
 
 require('dotenv').config();
 require('./config/passport')(passport);
-console.log( process.env);
+// console.log( process.env);
 const app = express();
 app.use(morgan('dev'));
 app.use(function(req, res, next) {
@@ -64,5 +64,5 @@ app.get('/*', function (req, res) {
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
 
-require("./utils/discordbot");
-require("./utils/telegrambot");
+// require("./utils/discordbot");
+// require("./utils/telegrambot");

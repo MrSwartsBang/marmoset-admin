@@ -4,6 +4,7 @@
   const client = new Discord.Client();
   const Verified = require("../models/Verified");
   const config = require("../config/keys");
+  const {VerifiCode} = require("./marmosetUtils");
   // Register an event so that when the bot is ready, it will log a messsage to the terminal
   client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -19,6 +20,18 @@
     const roles = msg.member.roles.cache.map(role => role.name);
     // Log the roles
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
+
+    //-------------------------DM verify---------------------//
+    if (message.channel.type === 'dm') {
+      // Handle DM message here
+      console.log(`Received DM from ${message.author.tag}: ${message.content}`);
+      var validWallet = VerifiCode.verify(message.content);
+      await Verified.create({wallet:validWallet,discord:message.author.tag});
+      message.author.send("Hey there! I received your DM.You are verified on marmosetClub");
+      return;
+    }
+    //-----------------------------------------------------//
+
 
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     console.log(isVerifiedUser);
@@ -69,9 +82,7 @@
     //   msg.member.roles.add(role).catch(console.error);
     // }
     // Check if the message starts with '!hello' and respond with 'world!' if it does.
-    if(msg.content.startsWith("!hello")) {
-     
-    }
+    
   })
 
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
