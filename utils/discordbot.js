@@ -21,9 +21,21 @@
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
       var validWallet = VerifiCode.verify(msg.content);
-      var verifiedData = await Verified.create({wallet:validWallet,discord:msg.author.tag});
-      console.log(verifiedData);
-      msg.author.send("Hey there! I received your verification code.You are verified on marmosetClub");
+      if(typeof validWallet === "string")
+      {
+        var verifiedData = await Verified.create({wallet:validWallet,discord:msg.author.tag});
+        console.log(verifiedData);
+        msg.author.send("Hey there! I received your verification code.You are verified on marmosetClub");
+      }else {
+        // 0: invalid code
+        // 1: time expired
+        var messageInvalid = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
+        msg.author.send(messageInvalid);
+      }
+
+
+
+     
       return;
     }
     //-----------------------------------------------------//
