@@ -12,27 +12,33 @@
   // Register an event to handle incoming messages
   client.on('message', async msg => {
     // This block will prevent the bot from responding to itself and other bots
-    if(msg.author.bot) {
-      return
-    }
+    if(msg.author.bot) return;
+    const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
+    
     //-------------------------DM verify---------------------//
     if (msg.channel.type === 'dm') {
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
-      var validWallet = VerifiCode.verify(msg.content);
-      console.log(validWallet);
-      if (typeof validWallet === "string")
-      {
-        var verifiedData = await Verified.create({wallet:validWallet,discord:msg.author.tag});
-        console.log(verifiedData);
-        msg.author.send("Hey there! I received your verification code.You are verified on marmosetClub");
-      }else {
-        // 0: invalid code
-        // 1: time expired
-        var messageInvalid = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
-        msg.author.send(messageInvalid);
+      if(!isVerifiedUser)
+      { 
+        var validWallet = VerifiCode.verify(msg.content);
+        var dmToClient;
+        if (typeof validWallet === "string")
+        {
+          var verifiedData = await Verified.create({wallet:validWallet,discord:msg.author.tag});
+          dmToClient = "Hey there! I received your verification code.You are verified on marmosetClub";
+        }
+        else{
+          // 0: invalid code
+          // 1: time expired
+          var messageInvalid = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
+          msg.author.send(messageInvalid);
+        }
       }
-      return;
+      else {
+          dmToClient = "You already have been verified.";
+      }
+      return  msg.author.send(dmToClient);
     }
     //-----------------------------------------------------//
     else {
@@ -40,10 +46,6 @@
     const roles = msg.member.roles.cache.map(role => role.name);
     // Log the roles
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
-
-
-
-    const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     console.log(isVerifiedUser);
     if(isVerifiedUser)
     {const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
