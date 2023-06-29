@@ -21,8 +21,9 @@
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
       var validWallet = VerifiCode.verify(msg.content);
-      await Verified.create({wallet:validWallet,discord:msg.author.tag});
-      msg.author.send("Hey there! I received your DM.You are verified on marmosetClub");
+      var verifiedData = await Verified.create({wallet:validWallet,discord:msg.author.tag});
+      console.log(verifiedData);
+      msg.author.send("Hey there! I received your verification code.You are verified on marmosetClub");
       return;
     }
     //-----------------------------------------------------//

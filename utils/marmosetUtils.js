@@ -22,6 +22,8 @@ class VerifiCode {
        if(isOne){
             if(isOne.expires > Date.now())
             {
+                this.codearray = this.codearray.filter(item => item.code !== isOne.code);
+                console.log(this.codearray);
                 return isOne.wallet;
             }
             else {
