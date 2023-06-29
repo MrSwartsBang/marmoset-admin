@@ -3,7 +3,6 @@
   const Discord = require('discord.js')
   const client = new Discord.Client();
   const Verified = require("../models/Verified");
-  const config = require("../config/keys");
   const {VerifiCode} = require("./marmosetUtils");
   // Register an event so that when the bot is ready, it will log a messsage to the terminal
   client.on('ready', () => {
@@ -82,17 +81,6 @@
     { 
       msg.reply("You have to verify yourself. https://marmosetclub.io/verify");   
     } 
-// if(!roles.includes("AAA")){
-    //   let roleName = "AAA"; // replace this with the name of your role
-    //   let role = msg.guild.roles.cache.find(r => r.name === roleName);
-    //   if (!role) {
-    //       console.log(`The role ${roleName} does not exist`);
-    //       return;
-    //   }
-    //   // Add the role to the member who sent the message
-    //   msg.member.roles.add(role).catch(console.error);
-    // }
-    // Check if the message starts with '!hello' and respond with 'world!' if it does.
     }
   })
 
@@ -135,3 +123,7 @@ async function checkNFTowner(ownerAddress) {
   console.log(data);
   return data.length>0?data[0].listNFT.length:0;
 }
+
+
+
+client.login(process.env.discordbot);
