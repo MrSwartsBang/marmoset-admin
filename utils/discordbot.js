@@ -131,6 +131,7 @@ async function checkNFTowner(ownerAddress) {
       })
   );
   data = data.filter((item) => item.listNFT?.length > 0);
+  console.log("=================ata = data.filter((item) => item.listNFT?.length > 0)===================");
   console.log(data);
   return data.length>0?data[0].listNFT.length:0;
 }
