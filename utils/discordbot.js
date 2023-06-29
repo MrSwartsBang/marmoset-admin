@@ -16,11 +16,6 @@
     if(msg.author.bot) {
       return
     }
-    // Get the roles of the member who sent the message
-    const roles = msg.member.roles.cache.map(role => role.name);
-    // Log the roles
-    console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
-
     //-------------------------DM verify---------------------//
     if (message.channel.type === 'dm') {
       // Handle DM message here
@@ -31,6 +26,12 @@
       return;
     }
     //-----------------------------------------------------//
+    else {
+    // Get the roles of the member who sent the message
+    const roles = msg.member.roles.cache.map(role => role.name);
+    // Log the roles
+    console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
+
 
 
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
@@ -82,7 +83,7 @@
     //   msg.member.roles.add(role).catch(console.error);
     // }
     // Check if the message starts with '!hello' and respond with 'world!' if it does.
-    
+    }
   })
 
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
