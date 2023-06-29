@@ -21,7 +21,8 @@
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
       var validWallet = VerifiCode.verify(msg.content);
-      if(typeof validWallet === "string")
+      console.log(validWallet);
+      if (typeof validWallet === "string")
       {
         var verifiedData = await Verified.create({wallet:validWallet,discord:msg.author.tag});
         console.log(verifiedData);
@@ -32,10 +33,6 @@
         var messageInvalid = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
         msg.author.send(messageInvalid);
       }
-
-
-
-     
       return;
     }
     //-----------------------------------------------------//
