@@ -98,8 +98,6 @@
 
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
-client.login(process.env.discordbot);
-
 
 async function checkNFTowner(ownerAddress) {
   console.log(clientAPI);
@@ -133,5 +131,6 @@ async function checkNFTowner(ownerAddress) {
       })
   );
   data = data.filter((item) => item.listNFT?.length > 0);
+  console.log(data);
   return data.length>0?data[0].listNFT.length:0;
 }
