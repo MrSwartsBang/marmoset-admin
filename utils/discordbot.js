@@ -17,12 +17,12 @@
       return
     }
     //-------------------------DM verify---------------------//
-    if (message.channel.type === 'dm') {
+    if (msg.channel.type === 'dm') {
       // Handle DM message here
-      console.log(`Received DM from ${message.author.tag}: ${message.content}`);
-      var validWallet = VerifiCode.verify(message.content);
-      await Verified.create({wallet:validWallet,discord:message.author.tag});
-      message.author.send("Hey there! I received your DM.You are verified on marmosetClub");
+      console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
+      var validWallet = VerifiCode.verify(msg.content);
+      await Verified.create({wallet:validWallet,discord:msg.author.tag});
+      msg.author.send("Hey there! I received your DM.You are verified on marmosetClub");
       return;
     }
     //-----------------------------------------------------//
