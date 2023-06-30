@@ -24,7 +24,7 @@ class Sidebar extends Component {
                     <Link to="/admin/carousel" className="list-group-item list-group-item-action">Carousel</Link>
                     <Link to="/admin/staff" className="list-group-item list-group-item-action">Staff</Link>
                     <Link to="/admin/about" className="list-group-item list-group-item-action">About</Link>
-                    {/* <Link to="/events" className="list-group-item list-group-item-action">Events</Link> */}
+                    <Link to="/admin/roadmap" className="list-group-item list-group-item-action">Roadmap</Link>
                     <button className="list-group-item list-group-item-action" onClick={this.onLogoutClick}>Logout <FontAwesomeIcon icon={faSignOutAlt} /></button>
                 </div>
             </div>

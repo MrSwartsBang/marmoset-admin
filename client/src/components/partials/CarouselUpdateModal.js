@@ -201,17 +201,6 @@ class CarouselUpdateModal extends React.Component {
                                                 className={classnames("form-control")}
                                             />
                                             <img src={this.state.img} style={{height:"500px",width:"500px"}}/>
-                                            {/* {
-                                                
-                                                this.state.imgflg?<img src={this.state.img} style={{height:"500px",width:"500px"}}/>:<input
-                                                onChange={this.onChange}
-                                                value={this.state.img}
-                                                id="img-update-name"
-                                                type="text"
-                                                className={classnames("form-control")}/>
-                                                
-                                            }<input onChange={this.handleImg}
-                                            id="img-file" type="file"/> */}
                                         </div>
                                     </div>
                                     <div className="row mt-2">

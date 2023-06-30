@@ -30,9 +30,7 @@ mongoose.connect(process.env.mongoURI, { useNewUrlParser: true,
         "users",
         "roadmap",
         "carousel"
-    ].map(apiItem =>{
-        console.log(apiItem);
-        require(`./routes/api/${apiItem}`);});
+    ].map(apiItem =>app.use("/api",require(`./routes/api/${apiItem}`)));
 
 app.use('/admin', express.static(path.join(__dirname, 'client/build')));
 app.get('/admin/*', function (req, res) {res.sendFile(path.join(__dirname, 'client/build', 'index.html'));});

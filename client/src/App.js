@@ -10,7 +10,6 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../node_modules/bootstrap/dist/js/bootstrap';
@@ -23,6 +22,7 @@ import Users from "./components/pages/Users";
 import Carousel from "./components/pages/Carousel";
 import Staff from "./components/pages/Staff";
 import About from "./components/pages/About";
+import Roadmap from "./components/pages/Roadmap";
 
 if (localStorage.jwtToken) {
     const token = localStorage.jwtToken;
@@ -53,6 +53,7 @@ class App extends Component {
                                 <PrivateRoute exact path="/admin/carousel" component={Carousel} />
                                 <PrivateRoute exact path="/admin/staff" component={Staff} />
                                 <PrivateRoute exact path="/admin/about" component={About} />
+                                <PrivateRoute exact path="/admin/roadmap" component={Roadmap} />
                             </Switch>
                             <Route exact path="*" component={NotFound} />
                         </Switch>

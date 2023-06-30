@@ -3,7 +3,7 @@ const router = express.Router();
 const Roadmap = require('../../models/Roadmap');
 
 router.get('/roadmap-data', (req, res) => {
-    Roadmap.find({}).sort({date:-1}).then(data => {
+    Roadmap.find({}).sort({createdAt:-1}).then(data => {
         console.log(data);
         if (data) {
             return res.status(200).send(data);
@@ -11,7 +11,7 @@ router.get('/roadmap-data', (req, res) => {
     });
 });
 router.get('/roadmap-data-one', (req, res) => {
-    Roadmap.findOne({}).sort({date:-1}).then(data => {
+    Roadmap.findOne({}).sort({createdAt:-1}).then(data => {
         console.log(data);
         if (data) {
             return res.status(200).send(data);
@@ -23,7 +23,6 @@ router.post('/roadmap-add', (req, res) => {
     roadmap
         .save()
         .then(roadmap => {
-            console.log(roadmap);
             return res.status(200).json({message: 'roadmap added successfully. Refreshing data...'})
         }).catch(err => console.log(err));
 });
@@ -33,15 +32,16 @@ router.post('/roadmap-update', (req, res) => {
     console.log(req.body);
     Roadmap.findOneAndUpdate({_id},req.body).then(data => {
         if (data) {
-            return res.status(200).json({ message: 'User updated successfully. Refreshing data...', success: true });
+            return res.status(200).json({ message: 'roadmap updated successfully. Refreshing data...', success: true });
         } else {
             return res.status(400).json({ message: 'Now user found to update.' });
         }
     });
 });
 
-router.post('/roadmap-delete', (req, res) => {
-    Roadmap.deleteOne({ _id: req.body._id}).then(user => {
+router.delete('/roadmap-delete/:id', (req, res) => {
+    const {id} = req.params;
+    Roadmap.findByIdAndDelete(id).then(user => {
         if (user) {
             return res.status(200).json({message: 'roadmap deleted successfully. Refreshing data...', success: true})
         }

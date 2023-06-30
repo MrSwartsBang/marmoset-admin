@@ -1,0 +1,21 @@
+
+
+.marmosetCard .card-footer{
+
+    display: flex !important;
+    justify-content: space-around !important;
+   
+}
+
+.marmosetCard .card-body {
+    gap:10px;
+    overflow-wrap: hidden;
+    word-wrap: break-word;
+}
+
+.marmosetCard_Board {
+    display: grid !important;
+    grid-template-columns: repeat(6,1fr) !important;
+    grid-template-rows: repeat(4,1fr) !important;
+    gap: 20px;
+}

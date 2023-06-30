@@ -1,23 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const RoadmapSchema = new Schema({
-    name: {
+    year: {
         type: String,
         required: true
     },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
-});
+    plans:[
+        String
+    ]
+},{timestamps:true});
 
 RoadmapSchema.virtual('id').get(function(){
     return this._id.toHexString();
