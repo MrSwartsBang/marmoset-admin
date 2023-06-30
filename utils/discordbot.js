@@ -16,11 +16,11 @@
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     
     //-------------------------DM verify---------------------//
-    var validWallet = VerifiCode.verify(msg.content);
     if (msg.channel.type === 'dm') {
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
       
+      var validWallet = VerifiCode.verify(msg.content);
       if(!isVerifiedUser)
       {
         var dmToClient;
@@ -38,8 +38,8 @@
       }
       else {
           dmToClient = "You already have been verified.";
-          isVerifiedUser.wallet  = validWallet;
-          var updatedUser = await isVerifiedUser.save();
+          // isVerifiedUser.wallet  = validWallet;
+          // var updatedUser = await isVerifiedUser.save();
           console.log("Updated wallet:"+ updatedUser.wallet);
       }
 

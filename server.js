@@ -15,7 +15,6 @@ require('dotenv').config();
 require('./config/passport')(passport);
 // console.log( process.env);
 const app = express();
-app.use(morgan('dev'));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -23,46 +22,32 @@ app.use(function(req, res, next) {
 });
 
 app.use(bodyParser.urlencoded({extended: false}));
-
 app.use(bodyParser.json());
 const db = process.env.mongoURI;
 mongoose.connect(db, { useNewUrlParser: true, 
-                        useUnifiedTopology: true,
-                        useFindAndModify: false})
+    useUnifiedTopology: true,
+    useFindAndModify: false})
     .then(() =>
-        console.log('MongoDB successfully connected.')
+    console.log('MongoDB successfully connected.')
     ).catch(err => console.log(err));
-
-app.use(passport.initialize());
-
-app.use('/api', admin);
-app.use('/api', users);
-app.use('/api', carousel);
-app.use('/api', about);
-app.use('/api', staff);
-
+    
+    app.use(passport.initialize());
+    app.use('/api',morgan('dev'));
+    app.use('/api', admin);
+    app.use('/api', users);
+    app.use('/api', carousel);
+    app.use('/api', about);
+    app.use('/api', staff);
+    
 app.use('/admin', express.static(path.join(__dirname, 'client/build')));
-
-app.get('/admin/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
-
+app.get('/admin/*', function (req, res) {res.sendFile(path.join(__dirname, 'client/build', 'index.html'));});
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.get('/uploads/*', function (req, res) {
-    console.log("sdd");
-    res.sendFile(path.join(__dirname, 'uploads'));
-});
-
+app.get('/uploads/*', function (req, res) {res.sendFile(path.join(__dirname, 'uploads'));});
 app.use(express.static(path.join(__dirname, 'user_build')));
-
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'user_build', 'index.html'));
-});
+app.get('/*', function (req, res) {res.sendFile(path.join(__dirname, 'user_build', 'index.html'));});
 
 
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+app.listen(process.env.PORT, () => console.log(`Server up and running on port ${process.env.PORT} !`));
 
-require("./utils/discordbot");
-require("./utils/telegrambot");
+// require("./utils/discordbot");
+// require("./utils/telegrambot");

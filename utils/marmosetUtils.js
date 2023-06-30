@@ -33,6 +33,9 @@ class VerifiCode {
         }
        else return 0;
     }
+
+    update = (code)=>{
+    }
     
 }
 exports.VerifiCode = new VerifiCode();
