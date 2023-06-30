@@ -46,23 +46,24 @@
     const roles = msg.member.roles.cache.map(role => role.name);
     // Log the roles
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
-    console.log(isVerifiedUser);
     if(isVerifiedUser)
-    {const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
-        let msgss = "";
+    {
+        const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
+        let roleName;
         if(NFTcount===0)
-        {msgss = "You no own NFT.";
-          let roleName = "NoNFT";
-             if(!roles.includes(roleName)){
+        {
+            roleName = "NoNFT";
+            if(!roles.includes(roleName)){
 		            let role = msg.guild.roles.cache.find(r=>r.name===roleName);
-                 msg.member.roles.add(role).catch(console.error);
-                 msg.reply("You get the NoNFT role.");
-             }
+                msg.member.roles.add(role).then(()=>msg.reply("You get the NoNFT role."))
+                                          .catch(console.error);
+                 
+            }
         }
         else if(NFTcount>0&&NFTcount<100)
         {
-          let roleName = "Azero Addict";
-             if(!roles.includes(roleName)){
+            roleName = "Azero Addict";
+            if(!roles.includes(roleName)){
               let role = msg.guild.roles.cache.find(r=>r.name===roleName);
               msg.member.roles.add(role).then(()=>msg.reply("You get the role of "+roleName))
                                         .catch(console.error);
@@ -70,14 +71,14 @@
         }
         else if(NFTcount>=100)
         {
-          let roleName = "manyNFTowner";
+            roleName = "manyNFTowner";
             if(!roles.includes(roleName)){
                let role = msg.guild.roles.cache.find(r=>r.name===roleName);
                msg.member.roles.add(role).then(()=>msg.reply("You get the role of "+roleName))
                                         .catch(console.error);
             }
         }
-        msgss = "You own much NFTs";
+ 
     }
     else
     { 
@@ -90,7 +91,6 @@
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 
 async function checkNFTowner(ownerAddress) {
-  console.log(clientAPI);
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
@@ -120,10 +120,9 @@ async function checkNFTowner(ownerAddress) {
           return collection;
       })
   );
-  data = data.filter((item) => item.listNFT?.length > 0);
-  console.log("=================ata = data.filter((item) => item.listNFT?.length > 0)===================");
-  console.log(data);
-  return data.length>0?data[0].listNFT.length:0;
+  const arr = data.filter(item => item.listNFT?.length > 0)
+            .flatMap(item => item.listNFT ?? []);
+  return arr.length;
 }
 
 

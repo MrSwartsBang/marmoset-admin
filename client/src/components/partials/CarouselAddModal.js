@@ -100,13 +100,13 @@ class CarouselAdd extends React.Component {
         else
         {
             const newCarousel = new FormData();
-                newCarousel.append('heroTitle', this.state.heroTitle);
-                newCarousel.append('heroText', this.state.heroText);
-                newCarousel.append('img', this.state.img);
-                newCarousel.append('devices', this.state.devices);
-                newCarousel.append('freetoplay', this.state.freetoplay);
-                newCarousel.append('playtoearn', this.state.playtoearn);
-                newCarousel.append('Status', this.state.Status);
+            newCarousel.append('heroTitle', this.state.heroTitle);
+            newCarousel.append('heroText', this.state.heroText);
+            newCarousel.append('img', this.state.img);
+            newCarousel.append('devices', this.state.devices);
+            newCarousel.append('freetoplay', this.state.freetoplay);
+            newCarousel.append('playtoearn', this.state.playtoearn);
+            newCarousel.append('Status', this.state.Status);
         }
 
         axios
