@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Staff = require('../../models/Staff');
 const multer = require('multer');
-const db = require('../../config/keys').mongoURI;
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {

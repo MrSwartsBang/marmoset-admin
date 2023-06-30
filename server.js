@@ -10,10 +10,9 @@ const about = require('./routes/api/about');
 const staff = require('./routes/api/staff');
 const users = require('./routes/api/users');
 const morgan = require('morgan');
-
 require('dotenv').config();
-require('./config/passport')(passport);
-// console.log( process.env);
+
+
 const app = express();
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -30,6 +29,8 @@ mongoose.connect(db, { useNewUrlParser: true,
     .then(() =>
     console.log('MongoDB successfully connected.')
     ).catch(err => console.log(err));
+    
+
     
     app.use(passport.initialize());
     app.use('/api',morgan('dev'));
