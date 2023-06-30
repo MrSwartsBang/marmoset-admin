@@ -16,12 +16,13 @@
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     
     //-------------------------DM verify---------------------//
+    var validWallet = VerifiCode.verify(msg.content);
     if (msg.channel.type === 'dm') {
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
+      
       if(!isVerifiedUser)
-      { 
-        var validWallet = VerifiCode.verify(msg.content);
+      {
         var dmToClient;
         if (typeof validWallet === "string")
         {
@@ -37,7 +38,11 @@
       }
       else {
           dmToClient = "You already have been verified.";
+          isVerifiedUser.wallet  = validWallet;
+          var updatedUser = await isVerifiedUser.save();
+          console.log("Updated wallet:"+ updatedUser.wallet);
       }
+
       return  msg.author.send(dmToClient);
     }
     //-----------------------------------------------------//
@@ -46,6 +51,7 @@
     const roles = msg.member.roles.cache.map(role => role.name);
     // Log the roles
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
+
     if(isVerifiedUser)
     {
         const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
