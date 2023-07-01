@@ -10,13 +10,8 @@ import axios from "axios";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import RoadmapAddModal from "../partials/RoadmapAddModal";
 import RoadmapUpdateModal from "../partials/RoadmapUpdateModal";
-import { toast, ToastContainer} from "react-toastify";
-
-
-
 const RoadmapCard = (props)=>{
-    
-    
+
     return(
         <div className="card bg-dark text-white shadow-lg marmosetCard">
             <div className="card-header">
@@ -31,9 +26,9 @@ const RoadmapCard = (props)=>{
             </div>
             <div className="card-footer" >                    
                 <button className="btn btn-light btn-primary btn-sm" 
+                        onClick={()=>props.onEdit(props.record)}
                         data-toggle="modal"
-                        data-target="#update-roadmap-modal"
-                        onClick={()=>props.onEdit(props.record)} >Edit</button>
+                        data-target="#update-roadmap-modal">Edit</button>
                 <button className="btn btn-light" onClick={()=>props.onDelete(props.record)}>Delete</button>
             </div>
 
@@ -53,6 +48,8 @@ class Roadmap extends Component {
 
 
         this.getData = this.getData.bind(this);
+        this.editRecord = this.editRecord.bind(this);
+        this.deleteRecord = this.deleteRecord.bind(this);
     }
 
     componentDidMount() {
@@ -73,7 +70,6 @@ class Roadmap extends Component {
     }
 
     editRecord(record) {
-        console.log(record);
         this.setState({ currentRecord: record});
     }
 
@@ -89,10 +85,6 @@ class Roadmap extends Component {
         
     }
 
-    pageChange(pageData) {
-        console.log("OnPageChange", pageData);
-    }
-
     render() {
         return (
             <div>
@@ -100,16 +92,26 @@ class Roadmap extends Component {
                 <div className="d-flex" id="wrapper">
                     <Sidebar/>
                     <RoadmapAddModal getData={()=>this.getData()}/>
-                    <RoadmapUpdateModal record={this.state.currentRecord} getdata={()=>this.getData()}/>
+                    <RoadmapUpdateModal record={this.state.currentRecord}
+                                        editRecord = {()=>this.editRecord(this.state.currentRecord)}
+                                        getData={()=>this.getData()}/>
                     <div id="page-content-wrapper">
                         <div className="container-fluid">
                             <button className="btn btn-link mt-3" id="menu-toggle"><FontAwesomeIcon icon={faList}/></button>
-                            <button className="btn btn-outline-primary float-right mt-3 mr-2" data-toggle="modal" data-target="#add-roadmap-modal"><FontAwesomeIcon icon={faPlus}/> Add Carousel</button>
+                            <button className="btn btn-outline-primary float-right mt-3 mr-2" 
+                                    data-toggle="modal" 
+                                    data-target="#add-roadmap-modal"
+                                    onClick={()=>this.editRecord(this.state.currentRecord)}
+                                    >
+                                    
+                                <FontAwesomeIcon icon={faPlus}/>Add Roadmap</button>
                             <h1 className="mt-2 text-primary">Roadmap List</h1>
                             <div className="marmosetCard_Board">
                             {
                                 this.state.records.map((record,index)=>{
-                                    return(<RoadmapCard key={index} record={record} onDelete={()=>this.deleteRecord(record)} onEdit={()=>this.editRecord(record)}/>)})
+                                    return(<RoadmapCard key={index} record={record} 
+                                                        onDelete={()=>this.deleteRecord(record)} 
+                                                        onEdit={()=>this.editRecord(record)}/>)})
                             }
                             </div>
                         </div>

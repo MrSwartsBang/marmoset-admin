@@ -1,4 +1,4 @@
-import React,{useEffect, useNavigate, useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -7,10 +7,9 @@ import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 
 const PlanCom = ({info,onChangePlan,index})=>{
-    const [planinfo,setPlanInfo] = useState({});
+    const [planinfo,setPlanInfo] = useState("---");
     useEffect(()=>{
-        setPlanInfo(info);
-        console.log(info);
+        // setPlanInfo(info);
     },[info]);
     return(
         <div className="row mt-2">
@@ -18,11 +17,14 @@ const PlanCom = ({info,onChangePlan,index})=>{
                 <label htmlFor={`plan${index}`}>{`Plan ${index+1}`}</label>
             </div>
             <div className="col-md-9">
+                {
+                    console.log(planinfo)
+                }
                 <input
+                    type="text"
                     onChange={onChangePlan}
                     value={planinfo}
                     id={`plan${index}`}
-                    type="text"
                     className={classnames("form-control")}
                 />
             </div>
@@ -39,11 +41,13 @@ class RoadmapUpdate extends React.Component {
             plans:[
             ]
         };
+        this.onChange = this.onChange.bind(this);
+        this.onClick = this.onClick.bind(this);
+        this.onUserRoadmap = this.onUserRoadmap.bind(this);
+        this.onChangePlan = this.onChangePlan.bind(this);
     }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.record) {
+    componentWillReceiveProps(nextProps,prev) {
             this.setState(nextProps.record);
-        }
     }
 
     onChange = e => {
@@ -55,7 +59,6 @@ class RoadmapUpdate extends React.Component {
         this.setState({ plans: planChange });
     };
     onClick = e => {
-        // this.setState({ ["plans"]:  });
         var planArr = this.state.plans.push("");
         this.setState({...this.state,planArr});
     };
