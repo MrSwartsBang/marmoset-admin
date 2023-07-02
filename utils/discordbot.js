@@ -25,7 +25,7 @@
       {
         var validWallet = VerifiCode.verify(msg.content);
         var dmToClient;
-        const polkadotReg = /^[\w]{1,48}$/;
+        const polkadotReg = /^[\w]{47,48}$/;
         if (polkadotReg.test(validWallet))
         {
           try {
