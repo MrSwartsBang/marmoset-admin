@@ -29,6 +29,7 @@ class VerifiCode {
         // 1: time expired
         // 2: everything is ok
        var isOne = this.codearray.find((arr)=> arr.code === code);
+       console.log(isOne);
        if(isOne){
             if(isOne.expires > Date.now())
             {
