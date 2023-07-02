@@ -16,7 +16,7 @@
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     
     //-------------------------DM verify---------------------//
-    const channel = message.channel;
+    const channel = msg.channel;
     if (channel.name === '-verify') {
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
@@ -53,7 +53,7 @@
 
 
 
-      
+
 
       return  msg.author.send(dmToClient);
     }
