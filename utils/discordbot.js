@@ -18,6 +18,8 @@
     //-------------------------DM verify---------------------//
     const channel = msg.channel;
     console.log(msg.content);
+    console.log(channel.content);
+
     if (channel.name.includes("verify")) {
       // Handle DM message here
       console.log(`verify DM from ${msg.author.tag}: ${msg.content}`);
@@ -27,7 +29,6 @@
         var validWallet = VerifiCode.verify(msg.content);
         var dmToClient;
         const polkadotReg = /^[a-zA-Z0-9]{48,}$/.test(validWallet);
-        console.log(polkadotReg,validWallet);
         if (polkadotReg)
         {
           try {
