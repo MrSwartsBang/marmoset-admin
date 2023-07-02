@@ -41,13 +41,13 @@
           // 0: invalid code
           // 1: time expired
           var messageInvalid = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
-          msg.author.send(messageInvalid);
+          msg.reply.send(messageInvalid);
         }
       }
       else {
           dmToClient = "You already have been verified.";
       }
-      msg.author.send(dmToClient);
+      msg.reply.send(dmToClient);
     }
     //-----------------------------------------------------//
     // Get the roles of the member who sent the message
