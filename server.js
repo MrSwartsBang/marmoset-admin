@@ -36,8 +36,8 @@ app.use('/admin', express.static(path.join(__dirname, 'client/build')));
 app.get('/admin/*', function (req, res) {res.sendFile(path.join(__dirname, 'client/build', 'index.html'));});
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/uploads/*', function (req, res) {res.sendFile(path.join(__dirname, 'uploads'));});
-app.use(express.static(path.join(__dirname, 'user_build')));
-app.get('/*', function (req, res) {res.sendFile(path.join(__dirname, 'user_build', 'index.html'));});
+app.use(express.static(path.join(__dirname, 'user_build/build')));
+app.get('/*', function (req, res) {res.sendFile(path.join(__dirname, 'user_build/build', 'index.html'));});
 
 
 app.listen(process.env.PORT, () => console.log(`Server up and running on port ${process.env.PORT} !`));
