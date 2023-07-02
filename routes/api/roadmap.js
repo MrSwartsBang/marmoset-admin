@@ -4,7 +4,7 @@ const Roadmap = require('../../models/Roadmap');
 
 router.get('/roadmap-data', (req, res) => {
     Roadmap.find({}).sort({createdAt:-1}).then(data => {
-        console.log(data);
+        // console.log(data);
         if (data) {
             return res.status(200).send(data);
         }
@@ -12,7 +12,7 @@ router.get('/roadmap-data', (req, res) => {
 });
 router.get('/roadmap-data-one', (req, res) => {
     Roadmap.findOne({}).sort({createdAt:-1}).then(data => {
-        console.log(data);
+        // console.log(data);
         if (data) {
             return res.status(200).send(data);
         }
@@ -27,10 +27,11 @@ router.post('/roadmap-add', (req, res) => {
         }).catch(err => console.log(err));
 });
 
-router.post('/roadmap-update', (req, res) => {
+router.patch('/roadmap-update', (req, res) => {
     const _id = req.body._id;
     console.log(req.body);
-    Roadmap.findOneAndUpdate({_id},req.body).then(data => {
+    
+    Roadmap.findByIdAndUpdate(_id,req.body,{new:true}).then(data => {
         if (data) {
             return res.status(200).json({ message: 'roadmap updated successfully. Refreshing data...', success: true });
         } else {

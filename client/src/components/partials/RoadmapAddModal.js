@@ -4,8 +4,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import 'react-toastify/dist/ReactToastify.css';
-
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+toastr.options = {
+  hideDuration: 500,
+  timeOut: 3000
+}
 const PlanCom = ({info,onChangePlan,index})=>{
     return(
         <div className="row mt-2">
@@ -56,6 +60,9 @@ class RoadmapAdd extends React.Component {
         var planArr = this.state.plans.push("");
         this.setState({...this.state,planArr});
     };
+    onCLose = e => {
+        this.setState({});
+    };
 
     onUserRoadmap = e => {
         e.preventDefault();
@@ -68,6 +75,8 @@ class RoadmapAdd extends React.Component {
         .post("/api/roadmap-add", newRoadmap)
         .then(res =>{
             this.props.getData();
+            toastr.success("Roadmap added successfully!");
+            this.setState({});
         }).catch(err =>{
 
         });
@@ -107,7 +116,7 @@ class RoadmapAdd extends React.Component {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" onClick={this.onClick} >Add Plan</button>
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.onCLose} >Close</button>
                                 <button
                                     form="add-roadmap"
                                     type="submit"

@@ -85,8 +85,9 @@ router.post('/getUserByWallet', (req, res) => {
     const {wallet} = req.body;
     if(!isEmpty(wallet))
     Verified.findOne({ wallet }).then((result)=>{
-        const {discord,telegram} = result;
-        res.status(200).json({message:"You are successfully verified.",flg:"success",discord,telegram});
+        const resData = result? {message:"You are successfully verified.",flg:true}
+                            :{message:"You are not verified yet. Get the verification code",flg:false};
+        res.status(200).json(resData);
     });
 });
 

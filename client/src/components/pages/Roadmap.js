@@ -94,7 +94,9 @@ class Roadmap extends Component {
                     <RoadmapAddModal getData={()=>this.getData()}/>
                     <RoadmapUpdateModal record={this.state.currentRecord}
                                         editRecord = {()=>this.editRecord(this.state.currentRecord)}
-                                        getData={()=>this.getData()}/>
+                                        getData={()=>this.getData()}
+
+                                    />
                     <div id="page-content-wrapper">
                         <div className="container-fluid">
                             <button className="btn btn-link mt-3" id="menu-toggle"><FontAwesomeIcon icon={faList}/></button>

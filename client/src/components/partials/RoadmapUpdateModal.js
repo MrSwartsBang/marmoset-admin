@@ -4,12 +4,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import 'react-toastify/dist/ReactToastify.css';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+toastr.options = {
+  hideDuration: 500,
+  timeOut: 3000
+}
 
 const PlanCom = ({info,onChangePlan,index})=>{
     const [planinfo,setPlanInfo] = useState("---");
     useEffect(()=>{
-        // setPlanInfo(info);
+        setPlanInfo(info);
     },[info]);
     return(
         <div className="row mt-2">
@@ -65,15 +70,12 @@ class RoadmapUpdate extends React.Component {
 
     onUserRoadmap = e => {
         e.preventDefault();
-        console.log(this.state.plans);
-        const newRoadmap = {
-            year:this.state.year,
-            plans:this.state.plans
-        }
         axios
-        .post("/api/roadmap-add", newRoadmap)
+        .patch("/api/roadmap-update", this.state)
         .then(res =>{
             this.props.getData();
+            toastr.success(res.data.message);
+            this.setState({});
         }).catch(err =>{
 
         });
