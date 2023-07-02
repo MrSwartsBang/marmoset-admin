@@ -6,12 +6,22 @@ class VerifiCode {
     }
 
     create = ({wallet})=>{
-        var newcode = {
-            code:Math.random().toString(36).substring(2, 6).toUpperCase(),
-            expires:Date.now()+1000*10,
-            wallet:wallet
-        };
-        this.codearray.push(newcode);
+
+        var isWallet = this.codearray.find(arr=>arr.wallet===wallet);
+        var code = Math.random().toString(36).substring(2, 6).toUpperCase();
+        var expires = Date.now()+1000*60*15;
+        if(isWallet)
+        {   
+            isWallet.code = code;
+            isWallet.expires = expires;
+            console.log(this.codearray);
+            return isWallet;
+        }
+        else{
+            var newcode = {code,expires,wallet};
+            this.codearray.push(newcode);
+        }
+        console.log(this.codearray);
         return newcode;
     }
     verify = (code)=>{

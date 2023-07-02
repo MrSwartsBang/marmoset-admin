@@ -26,8 +26,15 @@
         var dmToClient;
         if (typeof validWallet === "string")
         {
-          var verifiedData = await Verified.create({wallet:validWallet,discord:msg.author.tag});
-          dmToClient = "Hey there! I received your verification code.You are verified on marmosetClub";
+          try {
+            const verifiedData = await Verified.create({ wallet: validWallet, discord: msg.author.tag });
+            console.log('Document created successfully');
+            dmToClient = "Hey there! I received your verification code.You are verified on marmosetClub";
+          } catch (error) {
+            console.log('Error:', error.message);
+            Verified.findOneAndUpdate({ wallet: validWallet},{discord: msg.author.tag}).then(r=>console.log).catch(e=>console.warn);
+            dmToClient = "Hey there! I received your verification code. Your verification has been updated.";
+          }
         }
         else{
           // 0: invalid code
