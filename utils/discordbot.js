@@ -25,9 +25,9 @@
       {
         var validWallet = VerifiCode.verify(msg.content);
         var dmToClient;
-        const polkadotReg = /^[a-zA-Z0-9]{48,}$/;
-        
-        if (polkadotReg.test(validWallet))
+        const polkadotReg = /^[a-zA-Z0-9]{48,}$/.test(validWallet);
+        console.log(polkadotReg,validWallet);
+        if (polkadotReg)
         {
           try {
             const verifiedData = await Verified.create({ wallet: validWallet, discord: msg.author.tag });
