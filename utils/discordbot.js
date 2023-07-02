@@ -19,13 +19,14 @@
     const channel = msg.channel;
     if (channel.name.includes("verify")) {
       // Handle DM message here
-      console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
+      console.log(`verify DM from ${msg.author.tag}: ${msg.content}`);
       
-      var validWallet = VerifiCode.verify(msg.content);
       if(!isVerifiedUser)
       {
+        var validWallet = VerifiCode.verify(msg.content);
         var dmToClient;
-        if (typeof validWallet === "string")
+        const polkadotReg = /^[\w]{1,48}$/;
+        if (polkadotReg.test(validWallet))
         {
           try {
             const verifiedData = await Verified.create({ wallet: validWallet, discord: msg.author.tag });
