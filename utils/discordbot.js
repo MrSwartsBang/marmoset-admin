@@ -17,8 +17,7 @@
     
     //-------------------------DM verify---------------------//
     const channel = msg.channel;
-    console.log(channel.name);
-    if (channel.name === '-verify') {
+    if (channel.name.includes("verify")) {
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
       
