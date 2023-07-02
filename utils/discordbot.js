@@ -20,12 +20,13 @@
     if (channel.name.includes("verify")) {
       // Handle DM message here
       console.log(`verify DM from ${msg.author.tag}: ${msg.content}`);
-      
+            
       if(!isVerifiedUser)
       {
         var validWallet = VerifiCode.verify(msg.content);
         var dmToClient;
-        const polkadotReg = /^[\w]{47,48}$/;
+        const polkadotReg = /^[a-zA-Z0-9]{48,}$/;
+        
         if (polkadotReg.test(validWallet))
         {
           try {
