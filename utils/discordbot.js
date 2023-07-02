@@ -16,7 +16,8 @@
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     
     //-------------------------DM verify---------------------//
-    if (msg.channel.type === 'dm') {
+    const channel = message.channel;
+    if (channel.name === '-verify') {
       // Handle DM message here
       console.log(`Received DM from ${msg.author.tag}: ${msg.content}`);
       
@@ -49,6 +50,10 @@
           // var updatedUser = await isVerifiedUser.save();
           console.log("Updated wallet:"+ updatedUser.wallet);
       }
+
+
+
+      
 
       return  msg.author.send(dmToClient);
     }
