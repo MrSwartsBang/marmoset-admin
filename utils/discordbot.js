@@ -46,24 +46,14 @@
       }
       else {
           dmToClient = "You already have been verified.";
-          // isVerifiedUser.wallet  = validWallet;
-          // var updatedUser = await isVerifiedUser.save();
-          console.log("Updated wallet:"+ updatedUser.wallet);
       }
-
-
-
-
-
-      return  msg.author.send(dmToClient);
+      msg.author.send(dmToClient);
     }
     //-----------------------------------------------------//
-    else {
     // Get the roles of the member who sent the message
     const roles = msg.member.roles.cache.map(role => role.name);
     // Log the roles
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
-
     if(isVerifiedUser)
     {
         const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
@@ -102,7 +92,7 @@
     { 
       msg.reply("You have to verify yourself. https://marmosetclub.io/verify");   
     } 
-    }
+    
   })
 
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
