@@ -42,7 +42,7 @@
           // 0: invalid code
           // 1: time expired
           var messageInvalid = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
-          msg.reply(messageInvalid);
+          // msg.reply(messageInvalid);
         }
       }
       else {
