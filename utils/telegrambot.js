@@ -82,7 +82,7 @@ bot.on('message',async (msg) => {
         ]
       };
       bot.sendMessage(userId, `You are not a member of marmoset, please verify on [link](${dmLink}).`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
-      if(msg.chat.type.includes("private")){
+      if(!msg.chat.type.includes("private")){
         await bot.restrictChatMember(chatId, userId, permissions);
         await bot.deleteMessage(chatId, msg.message_id);
       }
