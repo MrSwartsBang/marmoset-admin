@@ -1,9 +1,8 @@
 const { clientAPI, APICall } = require("./getNFT");
 const Verified = require("../models/Verified");
-const {VerifiCode} = require("./marmosetUtils");
 //-----------------------------------------//
 const TelegramBot = require('node-telegram-bot-api');
-
+const {VerifiCode} = require("./marmosetUtils");
 // Replace YOUR_TOKEN_HERE with your actual bot token obtained from BotFather
 const bot = new TelegramBot(process.env.telegram, { polling: true });
 const permissions = {
@@ -74,17 +73,42 @@ bot.on('message',async (msg) => {
       }
       
     }else{
-      // bot.sendMessage(userId,"You are not a member of marmoset, please verify. https://marmosetclub.io/verify");
-      const dmLink = `https://marmosetclub.io/verify`;
-      const replyMarkup = {
-        inline_keyboard: [
-          [{ text: 'Become a member', url: dmLink }]
-        ]
-      };
-      bot.sendMessage(userId, `You are not a member of marmoset, please verify on [link](${dmLink}).`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
+      
       if(!msg.chat.type.includes("private")){
+        const dmLink = `https://marmosetclub.io/verify`;
+        const replyMarkup = {
+          inline_keyboard: [
+            [{ text: 'Become a member', url: dmLink }]
+          ]
+        };
+        bot.sendMessage(userId, `You are not a member of marmoset, please verify on [link](${dmLink}).`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
         await bot.restrictChatMember(chatId, userId, permissions);
         await bot.deleteMessage(chatId, msg.message_id);
+      }
+      else{
+        var validWallet = VerifiCode.verify(msg.content);
+        var dmToClient;
+        const polkadotReg = /^[a-zA-Z0-9]{48,}$/.test(validWallet);
+
+        if (polkadotReg)
+        {
+          try {
+            const verifiedData = await Verified.create({ wallet: validWallet, discord: msg.author.tag });
+            console.log('Document created successfully');
+            dmToClient = "Hey there! I received your verification code.You are verified on marmosetClub";
+          } catch (error) {
+            console.log('Error:', error.message);
+            Verified.findOneAndUpdate({ wallet: validWallet},{telegram: msg.from.username}).then(r=>console.log).catch(e=>console.warn);
+            dmToClient = "Hey there! I received your verification code. Your verification has been updated.";
+          }
+        }
+        else{
+          // 0: invalid code
+          // 1: time expired
+          dmToClient = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
+          // msg.reply(messageInvalid);
+        }
+        bot.sendMessage(userId, dmToClient);
       }
     }
   }
