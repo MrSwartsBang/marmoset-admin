@@ -86,8 +86,9 @@ bot.on('message',async (msg) => {
         await bot.deleteMessage(chatId, msg.message_id);
       }
       else{
-        var validWallet = VerifiCode.verify(msg.content);
+        var validWallet = VerifiCode.verify(text);
         var dmToClient;
+        console.log();
         if (typeof validWallet == "string")
         {
           try {
