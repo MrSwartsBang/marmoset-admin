@@ -32,7 +32,6 @@ bot.on('message',async (msg) => {
   if (msg.new_chat_members !== undefined) {
     // console.log(msg.new_chat_members);
     for (let i = 0; i < msg.new_chat_members.length; i++) {
-      const newMember = msg.new_chat_members[i];
       const dmLink = `https://marmosetclub.io/verify`;
       const replyMarkup = {
         inline_keyboard: [
@@ -45,7 +44,7 @@ bot.on('message',async (msg) => {
   }
   else {
 
-    const isVerifiedUser = await Verified.findOne({telegram:"@"+msg.from.username});
+    const isVerifiedUser = await Verified.findOne({telegram:msg.from.username});
     if(isVerifiedUser){      
       const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
       if (NFTcount > 0) {
@@ -77,7 +76,14 @@ bot.on('message',async (msg) => {
       }
       
     }else{
-      bot.sendMessage(userId,"You are not a member of marmoset, please verify. http://marmosetclub.io/verify");
+      // bot.sendMessage(userId,"You are not a member of marmoset, please verify. https://marmosetclub.io/verify");
+      const dmLink = `https://marmosetclub.io/verify`;
+      const replyMarkup = {
+        inline_keyboard: [
+          [{ text: 'Become a member', url: dmLink }]
+        ]
+      };
+      bot.sendMessage(userId, `You are not a member of marmoset, please verify on [link](${dmLink}).`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
       await bot.restrictChatMember(chatId, userId, permissions);
       await bot.deleteMessage(chatId, msg.message_id);
     }
