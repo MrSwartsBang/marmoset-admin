@@ -41,7 +41,7 @@ bot.on('message',async (msg) => {
     }
   }
   else {
-    console.log(msg.chat);
+    
     const isVerifiedUser = await Verified.findOne({telegram:msg.from.username});
     if(isVerifiedUser){      
       const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
@@ -81,9 +81,11 @@ bot.on('message',async (msg) => {
           [{ text: 'Become a member', url: dmLink }]
         ]
       };
-      // bot.sendMessage(userId, `You are not a member of marmoset, please verify on [link](${dmLink}).`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
-      // await bot.restrictChatMember(chatId, userId, permissions);
-      // await bot.deleteMessage(chatId, msg.message_id);
+      bot.sendMessage(userId, `You are not a member of marmoset, please verify on [link](${dmLink}).`, { reply_markup: replyMarkup, parse_mode: "Markdown" });
+      if(msg.chat.type.includes("private")){
+        await bot.restrictChatMember(chatId, userId, permissions);
+        await bot.deleteMessage(chatId, msg.message_id);
+      }
     }
   }
 });
