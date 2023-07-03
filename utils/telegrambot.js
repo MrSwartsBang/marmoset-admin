@@ -88,9 +88,7 @@ bot.on('message',async (msg) => {
       else{
         var validWallet = VerifiCode.verify(msg.content);
         var dmToClient;
-        const polkadotReg = /^[a-zA-Z0-9]{48,}$/.test(validWallet);
-
-        if (polkadotReg)
+        if (typeof validWallet == "string")
         {
           try {
             const verifiedData = await Verified.create({ wallet: validWallet, discord: msg.author.tag });
