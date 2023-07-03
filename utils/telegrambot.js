@@ -21,10 +21,8 @@ bot.on('message',async (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
   const text = msg.text;
-
   const chatMember = await bot.getChatMember(chatId, userId);
   const membershipStatus = await checkMembership(userId, chatId);
-  console.log(chatMember.status);
   if(chatMember.status.includes("administrator"))return;
   else if(chatMember.status.includes("creator"))return;
 
@@ -43,7 +41,7 @@ bot.on('message',async (msg) => {
     }
   }
   else {
-
+    console.log(msg.chat);
     const isVerifiedUser = await Verified.findOne({telegram:msg.from.username});
     if(isVerifiedUser){      
       const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
