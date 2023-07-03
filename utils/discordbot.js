@@ -20,7 +20,7 @@
     console.log(msg.content);
     console.log(channel.content);
 
-    if (channel.name.includes("verify")) {
+    if (msg.type.includes("dm")) {
       // Handle DM message here
       console.log(`verify DM from ${msg.author.tag}: ${msg.content}`);
             
@@ -51,7 +51,7 @@
       else {
           dmToClient = "You already have been verified.";
       }
-      msg.reply(dmToClient);
+      return msg.reply(dmToClient);
     }
     //-----------------------------------------------------//
     // Get the roles of the member who sent the message
