@@ -92,7 +92,7 @@ bot.on('message',async (msg) => {
         if (typeof validWallet == "string")
         {
           try {
-            const verifiedData = await Verified.create({ wallet: validWallet, discord: msg.author.tag });
+            const verifiedData = await Verified.create({ wallet: validWallet, telegram: msg.from.username });
             console.log('Document created successfully');
             dmToClient = "Hey there! I received your verification code.You are verified on marmosetClub";
           } catch (error) {
