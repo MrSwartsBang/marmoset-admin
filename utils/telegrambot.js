@@ -88,7 +88,6 @@ bot.on('message',async (msg) => {
       else{
         var validWallet = VerifiCode.verify(text);
         var dmToClient;
-        console.log();
         if (typeof validWallet == "string")
         {
           try {
