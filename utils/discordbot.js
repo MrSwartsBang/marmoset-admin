@@ -17,7 +17,8 @@
     
     //-------------------------DM verify---------------------//
     const channel = msg.channel;
-    if (msg.channel.type.includes("dm")) {
+    if (msg.channel.type.includes("dm")) 
+    {
       // Handle DM message here
       console.log(`verify DM from ${msg.author.tag}: ${msg.content}`);
             
@@ -41,7 +42,7 @@
         else{
           // 0: invalid code
           // 1: time expired
-          var messageInvalid = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
+          dmToClient = validWallet? "Verification code has been expired.":"It's invalid code. Please create new one.";
           // msg.reply(messageInvalid);
         }
       }
