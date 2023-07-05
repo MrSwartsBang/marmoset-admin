@@ -55,9 +55,15 @@ class RoadmapAdd extends React.Component {
             planChange[Number(e.target.id.replace("plan",""))] = e.target.value;
         this.setState({ plans: planChange });
     };
-    onClick = e => {
+    onAddPlan = e => {
         // this.setState({ ["plans"]:  });
         var planArr = this.state.plans.push("");
+        this.setState({...this.state,planArr});
+    };
+    onDeletePlan = e => {
+        // this.setState({ ["plans"]:  });
+        var planArr = this.state.plans.pop();
+        console.log(planArr);
         this.setState({...this.state,planArr});
     };
     onCLose = e => {
@@ -105,7 +111,7 @@ class RoadmapAdd extends React.Component {
                                                 onChange={this.onChange}
                                                 value={this.state.year}
                                                 id="year"
-                                                type="date"
+                                                type="text"
                                                 className={classnames("form-control")}/>
                                         </div>
                                     </div>
@@ -115,7 +121,8 @@ class RoadmapAdd extends React.Component {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={this.onClick} >Add Plan</button>
+                                <button type="button" className="btn btn-secondary" onClick={this.onAddPlan} >Add Plan</button>
+                                <button type="button" className="btn btn-secondary" onClick={this.onDeletePlan} >Delete Plan</button>
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.onCLose} >Close</button>
                                 <button
                                     form="add-roadmap"

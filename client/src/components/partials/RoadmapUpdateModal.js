@@ -47,7 +47,6 @@ class RoadmapUpdate extends React.Component {
             ]
         };
         this.onChange = this.onChange.bind(this);
-        this.onClick = this.onClick.bind(this);
         this.onUserRoadmap = this.onUserRoadmap.bind(this);
         this.onChangePlan = this.onChangePlan.bind(this);
     }
@@ -63,8 +62,12 @@ class RoadmapUpdate extends React.Component {
             planChange[Number(e.target.id.replace("plan",""))] = e.target.value;
         this.setState({ plans: planChange });
     };
-    onClick = e => {
+    onAddPlan = e => {
         var planArr = this.state.plans.push("");
+        this.setState({...this.state,planArr});
+    };
+    onDeletePlan = e => {
+        var planArr = this.state.plans.pop();
         this.setState({...this.state,planArr});
     };
 
@@ -97,14 +100,14 @@ class RoadmapUpdate extends React.Component {
                                 <form noValidate onSubmit={this.onUserRoadmap} id="update-roadmap">
                                     <div className="row mt-2">
                                         <div className="col-md-3">
-                                            <label htmlFor="year">Year</label>
+                                            <label htmlFor="year">Road</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
                                                 onChange={this.onChange}
                                                 value={this.state.year}
                                                 id="year"
-                                                type="date"
+                                                type="text"
                                                 className={classnames("form-control")}/>
                                         </div>
                                     </div>
@@ -114,7 +117,8 @@ class RoadmapUpdate extends React.Component {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={this.onClick} >Add Plan</button>
+                                <button type="button" className="btn btn-secondary" onClick={this.onAddPlan} >Add Plan</button>
+                                <button type="button" className="btn btn-secondary" onClick={this.onDeletePlan} >Delete Plan</button>
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button
                                     form="update-roadmap"
