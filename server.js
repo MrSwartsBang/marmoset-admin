@@ -6,13 +6,12 @@ const morgan = require('morgan');
 const fs = require("fs");
 require('dotenv').config();
 
-
 mongoose.connect(process.env.mongoURI, { useNewUrlParser: true, 
-    useUnifiedTopology: true,
-    useFindAndModify: false})
+                                        useUnifiedTopology: true,
+                                        useFindAndModify: false})
     .then(() =>console.log('MongoDB successfully connected.'))
     .catch(err => console.log(err));
-    
+
     const app = express();
     app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
@@ -24,12 +23,8 @@ mongoose.connect(process.env.mongoURI, { useNewUrlParser: true,
     
     app.use('/api',morgan('dev'));
     [
-        "admin",
-        "about",
-        "staff",
-        "users",
-        "roadmap",
-        "carousel"
+        "admin","about","staff",
+        "users","roadmap","carousel"
     ].map(apiItem =>app.use("/api",require(`./routes/api/${apiItem}`)));
 
 app.use('/admin', express.static(path.join(__dirname, 'client/build')));

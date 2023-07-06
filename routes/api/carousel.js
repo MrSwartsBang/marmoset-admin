@@ -19,7 +19,6 @@ router.post(['/carousel-add'], (req, res) => {
 });
 
 router.post(['/carousel-data'], (req, res) => {
-    console.log(req.body);
     Carousel.find({}).sort({date:-1}).then(car => {
         if (car) {
             return res.status(200).json(car);
