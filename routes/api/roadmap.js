@@ -4,7 +4,7 @@ const Roadmap = require('../../models/Roadmap');
 
 router.get('/roadmap-data', (req, res) => {
     Roadmap.find({}).sort({createdAt:-1}).then(data => {
-        // console.log(data);
+        console.log('/roadmap-data',data);
         if (data) {
             return res.status(200).send(data);
         }
