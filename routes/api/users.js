@@ -9,6 +9,7 @@ const {VerifiCode} = require("../../utils/marmosetUtils");
 router.post('/user-data', (req, res) => {
     Verified.find({}).then(user => {
         if (user) {
+            console.log(user);
             return res.status(200).send(user);
         }
     });
