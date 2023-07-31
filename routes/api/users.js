@@ -10,13 +10,13 @@ const {checkNFTowner} = require("../../utils/discordbot");
 router.post('/user-data', (req, res) => {
     Verified.find({}).then( async(user) => {
         if (user) {
-           var userList = [];
-            for(var ui in user){
+            const promises = user.map(async (ui) => {
                 ui.nftCount = await checkNFTowner(ui.wallet);
-                userList.push(ui);
-            }
-            
-            return res.status(200).send(user);
+                return ui;
+            });
+            const userList = await Promise.all(promises);
+            console.log(userList);
+            return res.status(200).send(userList);
         }
     });
 });
