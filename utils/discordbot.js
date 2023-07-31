@@ -156,6 +156,4 @@ async function checkNFTowner(ownerAddress) {
 module.exports = {
   checkNFTowner
 }
-
-
 client.login(process.env.discordbot);
