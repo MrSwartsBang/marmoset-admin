@@ -119,7 +119,7 @@
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 
-export async function checkNFTowner(ownerAddress) {
+async function checkNFTowner(ownerAddress) {
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
@@ -153,7 +153,9 @@ export async function checkNFTowner(ownerAddress) {
             .flatMap(item => item.listNFT ?? []);
   return arr.length;
 }
-
+module.exports = {
+  checkNFTowner
+}
 
 
 client.login(process.env.discordbot);
