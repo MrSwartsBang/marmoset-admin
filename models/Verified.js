@@ -15,21 +15,27 @@ const VerifiedSchema = new Schema({
         type: String,
         required: true
     }
-},{timestamps:true,toJSON: { virtuals: true }});
+},{timestamps:true});
+VerifiedSchema.set('toJSON', {
+    virtuals: true
+});
 
 VerifiedSchema.virtual('id').get(function(){
     return this._id.toHexString();
 });
 
-VerifiedSchema.virtual('nftCount').get(async function(){
-    var tf = await checkNFTowner(this.wallet);
-    console.log(tf);
-    return tf;
+VerifiedSchema.virtual('nftCount').get(function(){
+    return new Promise(async (resolve, reject) => {
+        try {
+            const tf = await checkNFTowner(this.wallet);
+            resolve(tf);
+        } catch (error) {
+            reject(error);
+        }
+    });
 });
 
-VerifiedSchema.set('toJSON', {
-    virtuals: true
-});
+
 
 VerifiedSchema.pre('save', async function(next) {
     const existingDocument = await this.constructor.findOne({ wallet: this.wallet });
