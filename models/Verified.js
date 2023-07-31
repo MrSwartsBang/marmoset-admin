@@ -22,7 +22,9 @@ VerifiedSchema.virtual('id').get(function(){
 });
 
 VerifiedSchema.virtual('nftCount').get(async function(){
-    return await checkNFTowner(this.wallet);
+    var tf = await checkNFTowner(this.wallet);
+    console.log(tf);
+    return tf;
 });
 
 VerifiedSchema.set('toJSON', {
