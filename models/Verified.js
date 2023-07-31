@@ -15,7 +15,7 @@ const VerifiedSchema = new Schema({
         type: String,
         required: true
     }
-},{timestamps:true});
+},{timestamps:true,toJSON: { virtuals: true }});
 
 VerifiedSchema.virtual('id').get(function(){
     return this._id.toHexString();
