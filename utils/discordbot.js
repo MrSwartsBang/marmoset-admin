@@ -119,7 +119,7 @@
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 
-async function checkNFTowner(ownerAddress) {
+export async function checkNFTowner(ownerAddress) {
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
