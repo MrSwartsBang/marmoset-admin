@@ -6,7 +6,6 @@ class VerifiCode {
     }
 
     create = ({wallet})=>{
-
         var isWallet = this.codearray.find(arr=>arr.wallet===wallet);
         var code = Math.random().toString(36).substring(2, 6).toUpperCase();
         var expires = Date.now()+1000*60*15;
@@ -28,9 +27,9 @@ class VerifiCode {
         // 0: invalid code
         // 1: time expired
         // 2: everything is ok
-        console.log(code);
+        // console.log(code);
        var isOne = this.codearray.find((arr)=> arr.code === code);
-       console.log(isOne);
+    //    console.log(isOne);
        if(isOne){
             if(isOne.expires > Date.now())
             {

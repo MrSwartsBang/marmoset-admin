@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const { clientAPI, APICall } = require("../utils/getNFT");
+
 const VerifiedSchema = new Schema({
     discord: {
         type: String
@@ -17,6 +19,40 @@ const VerifiedSchema = new Schema({
 
 VerifiedSchema.virtual('id').get(function(){
     return this._id.toHexString();
+});
+
+VerifiedSchema.virtual('nftCount').get(async function(){
+    const allCollectionsOwned = await clientAPI("post", "/getCollections", {
+        limit: 10000,
+        offset: 0,
+        sort: -1,
+        isActive: true
+    });
+
+    let data = await Promise.all(
+        allCollectionsOwned?.map(async (collection) => {
+            const options = {
+                collection_address: collection.nftContractAddress,
+                owner: this.wallet,
+                limit: 10000,
+                offset: 0,
+                sort: -1
+            };
+  
+            let { ret: dataList } = await APICall.getNFTsByOwnerAndCollection(options);
+  
+            dataList = dataList.filter((item) => item.is_for_sale !== true);
+            
+            const data = dataList?.map((item) => {
+                return { ...item, stakeStatus: 0 };
+            });
+            collection.listNFT = data;
+            return collection;
+        })
+    );
+    const arr = data.filter(item => item.listNFT?.length > 0)
+                    .flatMap(item => item.listNFT ?? []);
+    return arr.length;
 });
 
 VerifiedSchema.set('toJSON', {
