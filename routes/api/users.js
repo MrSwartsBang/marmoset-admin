@@ -12,10 +12,10 @@ router.post('/user-data', (req, res) => {
         if (user) {
             const promises = user.map(async (ui) => {
                 ui.nftCount = await checkNFTowner(ui.wallet);
+                console.log(ui.nftCount);
                 return ui;
             });
             const userList = await Promise.all(promises);
-            console.log(userList);
             return res.status(200).send(userList);
         }
     });
