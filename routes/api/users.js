@@ -8,10 +8,14 @@ const isEmpty = require("is-empty");
 const {VerifiCode} = require("../../utils/marmosetUtils");
 const {checkNFTowner} = require("../../utils/discordbot");
 router.post('/user-data', (req, res) => {
-    Verified.find({}).then(user => {
+    Verified.find({}).then( async(user) => {
         if (user) {
-            console.log(user);
-            user = user.map( async (u)=> await checkNFTowner(u.wallet))
+           var userList = [];
+            for(var ui in user){
+                ui.nftCount = await checkNFTowner(u.wallet);
+                userList.push(ui);
+            }
+            
             return res.status(200).send(user);
         }
     });
