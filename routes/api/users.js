@@ -6,10 +6,12 @@ const validateUpdateUserInput = require('../../validation/updateUser');
 const Verified = require('../../models/Verified');
 const isEmpty = require("is-empty");
 const {VerifiCode} = require("../../utils/marmosetUtils");
+const {checkNFTowner} = require("../utils/discordbot");
 router.post('/user-data', (req, res) => {
     Verified.find({}).then(user => {
         if (user) {
             console.log(user);
+            user = user.map( async (u)=> await checkNFTowner(u.wallet))
             return res.status(200).send(user);
         }
     });

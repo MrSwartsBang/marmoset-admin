@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const {checkNFTowner} = require("../utils/discordbot");
+
 
 const VerifiedSchema = new Schema({
     discord: {
@@ -25,14 +25,7 @@ VerifiedSchema.virtual('id').get(function(){
 });
 
 VerifiedSchema.virtual('nftCount').get(function(){
-    return new Promise(async (resolve, reject) => {
-        try {
-            const tf = await checkNFTowner(this.wallet);
-            resolve(tf);
-        } catch (error) {
-            reject(error);
-        }
-    });
+    return 0
 });
 
 
