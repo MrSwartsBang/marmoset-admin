@@ -133,24 +133,27 @@ router.get('/url-get', (req, res) => {
     }).catch(()=>{});
 
 });
-router.post('/url-update', (req, res) => {
+router.post('/url-update',async (req, res) => {
     console.log(req.body);
-    const {_id, buynft, events} = req.body;
-    if(_id == undefined)
-        URL.create({
-            buynft:buynft,
-            events:events
-        }).then((result)=>{
+    try {
+        const { buynft, events } = req.body;
+        const result1 = await URL.find({});
+    
+        if (result1.length <= 0) {
+            const result = await URL.create({
+                buynft: buynft,
+                events: events
+            });
             res.status(200).json({ urls: result, success: true });
-        }).catch(()=>{});
-    else 
-        URL.findOneAndUpdate({buynft:buynft},{
-            buynft:buynft,
-            events:events
-        }).then((result)=>{
-            res.status(200).json({urls: result, success: true });
-        }).catch(()=>{});
-   
+        } else {
+            result1.buynft = buynft;
+            result1.events = events;
+            await result1.save();
+            res.status(200).json({ urls: result, success: true });
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
 });
 
 

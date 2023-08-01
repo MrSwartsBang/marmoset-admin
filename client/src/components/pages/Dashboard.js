@@ -15,7 +15,6 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
-            _id:undefined,
             buynft: "",
             events:""
         };
@@ -34,10 +33,9 @@ class Dashboard extends Component {
 
     onHandleChange = e => {
         e.preventDefault();
-    
         const { id, value } = e.target;
-        console.log({ id, value });
         this.setState({ [id]: value });
+        console.log(id,value);
     };
     
 
