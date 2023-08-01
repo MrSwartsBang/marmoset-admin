@@ -7,23 +7,27 @@ const Verified = require('../../models/Verified');
 const isEmpty = require("is-empty");
 const {VerifiCode} = require("../../utils/marmosetUtils");
 const {checkNFTowner} = require("../../utils/discordbot");
-router.post('/user-data', (req, res) => {
-    Verified.find({}).then( async(user) => {
-        if (user) {
-            let userList = [];
-            for(let ui of user){
-                const uj = {
-                    discord: ui.discord,
-                    telegram: ui.telegram,
-                    wallet: ui.wallet,
-                    nftCount: await checkNFTowner(user.wallet)
-                }
-                userList.push(uj);
-            }
-            return res.status(200).send(userList);
-        }
-    });
-});
+router.post('/user-data', async (req, res) => {
+    try {
+      const users = await Verified.find({});
+      if (users) {
+        const userList = await Promise.all(users.map(async (ui) => {
+          return {
+            discord: ui.discord,
+            telegram: ui.telegram,
+            wallet: ui.wallet,
+            nftCount: await checkNFTowner(ui.wallet)
+          };
+        }));
+        console.log(userList);
+        return res.status(200).send(userList);
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send('Internal Server Error');
+    }
+  });
+  
 
 router.post('/user-delete', (req, res) => {
     Verified.deleteOne({ _id: req.body._id}).then(user => {
