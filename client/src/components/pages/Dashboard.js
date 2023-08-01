@@ -36,11 +36,13 @@ class Dashboard extends Component {
         e.preventDefault();
     
         const { id, value } = e.target;
+        console.log({ id, value });
         this.setState({ [id]: value });
     };
     
 
     onSubmit = ()=>{
+        console.log(this.state);
         axios
         .post("/api/url-update", this.state)
         .then(res =>{
