@@ -128,14 +128,7 @@ router.post('/login', (req, res) => {
 router.get('/url-get', (req, res) => {
     console.log('/url-get');
     URL.find({}).then((urls)=>{
-        const urlOb = {buynft:"",events:""};
-        for(let i of urls){
-            if(i.title === "buynft")
-            urlOb.buynft = i.url;
-            else if(i.title === "events")
-            urlOb.events = i.url;
-        }
-        res.status(200).json({ urls: urlOb, success: true });
+        res.status(200).json({ urls: urls[0], success: true });
     }).catch(()=>{});
 
 });
@@ -150,7 +143,7 @@ router.post('/url-update', (req, res) => {
             res.status(200).json({ urls: result, success: true });
         }).catch(()=>{});
     else 
-        URL.findByIdAndUpdate(_id,{
+        URL.findOneAndUpdate({buynft:buynft},{
             buynft:buynft,
             events:events
         }).then((result)=>{

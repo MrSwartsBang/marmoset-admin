@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const URLSchema = new Schema({
-    title: {
+    buynft: {
         type: String,
         required: true
     },
-    url: {
+    events: {
         type: String,
         required: true
     }
