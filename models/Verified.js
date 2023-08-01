@@ -14,7 +14,9 @@ const VerifiedSchema = new Schema({
     wallet: {
         type: String,
         required: true
-    }
+    },
+    nftCount:Number
+
 },{timestamps:true});
 VerifiedSchema.set('toJSON', {
     virtuals: true
@@ -22,17 +24,6 @@ VerifiedSchema.set('toJSON', {
 
 VerifiedSchema.virtual('id').get(function(){
     return this._id.toHexString();
-});
-
-VerifiedSchema.virtual('nftCount').get(async function(){
-    const user = this; // 'this' refers to the current user document
-    try {
-        // Assuming 'checkNFTowner' is the function to get the NFT count from the database
-        const nftCount = await checkNFTowner(user.wallet);
-        return nftCount;
-    } catch (error) {
-        return 0; // Return 0 or handle the error as per your requirement
-    }
 });
 
 

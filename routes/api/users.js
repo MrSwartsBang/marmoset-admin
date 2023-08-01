@@ -12,10 +12,9 @@ router.post('/user-data', (req, res) => {
         if (user) {
             let userList = [];
             for(const ui of user){
-                // ui.nftCount = await checkNFTowner(ui.wallet);
                 userList.push(ui);
-                // var th = await ui.nftCount;
-                console.log(await ui.nftCount);
+                ui.nftCount = await checkNFTowner(user.wallet)
+                console.log(ui.nftCount);
             }
             return res.status(200).send(userList);
         }
