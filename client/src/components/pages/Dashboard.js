@@ -8,14 +8,46 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faList} from "@fortawesome/free-solid-svg-icons/faList";
 import {Link} from "react-router-dom";
 import {faUserAlt} from "@fortawesome/free-solid-svg-icons/faUserAlt";
-
+import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class Dashboard extends Component {
+    constructor() {
+        super();
+        this.state = {
+            buynft: "",
+            events:""
+        };
 
-    onLogoutClick = e => {
+    }
+
+    componentDidMount(){
+        axios.get("/api/url-get").then((res) => {
+            console.log(res.data);
+            this.setState({
+                            events:res.data.urls.events,
+                            buynft:res.data.urls.buynft
+                        });
+        }).catch();
+    }
+
+    onHandleChange = e => {
         e.preventDefault();
-        this.props.logoutUser();
+    
+        const { id, value } = e.target;
+        this.setState({ [id]: value });
     };
+    
 
+    onSubmit = ()=>{
+        axios
+        .patch("/api/url-update", this.state)
+        .then(res =>{
+            toast("URL updated successfully!", {
+                position: toast.POSITION.TOP_CENTER
+            });
+        }).catch(err =>{});
+    }
     render() {
         //const { user } = this.props.auth;
         return (
@@ -29,46 +61,34 @@ class Dashboard extends Component {
                             <h1 className="mt-2 text-primary">Dashboard</h1>
                             <div className="row px-2">
                                 <div className="col-sm-3 p-sm-2">
-                                    <div className="card bg-primary text-white shadow-lg">
-                                        <div className="card-body">
-                                            <h5 className="card-title">Users</h5>
-                                            <p className="card-text">With supporting text below as a natural lead-in to
-                                                additional content.</p>
-                                            <Link to="/users" className="btn btn-light"><FontAwesomeIcon className="text-primary" icon={faUserAlt}/> Go to Users</Link>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-3 p-sm-2">
-                                    <div className="card bg-secondary text-white shadow-lg">
-                                        <div className="card-body">
-                                            <h5 className="card-title">Special title treatment</h5>
-                                            <p className="card-text">With supporting text below as a natural lead-in to
-                                                additional content.</p>
-                                            <a href="#" className="btn btn-light">Go somewhere</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-3 p-sm-2">
                                     <div className="card bg-info text-white shadow-lg">
-                                        <div className="card-body">
-                                            <h5 className="card-title">Special title treatment</h5>
-                                            <p className="card-text">With supporting text below as a natural lead-in to
-                                                additional content.</p>
-                                            <a href="#" className="btn btn-light">Go somewhere</a>
-                                        </div>
+                                            <div className="card-body">
+                                                <h5 className="card-title">Events URL</h5>
+                                                <input type="text" id="events" value={this.state.events} onChange={this.onHandleChange}/>
+                                            </div>
                                     </div>
                                 </div>
                                 <div className="col-sm-3 p-sm-2">
                                     <div className="card bg-dark text-white shadow-lg">
                                         <div className="card-body">
-                                            <h5 className="card-title">Special title treatment</h5>
-                                            <p className="card-text">With supporting text below as a natural lead-in to
-                                                additional content.</p>
-                                            <a href="#" className="btn btn-light">Go somewhere</a>
+                                            <h5 className="card-title">Buy NFT URL</h5>
+                                            <input type="text" id="buynft" value={this.state.buynft} onChange={this.onHandleChange}/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div className="row px-2">
+                                <div className="col-sm-3 p-sm-2">
+                                    <button
+                                        onClick={this.onSubmit}
+                                        form="add-user"
+                                        type="submit"
+                                        className="btn btn-primary">
+                                        Update URL
+                                    </button>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
