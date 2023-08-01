@@ -131,7 +131,7 @@ async function checkNFTowner(ownerAddress) {
       allCollectionsOwned?.map(async (collection) => {
           const options = {
               collection_address: collection.nftContractAddress,
-              owner: "5CUe683PxXZ115YLrXXXEAzDq1LjGjutotxvkZQVnMVyjcJf",
+              owner: ownerAddress,
               limit: 10000,
               offset: 0,
               sort: -1
@@ -146,12 +146,13 @@ async function checkNFTowner(ownerAddress) {
           });
 
           collection.listNFT = data;
-
+          
           return collection;
       })
   );
   const arr = data.filter(item => item.listNFT?.length > 0)
             .flatMap(item => item.listNFT ?? []);
+  console.log("nftCount:",arr.length);
   return arr.length;
 }
 module.exports = {
