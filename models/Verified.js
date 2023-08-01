@@ -15,7 +15,9 @@ const VerifiedSchema = new Schema({
         type: String,
         required: true
     },
-    nftCount:Number
+    nftCount:{
+        type:Number
+    }
 
 },{timestamps:true});
 VerifiedSchema.set('toJSON', {

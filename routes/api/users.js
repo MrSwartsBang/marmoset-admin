@@ -11,10 +11,11 @@ router.post('/user-data', (req, res) => {
     Verified.find({}).then( async(user) => {
         if (user) {
             let userList = [];
-            for(const ui of user){
-                userList.push(ui);
+            for(let ui of user){
+                
                 ui.nftCount = await checkNFTowner(user.wallet)
                 console.log(ui.nftCount);
+                userList.push(ui);
             }
             return res.status(200).send(userList);
         }
