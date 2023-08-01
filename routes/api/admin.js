@@ -142,7 +142,7 @@ router.get('/url-get', (req, res) => {
 router.post('/url-update', (req, res) => {
     console.log(req.body);
     const {_id, buynft, events} = req.body;
-    if(isEmpty(_id))
+    if(_id == undefined)
         URL.create({
             buynft:buynft,
             events:events
