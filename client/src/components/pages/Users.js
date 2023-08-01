@@ -47,6 +47,13 @@ class Users extends Component {
                 sortable: true
             },
             {
+                key: "nftCount",
+                text: "nftCount",
+                className: "date",
+                align: "left",
+                sortable: true
+            },
+            {
                 key: "action",
                 text: "Action",
                 className: "action",
