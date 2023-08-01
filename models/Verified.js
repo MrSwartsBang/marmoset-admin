@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
+const {checkNFTowner} = require("../utils/discordbot");
 const VerifiedSchema = new Schema({
     discord: {
         type: String
