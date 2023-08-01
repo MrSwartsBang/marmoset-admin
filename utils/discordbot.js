@@ -120,7 +120,7 @@
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 
 async function checkNFTowner(ownerAddress) {
-  console.log("ownerAddress:",ownerAddress);
+  // console.log("ownerAddress:",ownerAddress);
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
@@ -152,7 +152,7 @@ async function checkNFTowner(ownerAddress) {
   );
   const arr = data.filter(item => item.listNFT?.length > 0)
             .flatMap(item => item.listNFT ?? []);
-  console.log("nftCount:",arr.length);
+  // console.log("nftCount:",arr.length);
   return arr.length;
 }
 module.exports = {

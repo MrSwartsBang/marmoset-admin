@@ -31,7 +31,6 @@ VerifiedSchema.virtual('nftCount').get(async function(){
         const nftCount = await checkNFTowner(user.wallet);
         return nftCount;
     } catch (error) {
-        console.error(error);
         return 0; // Return 0 or handle the error as per your requirement
     }
 });
