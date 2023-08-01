@@ -24,7 +24,7 @@ VerifiedSchema.virtual('id').get(function(){
     return this._id.toHexString();
 });
 
-VerifiedSchema.virtual('nftCount').get(async function(){
+VerifiedSchema.virtual('nftCount').set(async function(){
     const user = this; // 'this' refers to the current user document
     try {
         // Assuming 'checkNFTowner' is the function to get the NFT count from the database
