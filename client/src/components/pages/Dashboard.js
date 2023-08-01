@@ -41,7 +41,7 @@ class Dashboard extends Component {
 
     onSubmit = ()=>{
         axios
-        .patch("/api/url-update", this.state)
+        .post("/api/url-update", this.state)
         .then(res =>{
             toast("URL updated successfully!", {
                 position: toast.POSITION.TOP_CENTER
