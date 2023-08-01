@@ -15,6 +15,7 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
+            _id:undefined,
             buynft: "",
             events:""
         };
