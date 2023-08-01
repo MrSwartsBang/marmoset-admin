@@ -28,7 +28,7 @@ class Dashboard extends Component {
                             events:res.data.urls.events,
                             buynft:res.data.urls.buynft
                         });
-        }).catch();
+        }).catch(()=>{});
     }
 
     onHandleChange = e => {
@@ -43,8 +43,13 @@ class Dashboard extends Component {
         axios
         .post("/api/url-update", this.state)
         .then(res =>{
+            console.log(res.data);
             toast("URL updated successfully!", {
                 position: toast.POSITION.TOP_CENTER
+            });
+            this.setState({
+                events:res.data.urls.events,
+                buynft:res.data.urls.buynft
             });
         }).catch(err =>{});
     }

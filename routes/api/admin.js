@@ -128,11 +128,11 @@ router.post('/login', (req, res) => {
 router.get('/url-get', (req, res) => {
     console.log('/url-get');
     URL.find({}).then((urls)=>{
-        const urlOb = {};
+        const urlOb = {buynft:"",events:""};
         for(let i of urls){
-            if(i.title == "buynft")
+            if(i.title === "buynft")
             urlOb.buynft = i.url;
-            else if(i.title == "events")
+            else if(i.title === "events")
             urlOb.events = i.url;
         }
         res.status(200).json({ urls: urlOb, success: true });
@@ -146,15 +146,15 @@ router.post('/url-update', (req, res) => {
         URL.create({
             buynft:buynft,
             events:events
-        }).then(()=>{
-            res.status(200).json({ message: 'URL created successfully. Refreshing data...', success: true });
+        }).then((result)=>{
+            res.status(200).json({ urls: result, success: true });
         }).catch(()=>{});
     else 
         URL.findByIdAndUpdate(_id,{
             buynft:buynft,
             events:events
-        }).then(()=>{
-            res.status(200).json({ message: 'URL updated successfully. Refreshing data...', success: true });
+        }).then((result)=>{
+            res.status(200).json({urls: result, success: true });
         }).catch(()=>{});
    
 });
