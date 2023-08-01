@@ -128,6 +128,7 @@ router.post('/login', (req, res) => {
 router.get('/url-get', (req, res) => {
     console.log('/url-get');
     URL.find({}).then((urls)=>{
+        console.log(urls);
         res.status(200).json({ urls: urls[0], success: true });
     }).catch(()=>{});
 
