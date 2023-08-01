@@ -131,7 +131,7 @@ async function checkNFTowner(ownerAddress) {
       allCollectionsOwned?.map(async (collection) => {
           const options = {
               collection_address: collection.nftContractAddress,
-              owner: ownerAddress,
+              owner: "5CUe683PxXZ115YLrXXXEAzDq1LjGjutotxvkZQVnMVyjcJf",
               limit: 10000,
               offset: 0,
               sort: -1
