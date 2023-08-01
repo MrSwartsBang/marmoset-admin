@@ -12,11 +12,13 @@ router.post('/user-data', (req, res) => {
         if (user) {
             let userList = [];
             for(let ui of user){
-                
-                ui.nftCount = await checkNFTowner(user.wallet)
-                var ttt = await checkNFTowner(user.wallet);
-                console.log(typeof ttt);
-                userList.push(ui);
+                const uj = {
+                    discord: ui.discord,
+                    telegram: ui.telegram,
+                    wallet: ui.wallet,
+                    nftCount: await checkNFTowner(user.wallet)
+                }
+                userList.push(uj);
             }
             return res.status(200).send(userList);
         }
