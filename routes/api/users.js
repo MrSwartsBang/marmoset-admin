@@ -12,7 +12,7 @@ router.post('/user-data', async (req, res) => {
       const users = await Verified.find({});
       if (users) {
         const userList = await Promise.all(users.map(async (ui) => {
-            console.log(await checkNFTowner(ui.wallet));
+            // console.log(await checkNFTowner(ui.wallet));
             console.log(ui.wallet);
             
           return {

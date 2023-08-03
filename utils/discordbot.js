@@ -156,6 +156,7 @@ async function checkNFTowner(ownerAddress) {
   console.log("nftCount:",arr.length);
   return arr.length;
 }
+checkNFTowner("5Dc3pew3gbcBEsMpzTmiDhD6WAJm42d3wfkphgFtwsZU812A");
 module.exports = {
   checkNFTowner
 }
