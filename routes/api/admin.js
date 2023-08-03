@@ -146,9 +146,9 @@ router.post('/url-update',async (req, res) => {
             });
             res.status(200).json({ urls: result, success: true });
         } else {
-            result1.buynft = buynft;
-            result1.events = events;
-            await result1.save();
+            result1[0].buynft = buynft;
+            result1[0].events = events;
+            await result1[0].save();
             res.status(200).json({ urls: result, success: true });
         }
     } catch (error) {
