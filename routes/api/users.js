@@ -22,7 +22,7 @@ router.post('/user-data', async (req, res) => {
             // nftCount: await checkNFTowner(ui.wallet)
           };
         }));
-        console.log(userList);
+        // console.log(userList);
         return res.status(200).send(userList);
       }
     } catch (error) {
