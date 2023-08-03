@@ -20,4 +20,4 @@ URLSchema.set('toJSON', {
     virtuals: true
 });
 
-module.exports = URL = mongoose.model("url", URLSchema);
+module.exports = URL = mongoose.model("buttonurl", URLSchema);
