@@ -127,6 +127,7 @@ async function checkNFTowner(ownerAddress) {
       sort: -1,
       isActive: true
   });
+  console.log("ownerAddress:",ownerAddress);
   let data = await Promise.all(
       allCollectionsOwned?.map(async (collection) => {
           const options = {
@@ -152,7 +153,7 @@ async function checkNFTowner(ownerAddress) {
   );
   const arr = data.filter(item => item.listNFT?.length > 0)
             .flatMap(item => item.listNFT ?? []);
-  console.log("ownerAddress:",ownerAddress);
+
   console.log("nftCount:",arr.length);
   return arr.length;
 }
