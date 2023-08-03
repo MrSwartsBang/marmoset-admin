@@ -120,14 +120,13 @@
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 
 async function checkNFTowner(ownerAddress) {
-  
-  console.log("ownerAddress:",ownerAddress);
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
       sort: -1,
       isActive: true
   });
+  console.log("=================checkNFTowner================");
   let data = await Promise.all(
       allCollectionsOwned?.map(async (collection) => {
           const options = {
