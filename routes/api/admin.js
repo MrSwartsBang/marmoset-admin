@@ -8,6 +8,7 @@ const validateUpdateUserInput = require('../../validation/updateUser');
 const User = require('../../models/User');
 const Verified = require('../../models/Verified');
 const isEmpty = require("is-empty");
+const URL = require("../../models/URL");
 router.post(['/admin-add','/register'], (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
     if (!isValid) {
@@ -124,5 +125,34 @@ router.post('/login', (req, res) => {
         });
     });
 });
+router.get('/url-get', (req, res) => {
+    console.log('/url-get');
+    URL.find({}).then((urls)=>{
+        console.log(urls);
+        res.status(200).json({ urls: urls[0], success: true });
+    }).catch(()=>{});
 
+});
+router.post('/url-update',async (req, res) => {
+    console.log(req.body);
+    try {
+        const { buynft, events } = req.body;
+        const result1 = await URL.find({});
+    
+        if (result1.length <= 0) {
+            const result = await URL.create({
+                buynft: buynft,
+                events: events
+            });
+            res.status(200).json({ urls: result, success: true });
+        } else {
+            result1[0].buynft = buynft;
+            result1[0].events = events;
+            await result1[0].save();
+            res.status(200).json({ urls: result, success: true });
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
 module.exports = router;
