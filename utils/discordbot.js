@@ -121,13 +121,13 @@
 
 async function checkNFTowner(ownerAddress) {
   
+  console.log("ownerAddress:",ownerAddress);
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
       sort: -1,
       isActive: true
   });
-  console.log("ownerAddress:",ownerAddress);
   let data = await Promise.all(
       allCollectionsOwned?.map(async (collection) => {
           const options = {
