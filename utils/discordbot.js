@@ -156,16 +156,16 @@ async function checkNFTowner(ownerAddress) {
                   .flatMap(item => item.listNFT ?? []);
   const groupedData = {};
   data.filter(item => item.listNFT?.length > 0)
-  .forEach(item => {
-      const { contractType, nftCount } = item;
-      
-      if (groupedData[contractType]) {
-        groupedData[contractType] += nftCount;
-      } else {
-        groupedData[contractType] = nftCount;
-      }
-  });
-
+      .map(item=>({contractType:item.contractType ,nftCount:item.listNFT?.length}))
+      .forEach(item => {
+          const { contractType, nftCount } = item;
+          
+          if (groupedData[contractType]) {
+            groupedData[contractType] =+ Number(nftCount);
+          } else {
+            groupedData[contractType] = Number(nftCount);
+          }
+      });
   // const arr1 =  data.filter(item => item.listNFT?.length > 0);
   console.log("nftCount:",groupedData);
   return arr.length;
