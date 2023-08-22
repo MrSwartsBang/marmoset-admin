@@ -12,6 +12,7 @@
   // Register an event to handle incoming messages
   client.on('message', async msg => {
     // This block will prevent the bot from responding to itself and other bots
+    console.log(msg.author);
     if(msg.author.bot) return;
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     
