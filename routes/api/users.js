@@ -16,7 +16,7 @@ router.post('/user-data', async (req, res) => {
             discord: ui.discord,
             telegram: ui.telegram,
             wallet: ui.wallet,
-            nftCount: await checkNFTowner(ui.wallet)
+            nfts: await checkNFTowner(ui.wallet,true)
           };
         }));
         console.log(userList);

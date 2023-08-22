@@ -119,7 +119,7 @@ const { log } = require("console");
   // client.login logs the bot in and sets it up for use. You'll enter your token here.
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 
-async function checkNFTowner(ownerAddress) {
+async function checkNFTowner(ownerAddress,isAdmin=false) {
   // console.log("ownerAddress:",ownerAddress);
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
@@ -168,7 +168,9 @@ async function checkNFTowner(ownerAddress) {
       });
   // const arr1 =  data.filter(item => item.listNFT?.length > 0);
   console.log("nftCount:",groupedData);
+  if(!isAdmin)
   return arr.length;
+  else return groupedData;
 }
 module.exports = {
   checkNFTowner
