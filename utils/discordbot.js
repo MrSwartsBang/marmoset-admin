@@ -152,7 +152,7 @@ async function checkNFTowner(ownerAddress) {
   );
   const arr = data.filter(item => item.listNFT?.length > 0)
             .flatMap(item => item.listNFT ?? []);
-  // console.log("nftCount:",arr.length);
+  console.log("nftCount:",data);
   return arr.length;
 }
 module.exports = {
