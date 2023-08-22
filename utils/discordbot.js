@@ -160,6 +160,7 @@ async function checkNFTowner(ownerAddress) {
       .forEach(item => {
           const { contractType, nftCount } = item;
           console.log(typeof nftCount,nftCount);
+          console.log(contractType,groupedData[contractType]);
           if (groupedData[contractType]) {
             groupedData[contractType] =+ nftCount;
           } else {
