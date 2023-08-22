@@ -159,7 +159,7 @@ async function checkNFTowner(ownerAddress) {
       .map(item=>({contractType:item.contractType ,nftCount:item.listNFT?.length}))
       .forEach(item => {
           const { contractType, nftCount } = item;
-          
+          console.log(typeof nftCount,nftCount);
           if (groupedData[contractType]) {
             groupedData[contractType] =+ Number(nftCount);
           } else {
