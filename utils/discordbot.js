@@ -16,7 +16,6 @@ const { log } = require("console");
 
     if(msg.author.bot) return;
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
-    console.log("isVerifiedUser",isVerifiedUser);
     //-------------------------DM verify---------------------//
     if (msg.channel.type.includes("dm")) 
     {
