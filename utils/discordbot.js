@@ -172,7 +172,7 @@ async function checkNFTowner(ownerAddress,isAdmin=false) {
     }
   if(!isAdmin)
   return arr.length;
-  else return groupedData;
+  else return nftsPartCount;
 }
 module.exports = {
   checkNFTowner
