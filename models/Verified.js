@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
-const {checkNFTowner} = require("../utils/discordbot");
 const VerifiedSchema = new Schema({
     discord: {
         type: String
@@ -40,4 +38,4 @@ VerifiedSchema.pre('save', async function(next) {
   next();
 });
 
-module.exports = User = mongoose.model("verified", VerifiedSchema);
+module.exports = Verified = mongoose.model("verified", VerifiedSchema);
