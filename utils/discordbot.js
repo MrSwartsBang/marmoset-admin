@@ -166,6 +166,10 @@ async function checkNFTowner(ownerAddress,isAdmin=false) {
           }
 
       });
+    let nftsPartCount="";
+    for(each in groupedData){
+      nftsPartCount+=each+":"+groupedData[each]+"<br>";
+    }
   if(!isAdmin)
   return arr.length;
   else return groupedData;
