@@ -16,9 +16,8 @@ const { log } = require("console");
 
     if(msg.author.bot) return;
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
-    
+    console.log("isVerifiedUser",isVerifiedUser);
     //-------------------------DM verify---------------------//
-    const channel = msg.channel;
     if (msg.channel.type.includes("dm")) 
     {
       // Handle DM message here
@@ -58,7 +57,7 @@ const { log } = require("console");
     const roles = msg.member.roles.cache.map(role => role.name);
     // Log the roles
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
-    console.log("isVerifiedUser",isVerifiedUser);
+   
     if(isVerifiedUser)
     {
     
