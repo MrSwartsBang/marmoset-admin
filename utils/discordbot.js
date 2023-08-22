@@ -166,6 +166,7 @@ async function checkNFTowner(ownerAddress) {
           } else {
             groupedData[contractType] = nftCount;
           }
+          console.log(contractType,groupedData[contractType]);
       });
   // const arr1 =  data.filter(item => item.listNFT?.length > 0);
   console.log("nftCount:",groupedData);
