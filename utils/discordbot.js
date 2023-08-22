@@ -4,6 +4,7 @@
   const client = new Discord.Client();
   const Verified = require("../models/Verified");
   const {VerifiCode} = require("./marmosetUtils");
+const { log } = require("console");
   // Register an event so that when the bot is ready, it will log a messsage to the terminal
   client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -12,7 +13,7 @@
   // Register an event to handle incoming messages
   client.on('message', async msg => {
     // This block will prevent the bot from responding to itself and other bots
-    console.log(msg.author);
+
     if(msg.author.bot) return;
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     
@@ -57,8 +58,10 @@
     const roles = msg.member.roles.cache.map(role => role.name);
     // Log the roles
     console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
+    console.log("isVerifiedUser",isVerifiedUser);
     if(isVerifiedUser)
     {
+    
         const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
         let roleName;
         if(NFTcount===0)
@@ -110,9 +113,6 @@
                   You can complete the verification process from a mobile device using the browser of the Subwallet app or from a computer.
 
                   If you encounter any issues, send me a DM.`);
-
-
-
     } 
     
   })
@@ -121,13 +121,14 @@
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 
 async function checkNFTowner(ownerAddress) {
-  // console.log("ownerAddress:",ownerAddress);
+  console.log("ownerAddress:",ownerAddress);
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
       sort: -1,
       isActive: true
   });
+  console.log("allCollectionsOwned");
   let data = await Promise.all(
       allCollectionsOwned?.map(async (collection) => {
           const options = {
@@ -150,10 +151,11 @@ async function checkNFTowner(ownerAddress) {
           
           return collection;
       })
+      
   );
+  console.log("nftCount:",data);
   const arr = data.filter(item => item.listNFT?.length > 0)
             .flatMap(item => item.listNFT ?? []);
-  console.log("nftCount:",data);
   return arr.length;
 }
 module.exports = {
