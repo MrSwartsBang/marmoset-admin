@@ -166,8 +166,6 @@ async function checkNFTowner(ownerAddress,isAdmin=false) {
           }
 
       });
-  // const arr1 =  data.filter(item => item.listNFT?.length > 0);
-  console.log("nftCount:",groupedData);
   if(!isAdmin)
   return arr.length;
   else return groupedData;
