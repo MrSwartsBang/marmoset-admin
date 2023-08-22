@@ -7,7 +7,8 @@ const validateLoginInput = require('../../validation/login');
 const validateUpdateUserInput = require('../../validation/updateUser');
 const User = require('../../models/User');
 const Verified = require('../../models/Verified');
-const isEmpty = require("is-empty");
+const URLData = require('../../models/URL');
+// const isEmpty = require("is-empty");
 router.post(['/admin-add','/register'], (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
     if (!isValid) {
@@ -124,5 +125,33 @@ router.post('/login', (req, res) => {
         });
     });
 });
-
+router.post('/urldata',async (req, res) => {
+    const {buy,event} = req.body;
+    console.log(buy,event);
+    URLData.findOne({buy: { $exists: true }}).then(result=>{
+        if(result)
+        {
+            result.buy = buy;
+            result.event = event;
+            result.save().then((result1)=>{
+                res.status(200).send(result1);
+            }).catch(console.error);
+        }
+        else new URLData({buy,event}).save().then((result2)=>{
+            res.status(200).send(result2);
+        });
+    })
+    // await URL.checkIfIsURL(type,url);
+    // res.status(200).json({d:"ddddddddddddddddd"});
+})
+router.get('/urldata', (req, res) => {
+    URLData.find( {buy: { $exists: true }} , (err, data) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(data);
+        res.status(200).send(data[0]);
+      });
+})
 module.exports = router;
