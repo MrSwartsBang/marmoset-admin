@@ -98,20 +98,21 @@ const { log } = require("console");
       
       msg.reply(`We have reactivated the verification bots for Telegram and Discord.
 
-                  How do they work?
-                  Access the following link: [https://marmosetclub.io/verify](https://marmosetclub.io/verify)
-                  Connect your wallet to verify that you have the NFT, and it will generate a code that expires in 15 minutes.
+              How do they work?
+              Access the following link: [Verify](https://marmosetclub.io/verify)
+              Connect your wallet to verify that you have the NFT, and it will generate a code that expires in 15 minutes.
 
-                  What do I do with that code?
-                  Once you have the code, you need to send a DM to each of the bots with that code.
-                  @marmoset_club_bot on Telegram.
-                  Marmoset club#2864 on Discord.
+              What do I do with that code?
+              Once you have the code, you need to send a DM to each of the bots with that code.
+              @marmoset_club_bot on Telegram.
+              Marmoset club#2864 on Discord.
 
-                  Once verified, you will be able to write in the Telegram group and access the private section of Discord.
+              Once verified, you will be able to write in the Telegram group and access the private section of Discord.
 
-                  You can complete the verification process from a mobile device using the browser of the Subwallet app or from a computer.
+              You can complete the verification process from a mobile device using the browser of the Subwallet app or from a computer.
 
-                  If you encounter any issues, send me a DM.`);
+              If you encounter any issues, send me a DM.`);
+
     } 
     
   })
