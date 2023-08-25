@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Dashboard from "./components/pages/Dashboard";
+import BotSetting from "./components/pages/BotSetting";
 import React, { Component } from 'react';
 import Login from "./components/auth/Login";
 import NotFound from "./components/layout/NotFound";
@@ -47,6 +48,7 @@ class App extends Component {
                             <Route exact path="/admin/register" component={Register} />
                             <Route exact path="/admin/login" component={Login} />
                             <Switch>
+                                <PrivateRoute exact path="/admin/botsetting" component={BotSetting} />
                                 <PrivateRoute exact path="/admin/dashboard" component={Dashboard} />
                                 <PrivateRoute exact path="/admin/admin" component={Admin} />
                                 <PrivateRoute exact path="/admin/users" component={Users} />

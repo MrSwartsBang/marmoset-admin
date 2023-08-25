@@ -18,6 +18,7 @@ class Sidebar extends Component {
         return (
             <div className="border-right h-100" id="sidebar-wrapper">
                 <div className="list-group list-group-flush">
+                    <Link to="/admin/botsetting" className="list-group-item list-group-item-action">BotSetting</Link>
                     <Link to="/admin/dashboard" className="list-group-item list-group-item-action">Dashboard</Link>
                     <Link to="/admin/admin" className="list-group-item list-group-item-action">Admin</Link>
                     <Link to="/admin/Users" className="list-group-item list-group-item-action">Users</Link>

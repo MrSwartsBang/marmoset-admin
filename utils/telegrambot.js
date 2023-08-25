@@ -17,6 +17,8 @@ const permissions = {
 };
 
 bot.on('message',async (msg) => {
+  const botSetting = await BotSetting.findOne({});
+  if(!botSetting.telegram) return;
   const chatId = msg.chat.id;
   const userId = msg.from.id;
   const text = msg.text;
@@ -183,17 +185,12 @@ async function checkNFTowner(ownerAddress) {
               offset: 0,
               sort: -1
           };
-
           let { ret: dataList } = await APICall.getNFTsByOwnerAndCollection(options);
-
           dataList = dataList.filter((item) => item.is_for_sale !== true);
-          
           const data = dataList?.map((item) => {
               return { ...item, stakeStatus: 0 };
           });
-
           collection.listNFT = data;
-
           return collection;
       })
   );

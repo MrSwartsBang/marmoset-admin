@@ -8,6 +8,10 @@ const URLSchema = new Schema({
     event: {
         type: String,
         required: true
+    },
+    shop: {
+        type: String,
+        required: true
     }
 });
 URLSchema.virtual('id').get(function(){

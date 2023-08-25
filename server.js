@@ -39,7 +39,7 @@ app.get('/*', function (req, res) {res.sendFile(path.join(__dirname, 'user_build
 app.listen(process.env.PORT, () => console.log(`Server up and running on port ${process.env.PORT} !`));
 
 if(process.env.Production){
-// require("./utils/discordbot");
-// require("./utils/telegrambot");
+require("./utils/discordbot");
+require("./utils/telegrambot");
 }
 

@@ -14,7 +14,8 @@ class Dashboard extends Component {
         super(props);
         this.state = {
             buy:"",
-            url:""
+            url:"",
+            shop:""
         };
 
     }
@@ -68,6 +69,16 @@ class Dashboard extends Component {
                                         <div className="card-body">
                                             <h5 className="card-title">Events</h5>
                                             <input type="text" id="event" value={this.state.event} onChange={this.onChange} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row px-2">
+                                <div className="col-sm-3 p-sm-2">
+                                    <div className="card bg-primary text-white shadow-lg">
+                                        <div className="card-body">
+                                            <h5 className="card-title">Shop</h5>
+                                            <input type="text" id="shop" value={this.state.shop} onChange={this.onChange} />
                                         </div>
                                     </div>
                                 </div>

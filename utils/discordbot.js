@@ -3,8 +3,10 @@
   const Discord = require('discord.js')
   const client = new Discord.Client();
   const Verified = require("../models/Verified");
+  const BotSetting = require("../models/BotSetting");
   const {VerifiCode} = require("./marmosetUtils");
-const { log } = require("console");
+  const { log } = require("console");
+
   // Register an event so that when the bot is ready, it will log a messsage to the terminal
   client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -13,7 +15,8 @@ const { log } = require("console");
   // Register an event to handle incoming messages
   client.on('message', async msg => {
     // This block will prevent the bot from responding to itself and other bots
-
+    const botSetting = await BotSetting.findOne({});
+    if(!botSetting.discord) return;
     if(msg.author.bot) return;
     const isVerifiedUser = await Verified.findOne({discord:msg.author.tag});
     //-------------------------DM verify---------------------//
@@ -155,21 +158,26 @@ async function checkNFTowner(ownerAddress,isAdmin=false) {
   const arr = data.filter(item => item.listNFT?.length > 0)
                   .flatMap(item => item.listNFT ?? []);
   const groupedData = {};
+
+  console.log(data.filter(item => item.listNFT?.length > 0));
+
   data.filter(item => item.listNFT?.length > 0)
-      .map(item=>({contractType:item.contractType ,nftCount:item.listNFT?.length}))
+      .map(item=>({name:item.name ,nftCount:item.listNFT?.length}))
       .forEach(item => {
-          const { contractType, nftCount } = item;
-          if (groupedData[contractType]) {
-            groupedData[contractType] += nftCount;
+          const { name, nftCount } = item;
+          if (groupedData[name]) {
+            groupedData[name] += nftCount;
           } else {
-            groupedData[contractType] = nftCount;
+            groupedData[name] = nftCount;
           }
 
       });
     let nftsPartCount="";
+
     for(each in groupedData){
       nftsPartCount+=each+":"+groupedData[each]+"\n";
     }
+    // console.log(nftsPartCount);
   if(!isAdmin)
   return arr.length;
   else return nftsPartCount;

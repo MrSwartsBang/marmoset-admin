@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.6541ef76.css",
-    "main.js": "/static/js/main.9262d4c1.js",
+    "main.js": "/static/js/main.3ce6907c.js",
     "static/js/787.72e706b2.chunk.js": "/static/js/787.72e706b2.chunk.js",
     "static/media/SubWalletLogo.svg": "/static/media/SubWalletLogo.637b860fce4059c3a3b6b7c876a13601.svg",
     "static/media/MetaMaskLogo.svg": "/static/media/MetaMaskLogo.1e91d234a70747385cb8c9123cf4869d.svg",
@@ -10,11 +10,11 @@
     "static/media/FearlessWalletLogo.svg": "/static/media/FearlessWalletLogo.de4e8c2ad71364a21d4453e7991a5e5d.svg",
     "static/media/PolkadotLogo.svg": "/static/media/PolkadotLogo.8492330aac9d174faa4886cab4cb5b93.svg",
     "main.6541ef76.css.map": "/static/css/main.6541ef76.css.map",
-    "main.9262d4c1.js.map": "/static/js/main.9262d4c1.js.map",
+    "main.3ce6907c.js.map": "/static/js/main.3ce6907c.js.map",
     "787.72e706b2.chunk.js.map": "/static/js/787.72e706b2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6541ef76.css",
-    "static/js/main.9262d4c1.js"
+    "static/js/main.3ce6907c.js"
   ]
 }

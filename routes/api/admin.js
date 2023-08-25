@@ -8,6 +8,7 @@ const validateUpdateUserInput = require('../../validation/updateUser');
 const User = require('../../models/User');
 const Verified = require('../../models/Verified');
 const URLData = require('../../models/URL');
+const BotSetting = require('../../models/BotSetting');
 // const isEmpty = require("is-empty");
 router.post(['/admin-add','/register'], (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -126,13 +127,13 @@ router.post('/login', (req, res) => {
     });
 });
 router.post('/urldata',async (req, res) => {
-    const {buy,event} = req.body;
-    console.log(buy,event);
+    const {buy,event,shop} = req.body;
     URLData.findOne({buy: { $exists: true }}).then(result=>{
         if(result)
         {
             result.buy = buy;
             result.event = event;
+            result.shop = shop;
             result.save().then((result1)=>{
                 res.status(200).send(result1);
             }).catch(console.error);
@@ -154,4 +155,39 @@ router.get('/urldata', (req, res) => {
         res.status(200).send(data[0]);
       });
 })
+router.get('/botsetting', async (req, res) => {
+    try {
+        const botSetting = await BotSetting.findOne({});
+        const resData = botSetting===null?{discord:true,telegram:true}:botSetting;
+
+        console.log(resData);
+
+        res.status(200).json(resData);
+    } catch (error) {
+      console.error(error);
+      res.status(200).json({discord:true,telegram:true});
+    }
+  }).post("/botsetting",async (req, res) => {
+    try {
+      console.log(req.body);
+      const count = await BotSetting.countDocuments({});
+    //   console.log('Number of documents:', count);
+      if (count > 0) {
+        const result = await BotSetting.findOneAndUpdate({}, req.body, { new: true });
+        console.log(result);
+        res.status(200).json(result);
+      } else {
+        const botSetting = new BotSetting({
+          discord: req.body.discord,
+          telegram: req.body.telegram
+        });
+        const result1 = await botSetting.save();
+        res.status(200).json(result1);
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
 module.exports = router;
