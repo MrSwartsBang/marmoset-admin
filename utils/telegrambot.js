@@ -3,6 +3,7 @@ const Verified = require("../models/Verified");
 //-----------------------------------------//
 const TelegramBot = require('node-telegram-bot-api');
 const {VerifiCode} = require("./marmosetUtils");
+const {checkNFTowner} = require('./discordbot');
 // Replace YOUR_TOKEN_HERE with your actual bot token obtained from BotFather
 const bot = new TelegramBot(process.env.telegram, { polling: true });
 const permissions = {
@@ -165,34 +166,34 @@ async function checkMembership(userId, channelId) {
 }
 
 
-async function checkNFTowner(ownerAddress) {
+// async function checkNFTowner(ownerAddress) {
 
-  const allCollectionsOwned = await clientAPI("post", "/getCollections", {
-      limit: 10000,
-      offset: 0,
-      sort: -1,
-      isActive: true
-  });
-  let data = await Promise.all(
-      allCollectionsOwned?.map(async (collection) => {
-          const options = {
-              collection_address: collection.nftContractAddress,
-              owner: ownerAddress,
-              limit: 10000,
-              offset: 0,
-              sort: -1
-          };
-          let { ret: dataList } = await APICall.getNFTsByOwnerAndCollection(options);
-          dataList = dataList.filter((item) => item.is_for_sale !== true);
-          const data = dataList?.map((item) => {
-              return { ...item, stakeStatus: 0 };
-          });
-          collection.listNFT = data;
-          return collection;
-      })
-  );
-  data = data.filter((item) => item.listNFT?.length > 0);
-  if(data.length)
-  return data[0].listNFT.length;
-  else return 0;
-}
+//   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
+//       limit: 10000,
+//       offset: 0,
+//       sort: -1,
+//       isActive: true
+//   });
+//   let data = await Promise.all(
+//       allCollectionsOwned?.map(async (collection) => {
+//           const options = {
+//               collection_address: collection.nftContractAddress,
+//               owner: ownerAddress,
+//               limit: 10000,
+//               offset: 0,
+//               sort: -1
+//           };
+//           let { ret: dataList } = await APICall.getNFTsByOwnerAndCollection(options);
+//           dataList = dataList.filter((item) => item.is_for_sale !== true);
+//           const data = dataList?.map((item) => {
+//               return { ...item, stakeStatus: 0 };
+//           });
+//           collection.listNFT = data;
+//           return collection;
+//       })
+//   );
+//   data = data.filter((item) => item.listNFT?.length > 0);
+//   if(data.length)
+//   return data[0].listNFT.length;
+//   else return 0;
+// }

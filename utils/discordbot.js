@@ -167,7 +167,7 @@ async function checkNFTowner(ownerAddress,isAdmin=false) {
   return arr.length;
   else return nftsPartCount;
 }
+client.login(process.env.discordbot);
 module.exports = {
   checkNFTowner
 }
-client.login(process.env.discordbot);
