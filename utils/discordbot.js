@@ -5,7 +5,6 @@
   const Verified = require("../models/Verified");
   const BotSetting = require("../models/BotSetting");
   const {VerifiCode} = require("./marmosetUtils");
-  const { log } = require("console");
 
   // Register an event so that when the bot is ready, it will log a messsage to the terminal
   client.on('ready', () => {
@@ -23,7 +22,7 @@
     if (msg.channel.type.includes("dm")) 
     {
       // Handle DM message here
-      console.log(`verify DM from ${msg.author.tag}: ${msg.content}`);
+      // console.log(`verify DM from ${msg.author.tag}: ${msg.content}`);
             
       if(!isVerifiedUser)
       {
@@ -33,12 +32,11 @@
         if (polkadotReg)
         {
           try {
-            const verifiedData = await Verified.create({ wallet: validWallet, discord: msg.author.tag });
-            console.log('Document created successfully');
+            await Verified.create({ wallet: validWallet, discord: msg.author.tag });
             dmToClient = "Hey there! I received your verification code.You are verified on marmosetClub";
           } catch (error) {
             console.log('Error:', error.message);
-            Verified.findOneAndUpdate({ wallet: validWallet},{discord: msg.author.tag}).then(r=>console.log).catch(e=>console.warn);
+            Verified.findOneAndUpdate({ wallet: validWallet},{discord: msg.author.tag}).then(r=>{}).catch(e=>console.warn);
             dmToClient = "Hey there! I received your verification code. Your verification has been updated.";
           }
         }
@@ -57,12 +55,8 @@
     //-----------------------------------------------------//
     // Get the roles of the member who sent the message
     const roles = msg.member.roles.cache.map(role => role.name);
-    // Log the roles
-    console.log(`Roles of ${msg.author.tag}: ${roles.join(', ')}`);
-   
     if(isVerifiedUser)
     {
-    
         const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
         let roleName;
         if(NFTcount===0)
@@ -89,8 +83,10 @@
             roleName = "manyNFTowner";
             if(!roles.includes(roleName)){
                let role = msg.guild.roles.cache.find(r=>r.name===roleName);
-               msg.member.roles.add(role).then(()=>msg.reply("You get the role of "+roleName))
-                                        .catch(console.error);
+               msg.member
+                  .roles.add(role)
+                  .then(()=>msg.reply("You get the role of "+roleName))
+                  .catch(console.error);
             }
         }
  
@@ -123,14 +119,12 @@
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 
 async function checkNFTowner(ownerAddress,isAdmin=false) {
-  // console.log("ownerAddress:",ownerAddress);
   const allCollectionsOwned = await clientAPI("post", "/getCollections", {
       limit: 10000,
       offset: 0,
       sort: -1,
       isActive: true
   });
-  console.log("allCollectionsOwned");
   let data = await Promise.all(
       allCollectionsOwned?.map(async (collection) => {
           const options = {
@@ -140,17 +134,12 @@ async function checkNFTowner(ownerAddress,isAdmin=false) {
               offset: 0,
               sort: -1
           };
-
           let { ret: dataList } = await APICall.getNFTsByOwnerAndCollection(options);
-
           dataList = dataList.filter((item) => item.is_for_sale !== true);
-          
           const data = dataList?.map((item) => {
               return { ...item, stakeStatus: 0 };
           });
-
           collection.listNFT = data;
-          
           return collection;
       })
       
@@ -158,9 +147,6 @@ async function checkNFTowner(ownerAddress,isAdmin=false) {
   const arr = data.filter(item => item.listNFT?.length > 0)
                   .flatMap(item => item.listNFT ?? []);
   const groupedData = {};
-
-  console.log(data.filter(item => item.listNFT?.length > 0));
-
   data.filter(item => item.listNFT?.length > 0)
       .map(item=>({name:item.name ,nftCount:item.listNFT?.length}))
       .forEach(item => {
@@ -170,14 +156,13 @@ async function checkNFTowner(ownerAddress,isAdmin=false) {
           } else {
             groupedData[name] = nftCount;
           }
-
       });
+
     let nftsPartCount="";
 
     for(each in groupedData){
       nftsPartCount+=each+":"+groupedData[each]+"\n";
     }
-    // console.log(nftsPartCount);
   if(!isAdmin)
   return arr.length;
   else return nftsPartCount;

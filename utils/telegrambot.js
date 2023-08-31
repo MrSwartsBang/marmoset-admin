@@ -59,7 +59,6 @@ bot.on('message',async (msg) => {
     if(isVerifiedUser){      
       const NFTcount = await checkNFTowner(isVerifiedUser.wallet);
       if (NFTcount > 0) {
-        console.log("==============True==================");
         // call promoteChatMember to set the specified permissions
         bot.promoteChatMember(chatId, userId, {
           chat_permissions: {
@@ -134,15 +133,13 @@ bot.getMe().then((botInfo) => {
 // Call the getUpdates method to retrieve information about recent updates
 bot.getUpdates().then((updates) => {
   // Extract the chat IDs of all channels that the bot is a member of
-  const channelIds = updates
+  updates
     .map((update) => update.channel_post || update.message)
     .filter((msg) => msg != null && msg.chat.type === 'channel' && msg.chat.username !== undefined)
     .map((msg) => ({
       id: msg.chat.id,
       username: msg.chat.username
     }));
-
-  console.log(channelIds);
 });
 
 // Define a function to check if the user is a member of the specified channel
